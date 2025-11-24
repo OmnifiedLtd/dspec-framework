@@ -1,0 +1,72 @@
+meta:
+  id: feature.personal-notes
+  name: Personal Notes Log
+  owner: Productivity Team
+  version: 0.2.0
+  relates_to_domain: notes-domain
+
+what:
+  intent: >
+    Allow users to maintain a personal log of short text notes which they can
+    publish, view, edit, and delete. Users see only their own notes.
+  domain_refs:
+    glossary: domain-model.yaml#glossary
+    lifecycles: domain-model.yaml#lifecycles
+    events: domain-model.yaml#events
+  scope:
+    in:
+      - "Creating and Publishing notes"
+      - "Viewing personal note history"
+      - "Editing note content"
+      - "Deleting notes"
+    out:
+      - "Viewing other users' notes"
+      - "Following other users"
+      - "Public feeds"
+
+boundaries:
+  domain_invariants:
+    - id: note-author-ownership
+      rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
+      moment_of_truth: "NoteCreated"
+      consistency_demand:
+        scope: "note"
+        strength: "write-time"
+        tolerance: "none"
+    - id: note-length-limit
+      rule: "A Note's content must not exceed 280 characters."
+      moment_of_truth: "NotePublished"
+      consistency_demand:
+        scope: "note"
+        strength: "write-time"
+        tolerance: "none"
+    - id: author-modification-only
+      rule: "Only the Author of a Note may modify its content or state."
+      moment_of_truth: "NoteContentUpdated"
+      consistency_demand:
+        scope: "note"
+        strength: "write-time"
+        tolerance: "none"
+
+success:
+  acceptance_criteria:
+    - id: ac-001
+      statement: "User can create and publish a note."
+    - id: ac-002
+      statement: "User can edit the content of their existing note."
+    - id: ac-003
+      statement: "User sees only their own notes in the feed."
+    - id: ac-004
+      statement: "Attempting to access or edit another user's note results in an error."
+  quality_criteria:
+    - "Note updates are visible immediately (read-your-write)."
+  verification:
+    type: "executable"
+    artifacts:
+      - "tests/personal-notes/crud_spec.feature"
+
+dependencies:
+  upstream:
+    - "feature.user-identity"
+  downstream:
+    - "feature.data-export"

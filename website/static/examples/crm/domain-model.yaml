@@ -1,0 +1,75 @@
+meta:
+  id: crm
+  version: 0.1.0
+  owner: Sales Team
+
+glossary:
+  Account: "An organization or customer entity with whom we have or seek a commercial relationship."
+  Contact: "A person associated with an Account."
+  Lead: "A prospect not yet qualified to an Account or Opportunity."
+  Opportunity: "A potential sale with scope, value, and probability."
+  Quote: "A formal commercial proposal based on Opportunity scope."
+  Contract: "A legally binding agreement granting rights and obligations."
+  Consent: "Grant of permission to process personal data or contact a person under policy/regulation."
+  ProductOffering: "A sellable package with commercial terms."
+  Territory: "A sales coverage area with assignment rules."
+
+lifecycles:
+  Lead:
+    states: ["New", "Working", "Qualified", "Disqualified", "Converted"]
+    transitions:
+      - "New -> Working"
+      - "Working -> Qualified"
+      - "Working -> Disqualified"
+      - "Qualified -> Converted"
+    notes: "Conversion creates or links an Account and optionally an Opportunity."
+  Opportunity:
+    states: ["Open", "Negotiation", "Won", "Lost", "Closed"]
+    transitions:
+      - "Open -> Negotiation"
+      - "Negotiation -> Won"
+      - "Negotiation -> Lost"
+      - "Won -> Closed"
+      - "Lost -> Closed"
+  Quote:
+    states: ["Draft", "Issued", "Accepted", "Expired", "Withdrawn"]
+    transitions:
+      - "Draft -> Issued"
+      - "Issued -> Accepted"
+      - "Issued -> Expired"
+      - "Issued -> Withdrawn"
+  Contract:
+    states: ["Draft", "Active", "Suspended", "Terminated", "Expired"]
+    transitions:
+      - "Draft -> Active"
+      - "Active -> Suspended"
+      - "Active -> Terminated"
+      - "Active -> Expired"
+  Consent:
+    states: ["Granted", "Revoked"]
+    transitions:
+      - "Granted -> Revoked"
+
+invariants:
+  - id: opp-has-single-account
+    rule: "Every Opportunity is associated to exactly one Account."
+  - id: quote-aligns-with-opp
+    rule: "An Accepted Quote must reference exactly one Opportunity and its scope is a subset of that Opportunity's scope at acceptance."
+  - id: contract-after-won
+    rule: "A Contract may become Active only if derived from a Won Opportunity and an Accepted Quote."
+  - id: one-active-contract-per-account-offering
+    rule: "At most one Active Contract exists per Account × ProductOffering × effective period unless exclusivity is explicitly waived."
+  - id: consent-gates-communication
+    rule: "Outbound communication to a Contact requires Consent Granted for the relevant channel and purpose."
+  - id: territory-assignment-stability
+    rule: "Opportunity territory may change only at stage boundaries (Open↔Negotiation); changes are disallowed after Won/Lost."
+
+events:
+  - "LeadQualified(subject: Lead, occurred: Time)"
+  - "LeadConverted(subject: Lead, occurred: Time)"
+  - "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
+  - "QuoteIssued(subject: Quote, occurred: Time)"
+  - "QuoteAccepted(subject: Quote, occurred: Time)"
+  - "ContractActivated(subject: Contract, occurred: Time)"
+  - "ConsentGranted(subject: Consent, occurred: Time)"
+  - "ConsentRevoked(subject: Consent, occurred: Time)"

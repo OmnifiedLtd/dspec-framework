@@ -1,0 +1,34 @@
+meta:
+  id: notes-domain
+  version: 0.1.0
+  owner: Social Team
+
+glossary:
+  User: "A registered participant in the system."
+  Note: "A short text message created by a User."
+  Feed: "A reverse-chronological collection of Notes created by a specific User."
+
+lifecycles:
+  Note:
+    states: 
+      - "Draft"
+      - "Published"
+      - "Deleted"
+    transitions:
+      - "Draft -> Published"
+      - "Published -> Deleted"
+      - "Draft -> Deleted"
+
+invariants:
+  - id: note-author-ownership
+    rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
+  - id: note-length-limit
+    rule: "A Note's content must not exceed 280 characters."
+  - id: author-modification-only
+    rule: "Only the Author of a Note may modify its content or state."
+
+events:
+  - "NoteCreated(subject: Note, author: User, occurred: Time)"
+  - "NotePublished(subject: Note, occurred: Time)"
+  - "NoteContentUpdated(subject: Note, occurred: Time)"
+  - "NoteDeleted(subject: Note, occurred: Time)"
