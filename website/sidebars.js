@@ -8,7 +8,6 @@ const sidebars = {
       items: [
         'purpose-and-scope',
         'applicability',
-        'philosophy',
         'core-principles',
       ],
     },
