@@ -8,6 +8,7 @@ const sidebars = {
       items: [
         'purpose-and-scope',
         'applicability',
+        'planning-for-change',
         'core-principles',
       ],
     },
