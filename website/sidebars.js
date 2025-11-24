@@ -17,6 +17,7 @@ const sidebars = {
       label: 'Core Concepts',
       collapsed: true,
       items: [
+        'features',
         'bounded-contexts-and-domain-models',
         'events-as-facts-vs-messages',
         'why-aggregates-not-at-level-0',
