@@ -6,9 +6,9 @@ const sidebars = {
       label: 'Introduction',
       collapsed: false,
       items: [
-        '01-purpose-and-scope',
+        'purpose-and-scope',
         'philosophy',
-        '03-core-principles',
+        'core-principles',
       ],
     },
     {
@@ -16,9 +16,9 @@ const sidebars = {
       label: 'Core Concepts',
       collapsed: false,
       items: [
-        '06-bounded-contexts-and-domain-models',
-        '04-events-as-facts-vs-messages',
-        '11-why-aggregates-not-at-level-0',
+        'bounded-contexts-and-domain-models',
+        'events-as-facts-vs-messages',
+        'why-aggregates-not-at-level-0',
       ],
     },
     {
@@ -26,10 +26,10 @@ const sidebars = {
       label: 'Tiered Specs',
       collapsed: false,
       items: [
-        '05-spec-levels-at-a-glance',
-        '08-level-0-feature-dspec',
-        '09-level-1-design-dspec',
-        '10-level-2-implementation-dspec',
+        'spec-levels-at-a-glance',
+        'level-0-feature-dspec',
+        'level-1-design-dspec',
+        'level-2-implementation-dspec',
       ],
     },
     {
@@ -38,9 +38,9 @@ const sidebars = {
       collapsed: true,
       items: [
         'how-to-use',
-        '13-adoption-guide',
-        '12-traceability-and-governance',
-        '15-appendix-b-level-0-checklist',
+        'adoption-guide',
+        'traceability-and-governance',
+        'appendix-b-level-0-checklist',
       ],
     },
     {
@@ -48,7 +48,7 @@ const sidebars = {
       label: 'Influences',
       collapsed: true,
       items: [
-        '02-relation-to-wbs',
+        'relation-to-wbs',
         'influence-ddd',
         'influence-uncle-bob',
         'influence-dmmf',
@@ -59,9 +59,9 @@ const sidebars = {
       label: 'Reference',
       collapsed: true,
       items: [
-        '07-domain-models-examples',
-        '16-appendix-c-pattern-library',
-        '14-appendix-a-json-schemas',
+        'domain-models-examples',
+        'appendix-c-pattern-library',
+        'appendix-a-json-schemas',
       ],
     },
   ],
