@@ -1,6 +1,6 @@
 # dspec-framework
 
-> Formal Specifications for Modern Software. A tiered framework (Level 0-2) for defining domain models, features, designs, and implementations with full traceability.
+> Declarative, Friendly, Formal Specifications for Modern Software. A tiered framework (Level 0-2) for defining domain models, features, designs, and implementations with full traceability.
 
 The dspec-framework provides a structured approach to software specification, ensuring alignment between business requirements and technical implementation through rigorous, machine-readable specifications. It uses a three-level model:
 - **Level 0 (Feature)**: Functional requirements and user journeys.
