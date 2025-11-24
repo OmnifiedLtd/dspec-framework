@@ -1,0 +1,3 @@
+theme: jekyll-theme-minimal
+title: DSpec Framework
+description: A framework for Declarative, Specification-Driven Software Development. Aimed at Agentic workflows, influenced by Domain Driven Design.
