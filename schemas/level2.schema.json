@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["extends", "what", "boundaries", "success"],
+  "properties": {
+    "extends": { "type": "string" },
+    "what": { "type": "object" },
+    "boundaries": { "type": "object" },
+    "success": { "type": "object" }
+  }
+}
