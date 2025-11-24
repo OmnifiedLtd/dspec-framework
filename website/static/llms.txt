@@ -1,0 +1,32 @@
+# dspec-framework
+
+> Formal Specifications for Modern Software. A tiered framework (Level 0-2) for defining domain models, features, designs, and implementations with full traceability.
+
+The dspec-framework provides a structured approach to software specification, ensuring alignment between business requirements and technical implementation through rigorous, machine-readable specifications. It uses a three-level model:
+- **Level 0 (Feature)**: Functional requirements and user journeys.
+- **Level 1 (Design)**: Architecture, components, and message flows.
+- **Level 2 (Implementation)**: Code-level schemas and data structures.
+
+## Documentation
+
+* [Purpose and Scope](https://OmnifiedLtd.github.io/dspec-framework/docs/purpose-and-scope): Introduction to the framework's goals, covering the "Why" and high-level scope.
+* [Core Principles](https://OmnifiedLtd.github.io/dspec-framework/docs/core-principles): The fundamental axioms (e.g., "Events as Facts") that drive the framework's design.
+* [Spec Levels at a Glance](https://OmnifiedLtd.github.io/dspec-framework/docs/spec-levels-at-a-glance): A quick reference guide to the three specification levels (L0, L1, L2).
+* [Bounded Contexts & Domain Models](https://OmnifiedLtd.github.io/dspec-framework/docs/bounded-contexts-and-domain-models): Instructions on defining domain boundaries and the ubiquitous language.
+* [Level 0: Feature dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-0-feature-dspec): Detailed specification for defining functional requirements (User Stories, Scenarios).
+* [Level 1: Design dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-1-design-dspec): Detailed specification for technical design (Components, Topics, Interfaces).
+* [Level 2: Implementation dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-2-implementation-dspec): Detailed specification for implementation details (Payload schemas, Class definitions).
+* [Traceability & Governance](https://OmnifiedLtd.github.io/dspec-framework/docs/traceability-and-governance): How to link requirements (L0) to design (L1) and code (L2) for full auditability.
+
+## Schemas
+
+* [Domain Model Schema](https://OmnifiedLtd.github.io/dspec-framework/schemas/domain-model.schema.json): The formal JSON Schema for validating Domain Model files.
+* [Level 0 Schema](https://OmnifiedLtd.github.io/dspec-framework/schemas/level0.schema.json): The formal JSON Schema for validating Level 0 (Feature) specifications.
+* [Level 1 Schema](https://OmnifiedLtd.github.io/dspec-framework/schemas/level1.schema.json): The formal JSON Schema for validating Level 1 (Design) specifications.
+* [Level 2 Schema](https://OmnifiedLtd.github.io/dspec-framework/schemas/level2.schema.json): The formal JSON Schema for validating Level 2 (Implementation) specifications.
+
+## Examples
+
+* [E-Commerce Domain Model](https://OmnifiedLtd.github.io/dspec-framework/examples/ecommerce/domain-model.yaml): A comprehensive example of a domain model for an online store.
+* [E-Commerce Level 1 Design](https://OmnifiedLtd.github.io/dspec-framework/examples/ecommerce/level1.yaml): An example Level 1 spec showing component interactions for the E-Commerce domain.
+* [Catalog Level 0 Feature](https://OmnifiedLtd.github.io/dspec-framework/examples/catalog/level0.yaml): An example Level 0 spec defining features for a Product Catalog.
