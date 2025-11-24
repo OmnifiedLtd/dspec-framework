@@ -9,6 +9,7 @@ const sidebars = {
         'purpose-and-scope',
         'applicability',
         'planning-for-change',
+        'intent-engineering',
         'core-principles',
       ],
     },
