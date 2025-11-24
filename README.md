@@ -108,7 +108,7 @@ There is often confusion here.
 
 **Why this matters:** You cannot specify a feature's "Intent" or "Boundaries" (Level‑0) if you haven't agreed on the nouns, verbs, and rules of the world (Domain Model) it operates in.
 
-**Note for Developers New to DDD:** For solo developers or small projects, the initial understanding can be simplified: assume your entire project is a single Bounded Context. This means there's one overarching Domain Model that underpins all your features. You can then introduce explicit Bounded Context separation later as your project scales and different parts of your domain naturally diverge.
+**Note for Developers New to DDD:** For solo developers or small/medium projects, the initial understanding can be simplified: assume your entire project is a single Bounded Context. This means there's one overarching Domain Model that underpins all your features. You can then introduce explicit Bounded Context separation later as your project scales and different parts of your domain naturally diverge.
 
 ---
 
