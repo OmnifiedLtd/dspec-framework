@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_tailwind_shadcn_template=self.webpackChunkdocusaurus_tailwind_shadcn_template||[]).push([["9840"],{71487:function(t){t.exports=JSON.parse('{"blogTitle":"Blog","blogDescription":"Updates from the dspec-framework team","path":"blog","totalPosts":6,"totalRecentPosts":6}')}}]);

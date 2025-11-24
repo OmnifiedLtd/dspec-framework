@@ -1,0 +1,79 @@
+meta:
+  id: ecommerce
+  version: 0.1.0
+  owner: Commerce Team
+
+glossary:
+  Customer: "A buyer with an identity recognized by the store."
+  Product: "A sellable item with catalog identity and pricing policies."
+  Order: "A commitment to purchase specific products and quantities at agreed prices."
+  OrderLine: "A specific product and quantity within an Order at a priced snapshot."
+  InventoryReservation: "A temporary claim on stock for an Order or Shipment."
+  PaymentIntent: "A customer payment authorization/capture intent for an Order."
+  Shipment: "A fulfillment of one or more OrderLines to a delivery destination."
+  Return: "A customer-initiated return of delivered merchandise."
+  Promotion: "A policy that can reduce price under eligibility rules."
+
+lifecycles:
+  Order:
+    states: ["Draft", "Submitted", "Confirmed", "PartiallyFulfilled", "Fulfilled", "Cancelled"]
+    transitions:
+      - "Draft -> Submitted"
+      - "Submitted -> Confirmed"
+      - "Confirmed -> PartiallyFulfilled"
+      - "PartiallyFulfilled -> Fulfilled"
+      - "Submitted -> Cancelled"
+      - "Confirmed -> Cancelled"
+    notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
+  PaymentIntent:
+    states: ["Created", "Authorized", "Captured", "Voided", "Refunded"]
+    transitions:
+      - "Created -> Authorized"
+      - "Authorized -> Captured"
+      - "Authorized -> Voided"
+      - "Captured -> Refunded"
+  InventoryReservation:
+    states: ["Reserved", "Consumed", "Released", "Expired"]
+    transitions:
+      - "Reserved -> Consumed"
+      - "Reserved -> Released"
+      - "Reserved -> Expired"
+  Shipment:
+    states: ["Ready", "InTransit", "Delivered", "Lost"]
+    transitions:
+      - "Ready -> InTransit"
+      - "InTransit -> Delivered"
+      - "InTransit -> Lost"
+  Return:
+    states: ["Requested", "Approved", "Received", "Refunded", "Rejected"]
+    transitions:
+      - "Requested -> Approved"
+      - "Approved -> Received"
+      - "Received -> Refunded"
+      - "Requested -> Rejected"
+
+invariants:
+  - id: price-snapshot-at-submit
+    rule: "An Order's monetary commitments equal the sum of its OrderLines priced at the moment of submission, including promotions applicable at that moment."
+  - id: reservation-before-confirm
+    rule: "Sufficient InventoryReservation must exist for all OrderLines before an Order transitions to Confirmed."
+  - id: capture-not-exceed-authorize
+    rule: "Captured payment cannot exceed the last valid Authorized amount for the PaymentIntent."
+  - id: ship-only-confirmed-lines
+    rule: "Shipment may only include OrderLines belonging to a Confirmed (or later) Order state."
+  - id: one-return-per-unit
+    rule: "A delivered unit may be returned at most once."
+  - id: return-window-policy
+    rule: "Return can be Approved only if requested within the applicable return window for the Product."
+  - id: refund-after-receipt-or-proof
+    rule: "A Refund can be executed only after Returned goods are Received or acceptable proof-of-non-delivery exists."
+
+events:
+  - "OrderSubmitted(subject: Order, occurred: Time)"
+  - "InventoryReserved(subject: InventoryReservation, occurred: Time)"
+  - "OrderConfirmed(subject: Order, occurred: Time)"
+  - "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
+  - "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
+  - "ShipmentDelivered(subject: Shipment, occurred: Time)"
+  - "ReturnRequested(subject: Return, occurred: Time)"
+  - "RefundIssued(subject: PaymentIntent, occurred: Time)"

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_tailwind_shadcn_template=self.webpackChunkdocusaurus_tailwind_shadcn_template||[]).push([["3747"],{52219:function(s){s.exports=JSON.parse('{"name":"docusaurus-plugin-content-docs","id":"default"}')}}]);

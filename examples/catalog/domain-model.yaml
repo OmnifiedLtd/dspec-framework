@@ -1,0 +1,28 @@
+meta:
+  id: catalog
+  version: 0.1.0
+  owner: Catalog Team
+
+glossary:
+  Brand: "A label/manufacturer under which products are marketed."
+  Product: "A marketable item belonging to exactly one Brand."
+  Variant: "A purchasable option of a Product (e.g., size/color)."
+
+lifecycles:
+  Product:
+    states: ["Draft", "Active", "Discontinued"]
+    transitions:
+      - "Draft -> Active"
+      - "Active -> Discontinued"
+
+invariants:
+  - id: unique-model-code-per-brand
+    rule: "Within the same Brand, no two Active Products share the same modelCode."
+  - id: variant-sku-unique-per-product
+    rule: "A Product's Variant SKUs are unique within that Product."
+
+events:
+  - "ProductProposed(subject: Product, occurred: Time)"
+  - "ProductActivated(subject: Product, occurred: Time)"
+  - "ProductDiscontinued(subject: Product, occurred: Time)"
+  - "ModelCodeReassigned(subject: Product, occurred: Time)"
