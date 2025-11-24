@@ -18,7 +18,7 @@ const sidebars = {
       collapsed: true,
       items: [
         'features',
-        'bounded-contexts-and-domain-models',
+        'domain-models-and-bounded-contexts',
         'events-as-facts-vs-messages',
         'why-aggregates-not-at-level-0',
       ],
