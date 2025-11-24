@@ -9,7 +9,7 @@
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'dspec-framework',
-  tagline: 'Formal Specifications for Modern Software',
+  tagline: 'Declarative, Friendly, Formal Specifications for Modern Software',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -54,8 +54,7 @@ const config = {
           sidebarPath: './sidebars.js',
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            'https://github.com/OmnifiedLtd/dspec-framework/tree/main',
+          editUrl: 'https://github.com/OmnifiedLtd/dspec-framework/tree/main',
           docItemComponent: '@theme/ApiItem' // Derived from docusaurus-theme-openapi
         },
         blog: false, // Disable default blog plugin as we use the custom one below
@@ -90,9 +89,9 @@ const config = {
             position: 'left'
           },
           {
-            href: 'https://github.com/OmnifiedLtd/dspec-framework',
-            position: 'right',
-            className: 'header-github-link',
+            'href': 'https://github.com/OmnifiedLtd/dspec-framework',
+            'position': 'right',
+            'className': 'header-github-link',
             'aria-label': 'GitHub repository'
           }
         ]
@@ -141,11 +140,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} dspec-framework. Built with Docusaurus.`
       },
       prism: {
-        additionalLanguages: [
-          'json',
-          'bash',
-          'yaml'
-        ]
+        additionalLanguages: ['json', 'bash', 'yaml']
       }
     }),
 
@@ -210,8 +205,7 @@ const config = {
         truncateMarker: /<!--\s*(truncate)\s*-->/,
         showReadingTime: true,
         onUntruncatedBlogPosts: 'ignore',
-        editUrl:
-          'https://github.com/OmnifiedLtd/dspec-framework/tree/main/',
+        editUrl: 'https://github.com/OmnifiedLtd/dspec-framework/tree/main/',
         remarkPlugins: [
           [
             require('@docusaurus/remark-plugin-npm2yarn'),
@@ -232,15 +226,15 @@ const config = {
               rules: [
                 {
                   test: /\.yaml$/,
-                  use: 'yaml-loader',
-                },
-              ],
-            },
-          };
-        },
-      };
-    },
-  ],
+                  use: 'yaml-loader'
+                }
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
 }
 
 export default config
