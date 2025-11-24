@@ -7,6 +7,7 @@ const sidebars = {
       collapsed: false,
       items: [
         'purpose-and-scope',
+        'applicability',
         'philosophy',
         'core-principles',
       ],
