@@ -14,7 +14,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Core Concepts',
-      collapsed: false,
+      collapsed: true,
       items: [
         'bounded-contexts-and-domain-models',
         'events-as-facts-vs-messages',
@@ -24,7 +24,7 @@ const sidebars = {
     {
       type: 'category',
       label: 'Tiered Specs',
-      collapsed: false,
+      collapsed: true,
       items: [
         'spec-levels-at-a-glance',
         'level-0-feature-dspec',

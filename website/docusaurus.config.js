@@ -111,7 +111,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/intro'
+                to: '/docs/purpose-and-scope'
               }
             ]
           },
@@ -128,8 +128,8 @@ const config = {
             title: 'More',
             items: [
               {
-                label: 'Blog',
-                to: '/blog'
+                label: 'Schemas',
+                to: '/docs/appendix-a-json-schemas'
               },
               {
                 label: 'GitHub',
