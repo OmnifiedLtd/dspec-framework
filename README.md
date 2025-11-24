@@ -4,6 +4,8 @@
 
 DSpec is a lightweight, human‑readable, way to drive software development from layered declarative specifications.
 
+View on GitHub Pages: [https://omnifiedltd.github.io/dspec-framework/](https://omnifiedltd.github.io/dspec-framework/)
+
 The aim is to provide a structured way to declare feature specifications that will remain clear and human readable, such that development can be fully driven from the
 
 ---
@@ -77,11 +79,11 @@ At **Level‑0**, list **facts** (with minimal roles/obligations), not message s
 
 ## Spec Levels at a Glance
 
-| Level | Name                     | Audience              | Purpose                                                      | Contains                     |
-| ----- | ------------------------ | --------------------- | ------------------------------------------------------------ | ---------------------------- |
+| Level | Name                     | Audience              | Purpose                                                                                        | Contains                     |
+| ----- | ------------------------ | --------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- |
 | 0     | **Feature dspec**        | Product + Engineering | Define intent, domain semantics, invariants, consistency demands, scope, and success criteria. | **No boundaries/mechanisms** |
-| 1     | **Design dspec**         | Engineering           | Define consistency groups (aggregates), commands, and enforcement mechanisms for invariants. | Design, not tools            |
-| 2     | **Implementation dspec** | Engineering + Ops     | Bind design to APIs, schemas, infrastructure, SLOs, and tests. | Tools, transports, formats   |
+| 1     | **Design dspec**         | Engineering           | Define consistency groups (aggregates), commands, and enforcement mechanisms for invariants.   | Design, not tools            |
+| 2     | **Implementation dspec** | Engineering + Ops     | Bind design to APIs, schemas, infrastructure, SLOs, and tests.                                 | Tools, transports, formats   |
 
 ---
 
