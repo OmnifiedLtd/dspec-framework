@@ -77,11 +77,11 @@ At **Level‑0**, list **facts** (with minimal roles/obligations), not message s
 
 ## Spec Levels at a Glance
 
-| Level | Name                     | Audience              | Purpose                                                                                                                    | Contains                     |
-| ----- | ------------------------ | --------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| 0     | **Feature dspec**        | Product + Engineering | Define intent, domain semantics, **invariants** and **consistency demands**, scope edges, and pass/fail                    | **No boundaries/mechanisms** |
-| 1     | **Design dspec**         | Engineering           | Choose **consistency groups** (aggregate boundaries), define **commands**, and map invariants → enforcement **mechanisms** | Design, not tools            |
-| 2     | **Implementation dspec** | Engineering + Ops     | Bind design to APIs, schemas, infra, SLOs, tests                                                                           | Tools, transports, formats   |
+| Level | Name                     | Audience              | Purpose                                                      | Contains                     |
+| ----- | ------------------------ | --------------------- | ------------------------------------------------------------ | ---------------------------- |
+| 0     | **Feature dspec**        | Product + Engineering | Define intent, domain semantics, invariants, consistency demands, scope, and success criteria. | **No boundaries/mechanisms** |
+| 1     | **Design dspec**         | Engineering           | Define consistency groups (aggregates), commands, and enforcement mechanisms for invariants. | Design, not tools            |
+| 2     | **Implementation dspec** | Engineering + Ops     | Bind design to APIs, schemas, infrastructure, SLOs, and tests. | Tools, transports, formats   |
 
 ---
 
@@ -153,213 +153,15 @@ events:  # domain facts; roles only
 
 ### E‑Commerce: Order‑to‑Cash (Conceptual)
 
-```yaml
-# domains/ecommerce.domain.json
-meta:
-  id: ecommerce
-  version: 0.1.0
-  owner: Commerce Team
-
-glossary:
-  Customer: "A buyer with an identity recognized by the store."
-  Product: "A sellable item with catalog identity and pricing policies."
-  Order: "A commitment to purchase specific products and quantities at agreed prices."
-  OrderLine: "A specific product and quantity within an Order at a priced snapshot."
-  InventoryReservation: "A temporary claim on stock for an Order or Shipment."
-  PaymentIntent: "A customer payment authorization/capture intent for an Order."
-  Shipment: "A fulfillment of one or more OrderLines to a delivery destination."
-  Return: "A customer-initiated return of delivered merchandise."
-  Promotion: "A policy that can reduce price under eligibility rules."
-
-lifecycles:
-  Order:
-    states: ["Draft", "Submitted", "Confirmed", "PartiallyFulfilled", "Fulfilled", "Cancelled"]
-    transitions:
-      - "Draft -> Submitted"
-      - "Submitted -> Confirmed"
-      - "Confirmed -> PartiallyFulfilled"
-      - "PartiallyFulfilled -> Fulfilled"
-      - "Submitted -> Cancelled"
-      - "Confirmed -> Cancelled"
-    notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
-  PaymentIntent:
-    states: ["Created", "Authorized", "Captured", "Voided", "Refunded"]
-    transitions:
-      - "Created -> Authorized"
-      - "Authorized -> Captured"
-      - "Authorized -> Voided"
-      - "Captured -> Refunded"
-  InventoryReservation:
-    states: ["Reserved", "Consumed", "Released", "Expired"]
-    transitions:
-      - "Reserved -> Consumed"
-      - "Reserved -> Released"
-      - "Reserved -> Expired"
-  Shipment:
-    states: ["Ready", "InTransit", "Delivered", "Lost"]
-    transitions:
-      - "Ready -> InTransit"
-      - "InTransit -> Delivered"
-      - "InTransit -> Lost"
-  Return:
-    states: ["Requested", "Approved", "Received", "Refunded", "Rejected"]
-    transitions:
-      - "Requested -> Approved"
-      - "Approved -> Received"
-      - "Received -> Refunded"
-      - "Requested -> Rejected"
-
-invariants:
-  - id: price-snapshot-at-submit
-    rule: "An Order's monetary commitments equal the sum of its OrderLines priced at the moment of submission, including promotions applicable at that moment."
-  - id: reservation-before-confirm
-    rule: "Sufficient InventoryReservation must exist for all OrderLines before an Order transitions to Confirmed."
-  - id: capture-not-exceed-authorize
-    rule: "Captured payment cannot exceed the last valid Authorized amount for the PaymentIntent."
-  - id: ship-only-confirmed-lines
-    rule: "Shipment may only include OrderLines belonging to a Confirmed (or later) Order state."
-  - id: one-return-per-unit
-    rule: "A delivered unit may be returned at most once."
-  - id: return-window-policy
-    rule: "Return can be Approved only if requested within the applicable return window for the Product."
-  - id: refund-after-receipt-or-proof
-    rule: "A Refund can be executed only after Returned goods are Received or acceptable proof-of-non-delivery exists."
-
-events:
-  OrderSubmitted(subject: Order, occurred: Time)
-  InventoryReserved(subject: InventoryReservation, occurred: Time)
-  OrderConfirmed(subject: Order, occurred: Time)
-  PaymentAuthorized(subject: PaymentIntent, occurred: Time)
-  PaymentCaptured(subject: PaymentIntent, occurred: Time)
-  ShipmentDelivered(subject: Shipment, occurred: Time)
-  ReturnRequested(subject: Return, occurred: Time)
-  RefundIssued(subject: PaymentIntent, occurred: Time)
-```
+[See full example in `examples/ecommerce/domain-model.yaml`](examples/ecommerce/domain-model.yaml)
 
 ### CRM: Sales‑to‑Contract (Conceptual)
 
-```yaml
-# domains/crm.domain.json
-meta:
-  id: crm
-  version: 0.1.0
-  owner: Sales Team
-
-glossary:
-  Account: "An organization or customer entity with whom we have or seek a commercial relationship."
-  Contact: "A person associated with an Account."
-  Lead: "A prospect not yet qualified to an Account or Opportunity."
-  Opportunity: "A potential sale with scope, value, and probability."
-  Quote: "A formal commercial proposal based on Opportunity scope."
-  Contract: "A legally binding agreement granting rights and obligations."
-  Consent: "Grant of permission to process personal data or contact a person under policy/regulation."
-  ProductOffering: "A sellable package with commercial terms."
-  Territory: "A sales coverage area with assignment rules."
-
-lifecycles:
-  Lead:
-    states: ["New", "Working", "Qualified", "Disqualified", "Converted"]
-    transitions:
-      - "New -> Working"
-      - "Working -> Qualified"
-      - "Working -> Disqualified"
-      - "Qualified -> Converted"
-    notes: "Conversion creates or links an Account and optionally an Opportunity."
-  Opportunity:
-    states: ["Open", "Negotiation", "Won", "Lost", "Closed"]
-    transitions:
-      - "Open -> Negotiation"
-      - "Negotiation -> Won"
-      - "Negotiation -> Lost"
-      - "Won -> Closed"
-      - "Lost -> Closed"
-  Quote:
-    states: ["Draft", "Issued", "Accepted", "Expired", "Withdrawn"]
-    transitions:
-      - "Draft -> Issued"
-      - "Issued -> Accepted"
-      - "Issued -> Expired"
-      - "Issued -> Withdrawn"
-  Contract:
-    states: ["Draft", "Active", "Suspended", "Terminated", "Expired"]
-    transitions:
-      - "Draft -> Active"
-      - "Active -> Suspended"
-      - "Active -> Terminated"
-      - "Active -> Expired"
-  Consent:
-    states: ["Granted", "Revoked"]
-    transitions:
-      - "Granted -> Revoked"
-
-invariants:
-  - id: opp-has-single-account
-    rule: "Every Opportunity is associated to exactly one Account."
-  - id: quote-aligns-with-opp
-    rule: "An Accepted Quote must reference exactly one Opportunity and its scope is a subset of that Opportunity's scope at acceptance."
-  - id: contract-after-won
-    rule: "A Contract may become Active only if derived from a Won Opportunity and an Accepted Quote."
-  - id: one-active-contract-per-account-offering
-    rule: "At most one Active Contract exists per Account × ProductOffering × effective period unless exclusivity is explicitly waived."
-  - id: consent-gates-communication
-    rule: "Outbound communication to a Contact requires Consent Granted for the relevant channel and purpose."
-  - id: territory-assignment-stability
-    rule: "Opportunity territory may change only at stage boundaries (Open↔Negotiation); changes are disallowed after Won/Lost."
-
-events:
-  LeadQualified(subject: Lead, occurred: Time)
-  LeadConverted(subject: Lead, occurred: Time)
-  OpportunityStageAdvanced(subject: Opportunity, occurred: Time)
-  QuoteIssued(subject: Quote, occurred: Time)
-  QuoteAccepted(subject: Quote, occurred: Time)
-  ContractActivated(subject: Contract, occurred: Time)
-  ConsentGranted(subject: Consent, occurred: Time)
-  ConsentRevoked(subject: Consent, occurred: Time)
-```
+[See full example in `examples/crm/domain-model.yaml`](examples/crm/domain-model.yaml)
 
 ### Product Catalog: Brand/Product/Variant (Conceptual)
 
-```yaml
-# domains/catalog.domain.json (conceptual)
-meta:
-  id: catalog
-  version: 0.1.0
-  owner: Catalog Team
-
-glossary:
-  Brand: "A label/manufacturer under which products are marketed."
-  Product: "A marketable item belonging to exactly one Brand."
-  Variant: "A purchasable option of a Product (e.g., size/color)."
-
-lifecycles:
-  Product:
-    states: ["Draft", "Active", "Discontinued"]
-    transitions:
-      - "Draft -> Active"
-      - "Active -> Discontinued"
-
-invariants:
-  - id: unique-model-code-per-brand
-    rule: "Within the same Brand, no two Active Products share the same modelCode."
-    moment_of_truth: "ProductActivated"
-    consistency_demand:
-      scope: "brand"
-      strength: "write-time"
-      tolerance: "none"
-  - id: variant-sku-unique-per-product
-    rule: "A Product's Variant SKUs are unique within that Product."
-    moment_of_truth: "VariantActivated"
-    consistency_demand:
-      scope: "product"
-      strength: "write-time"
-      tolerance: "none"
-
-events:
-  ProductProposed(subject: Product, occurred: Time)
-  ProductActivated(subject: Product, occurred: Time)
-  ProductDiscontinued(subject: Product, occurred: Time)
-  ModelCodeReassigned(subject: Product, occurred: Time)
-```
+[See full example in `examples/catalog/domain-model.yaml`](examples/catalog/domain-model.yaml)
 
 ---
 
@@ -454,52 +256,7 @@ dependencies:
 
 ### Example Level‑0 Feature: Publish Product
 
-```yaml
-# specs/features/publish-product.level0.json (rendered as YAML for readability)
-meta:
-  id: feature.catalog.publish-product
-  name: Publish Product under Brand with collision-free identifiers
-  owner: Catalog Team
-  version: 0.3.1
-  relates_to_domain: catalog
-
-what:
-  intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
-  domain_refs:
-    glossary: domains/catalog.domain.json#glossary
-    lifecycles: domains/catalog.domain.json#lifecycles.Product
-    events: domains/catalog.domain.json#events
-  scope:
-    in: ['publish product', 'activate variant']
-    out: ['bulk reindexing', 'search relevance tuning']
-
-boundaries:
-  domain_invariants:
-    - id: unique-model-code-per-brand
-      rule: 'Within the same Brand, no two Active Products share the same modelCode.'
-      moment_of_truth: 'ProductActivated'
-      consistency_demand:
-        scope: 'brand'
-        strength: 'write-time'
-        tolerance: 'none'
-    - id: variant-sku-unique-per-product
-      rule: "A Product's Variant SKUs are unique within that Product."
-      moment_of_truth: 'VariantActivated'
-      consistency_demand:
-        scope: 'product'
-        strength: 'write-time'
-        tolerance: 'none'
-  system_constraints:
-    - 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
-    - 'Burst rates up to 2k publishes/minute per brand.'
-
-success:
-  acceptance_criteria:
-    - id: ac1
-      statement: 'Publishing a duplicate modelCode under a Brand is deterministically rejected.'
-    - id: ac2
-      statement: 'Concurrent publishes with distinct modelCodes do not false‑fail as duplicates.'
-```
+[See full example in `examples/catalog/level0.yaml`](examples/catalog/level0.yaml)
 
 ---
 
@@ -534,82 +291,15 @@ commands:
 
 ### E‑commerce Commands
 
-```yaml
-commands:
-  - name: SubmitOrder
-    target: Order
-    intent: 'Move Draft -> Submitted and fix priced snapshot'
-    preconditions: []
-    postconditions:
-      emits: ['OrderSubmitted']
-      transitions: ['Draft -> Submitted']
-
-  - name: ConfirmOrder
-    target: Order
-    intent: 'Confirm when reservations are sufficient'
-    preconditions: ['reservation-before-confirm']
-    postconditions:
-      emits: ['OrderConfirmed']
-      transitions: ['Submitted -> Confirmed']
-
-  - name: CapturePayment
-    target: PaymentIntent
-    intent: 'Capture funds up to authorized amount'
-    preconditions: ['capture-not-exceed-authorize']
-    postconditions:
-      emits: ['PaymentCaptured']
-```
+[See full example in `examples/ecommerce/level1.yaml`](examples/ecommerce/level1.yaml)
 
 ### Catalog Commands
 
-```yaml
-commands:
-  - name: ActivateProduct
-    target: Product
-    intent: 'Publish product under a Brand'
-    preconditions: ['unique-model-code-per-brand']
-    postconditions:
-      emits: ['ProductActivated']
-      transitions: ['Draft -> Active']
-    transactional_expectation: 'starts-saga' # if using reservation-then-confirm
-    failure_modes:
-      - violates: 'unique-model-code-per-brand'
-        outcome: 'reject DuplicateModelCode'
-
-  - name: ActivateVariant
-    target: Variant
-    intent: 'Publish purchasable SKU'
-    preconditions: ['variant-sku-unique-per-product']
-    postconditions:
-      emits: ['VariantActivated']
-```
+[See full example in `examples/catalog/level1.yaml`](examples/catalog/level1.yaml)
 
 ### CRM Commands
 
-```yaml
-commands:
-  - name: ConvertLead
-    target: Lead
-    intent: 'Create/link Account and optionally Opportunity'
-    preconditions: []
-    postconditions:
-      emits: ['LeadConverted']
-
-  - name: AcceptQuote
-    target: Quote
-    intent: 'Customer accepts terms for a single Opportunity'
-    preconditions: ['quote-aligns-with-opp']
-    postconditions:
-      emits: ['QuoteAccepted']
-
-  - name: ActivateContract
-    target: Contract
-    intent: 'Make contract effective'
-    preconditions:
-      ['contract-after-won', 'one-active-contract-per-account-offering']
-    postconditions:
-      emits: ['ContractActivated']
-```
+[See full example in `examples/crm/level1.yaml`](examples/crm/level1.yaml)
 
 ---
 
