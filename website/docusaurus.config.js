@@ -55,7 +55,7 @@ const config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/your-org/dspec-framework/tree/main',
+            'https://github.com/OmnifiedLtd/dspec-framework/tree/main',
           docItemComponent: '@theme/ApiItem' // Derived from docusaurus-theme-openapi
         },
         blog: false, // Disable default blog plugin as we use the custom one below
@@ -90,7 +90,7 @@ const config = {
             position: 'left'
           },
           {
-            href: 'https://github.com/your-org/dspec-framework',
+            href: 'https://github.com/OmnifiedLtd/dspec-framework',
             position: 'right',
             className: 'header-github-link',
             'aria-label': 'GitHub repository'
@@ -133,7 +133,7 @@ const config = {
               },
               {
                 label: 'GitHub',
-                href: 'https://github.com/your-org/dspec-framework'
+                href: 'https://github.com/OmnifiedLtd/dspec-framework'
               }
             ]
           }
@@ -211,7 +211,7 @@ const config = {
         showReadingTime: true,
         onUntruncatedBlogPosts: 'ignore',
         editUrl:
-          'https://github.com/your-org/dspec-framework/tree/main/',
+          'https://github.com/OmnifiedLtd/dspec-framework/tree/main/',
         remarkPlugins: [
           [
             require('@docusaurus/remark-plugin-npm2yarn'),
