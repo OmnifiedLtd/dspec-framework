@@ -2,6 +2,8 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import Image from '@theme/IdealImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -30,10 +32,7 @@ function HomepageHeader() {
           </div>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-          {/* Placeholder for a hero image or visual */}
-          <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 dark:bg-gray-800 border border-gray-200 dark:border-gray-700">
-             <span className="text-lg font-medium">Framework Visual / Diagram</span>
-          </div>
+          <Image img={useBaseUrl('/img/DSpec_Crystalline_Structure_of_Intent.png')} alt="The DSpec Framework: Crystalline Structure of Intent" />
         </div>
       </div>
     </header>
