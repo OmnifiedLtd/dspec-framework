@@ -150,20 +150,20 @@ const config = {
     }),
 
   themes: [
-    [
-      require.resolve('@easyops-cn/docusaurus-search-local'),
-      {
-        indexPages: true,
-        docsRouteBasePath: '/docs',
-        hashed: true,
-        language: ['en'],
-        highlightSearchTermsOnTargetPage: false,
-        searchResultContextMaxLength: 50,
-        searchResultLimits: 8,
-        searchBarShortcut: true,
-        searchBarShortcutHint: true
-      }
-    ],
+    // [
+    //   require.resolve('@easyops-cn/docusaurus-search-local'),
+    //   {
+    //     indexPages: true,
+    //     docsRouteBasePath: '/docs',
+    //     hashed: true,
+    //     language: ['en'],
+    //     highlightSearchTermsOnTargetPage: false,
+    //     searchResultContextMaxLength: 50,
+    //     searchResultLimits: 8,
+    //     searchBarShortcut: true,
+    //     searchBarShortcutHint: true
+    //   }
+    // ],
     'docusaurus-theme-openapi-docs'
   ],
   plugins: [
