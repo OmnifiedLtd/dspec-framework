@@ -85,8 +85,8 @@ const config = {
             label: 'Docs'
           },
           {
-            to: '/blog',
-            label: 'Blog',
+            to: '/docs/appendix-a-json-schemas',
+            label: 'Schemas',
             position: 'left'
           },
           {
