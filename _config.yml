@@ -1,3 +1,6 @@
-theme: just-the-docs
+remote_theme: just-the-docs/just-the-docs
+plugins:
+  - jekyll-remote-theme
+
 title: DSpec Framework
 description: A framework for Declarative, Specification-Driven Software Development. Aimed at Agentic workflows, influenced by Domain Driven Design.
