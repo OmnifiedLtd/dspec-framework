@@ -13,15 +13,16 @@ const config = {
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
-  url: 'https://your-docusaurus-site.example.com',
+  url: 'https://OmnifiedLtd.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
-  baseUrl: '/',
+  baseUrl: '/dspec-framework/',
 
   // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'your-org', // Usually your GitHub org/user name.
+  organizationName: 'OmnifiedLtd', // Usually your GitHub org/user name.
   projectName: 'dspec-framework', // Usually your repo name.
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
   markdown: {
