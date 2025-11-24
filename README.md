@@ -123,6 +123,11 @@ There is often confusion here.
 
 ```yaml
 # domains/identity.domain.json (conceptual)
+meta:
+  id: identity
+  version: 0.1.0
+  owner: Identity Team
+
 glossary:
   User: "A uniquely identified account holder"
   MagicLink: "A single-use, time-bound authentication link"
@@ -150,6 +155,11 @@ events:  # domain facts; roles only
 
 ```yaml
 # domains/ecommerce.domain.json
+meta:
+  id: ecommerce
+  version: 0.1.0
+  owner: Commerce Team
+
 glossary:
   Customer: "A buyer with an identity recognized by the store."
   Product: "A sellable item with catalog identity and pricing policies."
@@ -230,6 +240,11 @@ events:
 
 ```yaml
 # domains/crm.domain.json
+meta:
+  id: crm
+  version: 0.1.0
+  owner: Sales Team
+
 glossary:
   Account: "An organization or customer entity with whom we have or seek a commercial relationship."
   Contact: "A person associated with an Account."
@@ -306,6 +321,11 @@ events:
 
 ```yaml
 # domains/catalog.domain.json (conceptual)
+meta:
+  id: catalog
+  version: 0.1.0
+  owner: Catalog Team
+
 glossary:
   Brand: "A label/manufacturer under which products are marketed."
   Product: "A marketable item belonging to exactly one Brand."
