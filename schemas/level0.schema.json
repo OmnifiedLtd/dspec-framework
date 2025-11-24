@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["meta", "what", "boundaries", "success"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["id", "name", "owner", "version"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "owner": { "type": "string" },
+        "version": { "type": "string" },
+        "relates_to_domain": {
+          "oneOf": [
+            { "type": "string" },
+            { "type": "array", "items": { "type": "string" } }
+          ]
+        }
+      }
+    },
+    "what": {
+      "type": "object",
+      "required": ["intent", "domain_refs", "scope"],
+      "properties": {
+        "intent": { "type": "string" },
+        "domain_refs": { "type": "object" },
+        "scope": {
+          "type": "object",
+          "required": ["in", "out"],
+          "properties": {
+            "in": { "type": "array", "items": { "type": "string" } },
+            "out": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "boundaries": {
+      "type": "object",
+      "required": ["domain_invariants"],
+      "properties": {
+        "domain_invariants": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "rule"],
+            "properties": {
+              "id": { "type": "string" },
+              "rule": { "type": "string" },
+              "moment_of_truth": { "type": "string" },
+              "consistency_demand": {
+                "type": "object",
+                "properties": {
+                  "scope": { "type": "string" },
+                  "strength": {
+                    "type": "string",
+                    "enum": ["write-time", "read-your-write", "eventual"]
+                  },
+                  "tolerance": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "policy_and_regulatory": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "system_constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "explicit_exclusions": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "success": {
+      "type": "object",
+      "required": ["acceptance_criteria"],
+      "properties": {
+        "acceptance_criteria": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "statement"],
+            "properties": {
+              "id": { "type": "string" },
+              "statement": { "type": "string" }
+            }
+          }
+        },
+        "quality_criteria": { "type": "array", "items": { "type": "string" } },
+        "verification": {
+          "type": "object",
+          "properties": {
+            "type": { "type": "string", "enum": ["executable", "manual"] },
+            "artifacts": { "type": "array", "items": { "type": "string" } }
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "upstream": { "type": "array", "items": { "type": "string" } },
+        "downstream": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["meta", "glossary", "lifecycles", "invariants", "events"],
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["id", "version"],
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier for this domain model." },
+        "version": { "type": "string" },
+        "owner": { "type": "string" }
+      }
+    },
+    "glossary": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "lifecycles": {
+      "type": "object",
+      "patternProperties": {
+        "^.*$": {
+          "type": "object",
+          "required": ["states", "transitions"],
+          "properties": {
+            "states": { "type": "array", "items": { "type": "string" } },
+            "transitions": { "type": "array", "items": { "type": "string" } },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "rule"],
+        "properties": {
+          "id": { "type": "string" },
+          "rule": { "type": "string" }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  }
+}
