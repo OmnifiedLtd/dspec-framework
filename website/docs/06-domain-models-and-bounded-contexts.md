@@ -19,9 +19,11 @@ In DSpec, a Domain Model consists of:
 1.  **Glossary:** The nouns of your system (e.g., "User", "Order", "Product").
     *   **Precision in Naming & Definition:** Every concept in the Glossary must have an **extremely precise, yet concise** definition. The choice of a concept's name is crucial, and every word in its definition counts. This rigorous approach ensures clarity and eliminates ambiguity, forming the bedrock of the Ubiquitous Language.
     *   **Intentional Abstraction:** We deliberately do *not* specify whether a glossary concept is an "Entity" or a "Value Object" at this level. These distinctions, while vital for implementation (Level-2), can be non-trivial to grasp and apply correctly. DSpec's Domain Model operates at a higher level of abstraction, allowing a concept to potentially be modeled as an Entity or a Value Object depending on the specific context and future design choices (Level-1). The focus here is purely on *meaning*, not *mechanism*.
-2.  **Invariants (Rules):** The canonical library of business rules that must always be true (e.g., "Price cannot be negative," "User must be 18+").
-3.  **Lifecycles:** The valid states and transitions for your entities (e.g., `Order: Draft -> Submitted -> Shipped`).
-4.  **Events (Facts):** Past-tense statements of things that have happened (e.g., `OrderSubmitted`, `PaymentReceived`).
+2.  **Predicates:** Named, boolean conditions that represent significant business states (e.g., `Profile.IsComplete`, `User.HasVerifiedEmail`). These are distinct from Lifecycles (which track mutually exclusive modes) because they focus on specific logical facts that act as gateways for actions.
+3.  **Invariants (Rules):** The canonical library of business rules that must always be true (e.g., "Price cannot be negative," "User must be 18+").
+    *   *Note on Attributes:* We do not explicitly list every data field (attribute) in the Domain Model. **Attributes exist in the Domain Model only if they are governed by a Rule (Invariant) or a Predicate.** For example, a `Balance` attribute exists because of the rule "Balance cannot be negative." If an attribute has no business rules attached to it (e.g., a purely informational "Notes" field), it is effectively invisible at this level.
+4.  **Lifecycles:** The valid states and transitions for your entities (e.g., `Order: Draft -> Submitted -> Shipped`).
+5.  **Events (Facts):** Past-tense statements of things that have happened (e.g., `OrderSubmitted`, `PaymentReceived`).
 
 **Key Insight:** The Domain Model holds the **Definitions** of rules. The Feature Specs (Level-0) simply **Reference** them.
 
