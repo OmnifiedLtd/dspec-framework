@@ -34,36 +34,84 @@ glossary:
 
 lifecycles:
   order:
-    states: ["draft", "submitted", "confirmed", "partially_fulfilled", "fulfilled", "cancelled"]
+    states: 
+      - id: draft
+        name: Draft
+      - id: submitted
+        name: Submitted
+      - id: confirmed
+        name: Confirmed
+      - id: partially-fulfilled
+        name: PartiallyFulfilled
+      - id: fulfilled
+        name: Fulfilled
+      - id: cancelled
+        name: Cancelled
     transitions:
       - "draft -> submitted"
       - "submitted -> confirmed"
-      - "confirmed -> partially_fulfilled"
-      - "partially_fulfilled -> fulfilled"
+      - "confirmed -> partially-fulfilled"
+      - "partially-fulfilled -> fulfilled"
       - "submitted -> cancelled"
       - "confirmed -> cancelled"
     notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
   payment-intent:
-    states: ["created", "authorized", "captured", "voided", "refunded"]
+    states: 
+      - id: created
+        name: Created
+      - id: authorized
+        name: Authorized
+      - id: captured
+        name: Captured
+      - id: voided
+        name: Voided
+      - id: refunded
+        name: Refunded
     transitions:
       - "created -> authorized"
       - "authorized -> captured"
       - "authorized -> voided"
       - "captured -> refunded"
   inventory-reservation:
-    states: ["reserved", "consumed", "released", "expired"]
+    states: 
+      - id: reserved
+        name: Reserved
+      - id: consumed
+        name: Consumed
+      - id: released
+        name: Released
+      - id: expired
+        name: Expired
     transitions:
       - "reserved -> consumed"
       - "reserved -> released"
       - "reserved -> expired"
   shipment:
-    states: ["ready", "in_transit", "delivered", "lost"]
+    states: 
+      - id: ready
+        name: Ready
+      - id: in-transit
+        name: InTransit
+      - id: delivered
+        name: Delivered
+      - id: lost
+        name: Lost
     transitions:
-      - "ready -> in_transit"
+      - "ready -> in-transit"
       - "in_transit -> delivered"
       - "in_transit -> lost"
   return:
-    states: ["requested", "approved", "received", "refunded", "rejected"]
+    states: 
+      - id: requested
+        name: Requested
+      - id: approved
+        name: Approved
+      - id: received
+        name: Received
+      - id: refunded
+        name: Refunded
+      - id: rejected
+        name: Rejected
     transitions:
       - "requested -> approved"
       - "approved -> received"

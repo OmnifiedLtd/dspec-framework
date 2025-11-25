@@ -17,9 +17,12 @@ glossary:
 lifecycles:
   note:
     states: 
-      - "draft"
-      - "published"
-      - "deleted"
+      - id: draft
+        name: Draft
+      - id: published
+        name: Published
+      - id: deleted
+        name: Deleted
     transitions:
       - "draft -> published"
       - "published -> deleted"

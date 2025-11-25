@@ -16,7 +16,13 @@ glossary:
 
 lifecycles:
   product:
-    states: ["draft", "active", "discontinued"]
+    states: 
+      - id: draft
+        name: Draft
+      - id: active
+        name: Active
+      - id: discontinued
+        name: Discontinued
     transitions:
       - "draft -> active"
       - "active -> discontinued"

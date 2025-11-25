@@ -33,7 +33,13 @@ glossary:
 
 lifecycles:
   magic-link:
-    states: ["issued", "redeemed", "expired"]
+    states:
+      - id: issued
+        name: Issued
+      - id: redeemed
+        name: Redeemed
+      - id: expired
+        name: Expired
     transitions:
       - "issued -> redeemed"
       - "issued -> expired"
