@@ -19,6 +19,9 @@ meta:
   id: identity
   version: 0.1.0
   owner: Identity Team
+  title: Identity Domain Model
+  description: "Core concepts for user identity and authentication."
+  notes: "This model underpins all user management and login features."
 
 glossary:
   - name: User
