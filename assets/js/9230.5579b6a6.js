@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_tailwind_shadcn_template=self.webpackChunkdocusaurus_tailwind_shadcn_template||[]).push([["9230"],{2253:function(e,a,s){s.d(a,{createPacketServices:()=>c.$});var c=s(84474);s(81310)}}]);

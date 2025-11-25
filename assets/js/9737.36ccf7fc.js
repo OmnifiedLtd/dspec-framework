@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdocusaurus_tailwind_shadcn_template=self.webpackChunkdocusaurus_tailwind_shadcn_template||[]).push([["9737"],{4720:function(a,e,s){s.d(e,{createRadarServices:()=>u.f});var u=s(11262);s(81310)}}]);
