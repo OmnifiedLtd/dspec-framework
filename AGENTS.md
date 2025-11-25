@@ -22,3 +22,9 @@ If the build fails, **DO NOT COMMIT**. Fix the errors first.
 - The website is built with Docusaurus using a custom Tailwind + Shadcn theme.
 - Configuration is in `website/docusaurus.config.js`.
 - Sidebars are defined in `website/sidebars.js`.
+
+### 4. Generate llms-full.txt
+- After any changes to the documentation (e.g., `README.md` or `website/docs/` files), run `node generate_llms_full.js` from the project root to ensure `llms-full.txt` is up-to-date.
+
+### 5. Review llms.txt
+- **Review `llms.txt`**: Before pushing, manually inspect `llms.txt` (the summary) to ensure it is up-to-date and valid, and check for any broken links.

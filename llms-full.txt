@@ -1,0 +1,813 @@
+File: README.md
+# DSpec Framework
+
+**Declarative, Friendly, Formal Specifications for Modern Software**
+
+DSpec is a lightweight, human‑readable framework for driving software development through layered declarative specifications. It lets teams describe features in short, declarative specs that are readable by humans and consumable by AI agents.
+
+**[Read the full documentation](https://omnifiedltd.github.io/dspec-framework/)**
+
+
+---
+
+File: website/docs/01-purpose-and-scope.md
+---
+layout: default
+title: Purpose & Scope
+nav_order: 2
+---
+
+# Purpose & Scope
+
+DSpec lets teams describe features in **short, declarative specs** that are readable by humans and consumable by tools and in particular, by AI Agents. Specs progressively constrain the solution space—from business intent (Level‑0) to design (Level‑1) and then to concrete technology (Level‑2)—**without** polluting earlier layers with implementation details.
+
+### Problem
+
+With the new power of AI-agentic workflows, software is more and more being driven by markdown based specifications. These specifications
+have hugely varying strucuture and are extremely lengthy. Usually as a result people don't read them.
+
+### Solution
+
+Provide a structured, opinionated way of describing software via concise, human-readable specifications with a predicable structure.
+
+
+---
+
+File: website/docs/applicability.md
+---
+layout: default
+title: Applicability
+---
+
+# Applicability
+
+Understanding where the DSpec framework provides the most value is key to its successful adoption. While it is rooted in Domain-Driven Design (DDD) principles, its utility extends beyond complex enterprise systems.
+
+## Where DSpec Shines
+
+### Domain-Driven Applications
+DSpec is naturally aligned with applications where **Domain-Driven Design (DDD)** applies. If your software models real-world business processes, rules, and entities—whether it's an e-commerce platform, a healthcare management system, or a financial trading engine—DSpec provides the vocabulary to capture these intricacies without getting bogged down in implementation details.
+
+### Simpler Applications
+Even for simpler applications that might not traditionally warrant a full DDD approach, DSpec offers significant benefits:
+- **Structure & Consistency:** It replaces ad-hoc, varying requirements documents with a predictable, standard format.
+- **Communication:** It bridges the gap between non-technical stakeholders and developers by focusing on *what* the system does (Level-0) before *how* it does it.
+- **AI-Readiness:** The structured nature of DSpec makes it ideal for AI-assisted development workflows, ensuring that agents have clear, unambiguous instructions.
+
+## When to Use Something Else
+
+DSpec is designed to specify *behavior* and *domain logic*. It is **not** intended for highly technical, algorithmic, or purely infrastructure-level concerns where the "business domain" is the code itself.
+
+### Examples where DSpec is likely not applicable:
+
+1.  **High-Performance Computing & Algorithms:**
+    *   *Example:* Developing a new video compression codec or a 3D rendering engine.
+    *   *Reasoning:* The complexity here lies in the mathematics and memory management, not in business rules or user flows. A mathematical specification or pseudocode is more appropriate.
+
+2.  **Low-Level System Drivers:**
+    *   *Example:* Writing a device driver for a new graphics card or an embedded controller for a washing machine motor.
+    *   *Reasoning:* These tasks are defined by hardware interfaces and timing constraints, not by high-level "User Intent" or "Business Policies."
+
+3.  **Pure Data Transformation Pipelines:**
+    *   *Example:* A script that simply moves logs from one bucket to another, perhaps zipping them.
+    *   *Reasoning:* Unless there is complex business logic deciding *which* logs to move or *how* to transform them based on business rules, a simple flowchart or script description is sufficient.
+
+In summary, use DSpec when there is a **"Domain"** to understand—a set of rules, terms, and processes that exist independently of the software. If the problem is purely technical, other forms of specification may be more effective.
+
+
+---
+
+File: website/docs/planning-for-change.md
+---
+layout: default
+title: Planning for Change
+---
+
+# Planning for Change
+
+One of the primary strategic benefits of the DSpec framework is its ability to manage the **Rate of Change** in your software.
+
+Not all parts of a software system change at the same speed. By separating your specifications into layers, DSpec aligns your documentation with the natural "shearing layers" of software evolution.
+
+## The Shearing Layers of Software
+
+Stewart Brand’s concept of "Shearing Layers" (from *How Buildings Learn*) applies perfectly to software. A building has a **Site** (eternal), **Structure** (50 years), **Services** (15 years), and **Stuff** (daily).
+
+DSpec mirrors this stability gradient:
+
+### 1. The Domain Model (The Foundation)
+*   **Rate of Change:** Very Slow
+*   **What it is:** The definitions of "User", "Account", "Transaction".
+*   **Why it's stable:** The fundamental nature of your business doesn't change often. A "Bank Account" will always need a balance, regardless of whether you use SQL, NoSQL, or Blockchain.
+*   **Benefit:** investing deeply here pays off forever. A robust Domain Model survives multiple rewrites of the code.
+
+### 2. Level-0 Feature Spec (The Intent)
+*   **Rate of Change:** Slow
+*   **What it is:** "User places an order."
+*   **Why it's stable:** User goals remain consistent even as technology shifts. The desire to "transfer money" exists whether you do it via a teller, a website, or a mobile app.
+*   **Benefit:** These specs serve as a long-term "Contract of Behavior" that persists across redesigns.
+
+### 3. Level-1 Design Spec (The Architecture)
+*   **Rate of Change:** Medium
+*   **What it is:** "Use a REST API," "Eventual Consistency," "Microservices."
+*   **Why it changes:** As you scale, you might move from a Monolith to Microservices, or from synchronous to asynchronous processing.
+*   **Benefit:** You can refactor your architecture without rewriting your business requirements (Level-0).
+
+### 4. Level-2 Implementation Spec (The Code)
+*   **Rate of Change:** Fast
+*   **What it is:** "React Component," "Postgres Table `users_v2`," "Python Function."
+*   **Why it changes:** Libraries update, frameworks fall out of fashion, databases are optimized.
+*   **Benefit:** This layer is *disposable*. Because it is tightly constrained by the layers above, you can rewrite the implementation with confidence, knowing the constraints (Level-0 & Level-1) ensure correctness.
+
+## The Strategy: Focus Energy on the Slow Parts
+
+By recognizing these layers, teams can allocate their energy more effectively:
+
+*   **Spend more time on the Domain Model & Level-0.** These are your assets. They represent the "Knowledge" of the system.
+*   **Treat Level-2 as transient.** Don't get too attached to the implementation details. They will likely be rewritten in 2 years.
+
+This structure prevents the common "Big Ball of Mud" problem, where a change to a UI library breaks a core business rule, because the two concerns were hopelessly intertwined.
+
+
+---
+
+File: website/docs/intent-engineering.md
+---
+layout: default
+title: Intent Engineering
+---
+
+# Intent Engineering
+
+*Placeholder for documentation on the principles and practices of Intent Engineering within the DSpec framework. This section will describe how to systematically capture, refine, and specify user intent at Level-0, ensuring clarity, determinism, and alignment with business goals.
+
+**TODO:** Include a subsection comparing Intent Engineering with traditional Product Requirements Documents (PRDs).*
+
+
+---
+
+File: website/docs/03-core-principles.md
+---
+layout: default
+title: Core Principles
+nav_order: 4
+---
+
+# Core Principles
+
+1. **Truly Declarative Specs:** Designed to drive software development and get deterministic results.
+2. **Progressive constraint.** Each level narrows the solution space while keeping earlier layers stable.
+3. **Separate meaning from mechanism.** Start with the domain, progress through design, architecture and finally bind to technology.
+4. **Deterministic validation.** Success criteria at each level are _necessary & sufficient_; anything meeting them is valid, and anything valid must meet them.
+5. **Composability & traceability.** Domain artifacts are shared; features reference only what they need.
+
+
+---
+
+File: website/docs/features.md
+---
+layout: default
+title: Features
+---
+
+# Features
+
+In the DSpec framework, a **Feature** is the primary unit of specification and delivery. It represents a distinct slice of functionality that provides value to a user or system.
+
+A Feature is not a single document; it is a vertical slice of functionality underpinned by a **Domain Model** and defined progressively through **three levels of specification**.
+
+To manifest a feature deterministically and unambiguously, it must be fully specified across all three levels.
+
+## The Structure of a Feature
+
+A complete DSpec Feature is composed of:
+
+1.  **The Domain Model (Foundation):** Defines the vocabulary, invariants, and rules.
+2.  **Level-0 Spec (Intent):** Defines *what* the feature does (User Intent & Outcomes).
+3.  **Level-1 Spec (Design):** Defines *how* the system is architected to handle it (Commands & Consistency).
+4.  **Level-2 Spec (Implementation):** Defines *how* it is coded (Tables, Classes, Functions).
+
+### Visualizing the Stack
+
+```mermaid
+graph TD
+    L0[Level-0 Spec<br/>User Intent] -->|Refines| L1[Level-1 Spec<br/>Architecture]
+    L1 -->|Refines| L2[Level-2 Spec<br/>Code]
+    L0 -->|Uses Vocabulary From| DM[Domain Model]
+    L1 -->|Uses Vocabulary From| DM
+    L2 -->|Uses Vocabulary From| DM
+```
+
+## The Relationship: Features and Domain Models
+
+A common pitfall in software specification is mixing definitions with behavior. DSpec strictly separates these:
+
+1.  **The Domain Model** is the foundation. It defines the **Ubiquitous Language**: the entities, value objects, and invariant rules that are true regardless of any specific user workflow.
+    *   *Example:* "A `BankAccount` must have a non-negative balance."
+
+2.  **The Feature** is the application of that model. It orchestrates the domain elements to achieve a specific outcome.
+    *   *Example:* "User transfers money." This feature relies on the concept of `BankAccount` defined in the Domain Model but focuses on the *flow* of the transfer.
+
+### "Features sit on top of the Domain Model"
+
+You cannot write a concise, readable Feature spec without a Domain Model. The Domain Model acts as the dictionary. If your Feature spec is cluttered with definitions of data structures or validation rules, it’s a sign that those belong in the Domain Model.
+
+## The Three Levels of a Feature
+
+While a Feature starts at Level-0, it is not complete until it has been constrained through all layers.
+
+### 1. Level-0: The Feature Spec (Intent)
+Focuses entirely on the **User Intent** and the **System Consequence** (Events).
+*   **Intent:** What is the user trying to do? (e.g., `PlaceOrder`)
+*   **Preconditions:** What must be true for this to happen? (e.g., `UserIsLoggedIn`)
+*   **Outcome:** What facts are recorded in the system history? (e.g., `OrderPlaced`)
+
+### 2. Level-1: The Design Spec (Architecture)
+Focuses on the **Mechanisms** and **Consistency**.
+*   **Commands:** How does the user trigger the intent? (e.g., `POST /orders`)
+*   **Consistency:** Is this strongly consistent (ACID) or eventually consistent?
+*   **Components:** Which system components handle the logic?
+
+### 3. Level-2: The Implementation Spec (Code)
+Focuses on the **Technology** and **Storage**.
+*   **Schema:** Exact SQL tables or JSON structures.
+*   **Classes:** Specific class names and method signatures.
+*   **Code:** The actual implementation details.
+
+By strictly layering these concerns, the DSpec framework ensures that business intent (L0) remains stable even if the implementation (L2) changes.
+
+---
+
+File: website/docs/06-domain-models-and-bounded-contexts.md
+---
+layout: default
+title: Domain Models & Bounded Contexts
+nav_order: 7
+---
+
+# Domain Models & Bounded Contexts
+
+A **Domain Model** is the shared language and set of rules that define your business world. It is the foundation upon which all features are built.
+
+Before you can specify *what* a user does (a Feature), you must agree on the definitions of the things they are interacting with.
+
+## The Domain Model
+
+The Domain Model defines the **"Ubiquitous Language"** for your project. It ensures that when a developer, a product manager, and a stakeholder say "Order," they all mean exactly the same thing.
+
+In DSpec, a Domain Model consists of:
+
+1.  **Glossary:** The nouns of your system (e.g., "User", "Order", "Product").
+    *   **Precision in Naming & Definition:** Every concept in the Glossary must have an **extremely precise, yet concise** definition. The choice of a concept's name is crucial, and every word in its definition counts. This rigorous approach ensures clarity and eliminates ambiguity, forming the bedrock of the Ubiquitous Language.
+    *   **Intentional Abstraction:** We deliberately do *not* specify whether a glossary concept is an "Entity" or a "Value Object" at this level. These distinctions, while vital for implementation (Level-2), can be non-trivial to grasp and apply correctly. DSpec's Domain Model operates at a higher level of abstraction, allowing a concept to potentially be modeled as an Entity or a Value Object depending on the specific context and future design choices (Level-1). The focus here is purely on *meaning*, not *mechanism*.
+2.  **Predicates:** Named, boolean conditions that represent significant business states (e.g., `Profile.IsComplete`, `User.HasVerifiedEmail`). These are distinct from Lifecycles (which track mutually exclusive modes) because they focus on specific logical facts that act as gateways for actions.
+3.  **Invariants (Rules):** The canonical library of business rules that must always be true (e.g., "Price cannot be negative," "User must be 18+").
+    *   *Note on Attributes:* We do not explicitly list every data field (attribute) in the Domain Model. **Attributes exist in the Domain Model only if they are governed by a Rule (Invariant) or a Predicate.** For example, a `Balance` attribute exists because of the rule "Balance cannot be negative." If an attribute has no business rules attached to it (e.g., a purely informational "Notes" field), it is effectively invisible at this level.
+4.  **Lifecycles (Optional but often crucial):** The valid states and transitions for your entities (e.g., `Order: Draft -> Submitted -> Shipped`).
+5.  **Events (Facts):** Past-tense statements of things that have happened (e.g., `OrderSubmitted`, `PaymentReceived`).
+
+**Key Insight:** The Domain Model holds the **Definitions** of rules. The Feature Specs (Level-0) simply **Reference** them.
+
+## Bounded Contexts
+
+As systems grow, a single Domain Model can become too large and contradictory. For example, the concept of a "Product" looks very different to the **Sales Team** (marketing copy, price) versus the **Warehouse Team** (dimensions, weight, aisle number).
+
+This is where the **Bounded Context** comes in.
+
+A **Bounded Context** is a linguistic boundary. It groups related Features and Domain Models together. Within one context, terms have a specific, consistent meaning.
+
+*   **Context A (Sales):** "Product" = Price + Description.
+*   **Context B (Warehouse):** "Product" = SKU + Weight + Location.
+
+### For Simpler Projects
+
+**Note for Developers New to DDD:** For solo developers or small/medium projects, you can simplify this: **Assume your entire project is a single Bounded Context.**
+
+This means you have one overarching Domain Model that underpins all your features. You do not need to worry about multiple contexts until your project scales and different parts of your domain naturally diverge.
+
+### The Workflow
+
+1.  **Define the Model:** Agree on the nouns and rules (e.g., "What is a Valid Order?").
+2.  **Write the Feature:** Describe the user journey using those nouns (e.g., "User places a Valid Order").
+
+You cannot effectively specify a feature's "Intent" (Level‑0) if you haven't agreed on the language (Domain Model) it uses.
+
+---
+
+File: website/docs/04-events-as-facts-vs-messages.md
+---
+layout: default
+title: Events‑as‑Facts vs Messages
+nav_order: 5
+---
+
+# Events‑as‑Facts vs Messages
+
+“Events” can mean two different things:
+
+- **Domain facts**: business‑level occurrences that change lifecycle or invariants (Level‑0).
+- **Integration messages**: serialized payloads and transports (Level‑2).
+
+At **Level‑0**, list **facts** (with minimal roles/obligations), not message shapes. This keeps the model **implementation‑agnostic** while still constraining the solution space per WBS.
+
+
+---
+
+File: website/docs/11-why-aggregates-not-at-level-0.md
+---
+layout: default
+title: Why Aggregates not at Level-0
+nav_order: 12
+---
+
+# Why Aggregates Aren’t Included at Level‑0
+
+- **Aggregate = mechanism, not meaning.** Aggregates (consistency groups) are **design‑time** choices for how you keep rules true. Level‑0 defines _which rules_ must be true and _when_ (the **consistency intent**), not how.
+- **Premature boundaries distort models.** Locking in boundaries before you know volumes, hotspots, and latency windows often couples the model to storage/memory limits.
+- **WBS alignment.** Level‑0 should define **What** and **Boundaries** as constraints on meaning (invariants and their strictness), letting later stages pick mechanisms. This preserves **constructive constraint** and avoids over‑specifying early.
+
+**Rule of thumb:** Decide boundaries only after you know (1) the invariants, (2) the **moments of truth** where they must hold, and (3) the scale/latency drivers. Then map each invariant to a mechanism at Level‑1.
+
+
+---
+
+File: website/docs/05-spec-levels-at-a-glance.md
+---
+layout: default
+title: Spec Levels at a Glance
+nav_order: 6
+---
+
+# Spec Levels at a Glance
+
+| Level | Name                     | Audience              | Purpose                                                                                        | Contains                     |
+| ----- | ------------------------ | --------------------- | ---------------------------------------------------------------------------------------------- | ---------------------------- |
+| 0     | **Feature dspec**        | Product + Engineering | Define intent, domain semantics, invariants, consistency demands, scope, and success criteria. | **No boundaries/mechanisms** |
+| 1     | **Design dspec**         | Engineering           | Define consistency groups (aggregates), commands, and enforcement mechanisms for invariants.   | Design, not tools            |
+| 2     | **Implementation dspec** | Engineering + Ops     | Bind design to APIs, schemas, infrastructure, SLOs, and tests.                                 | Tools, transports, formats   |
+
+
+---
+
+File: website/docs/08-level-0-feature-dspec.md
+---
+layout: default
+title: Level-0 Feature dspec
+nav_order: 9
+---
+
+# Level‑0 — Feature dspec (Conceptual)
+
+---
+
+**💡 Tip: Varying Consistency Demands**
+
+While a **Domain Invariant** represents a universal business rule within its Bounded Context, the **Consistency Demand** specified in a Level‑0 Feature dspec acknowledges that its enforcement _strictness_ can vary depending on the feature's specific context, user experience requirements, and the cost of violation versus the cost of enforcement.
+
+**Example: "Unique Username" Invariant**
+
+- **Invariant:** `Username must be unique across all active user accounts.`
+
+- **Feature A: New User Registration**
+
+  - **Context:** A user signs up interactively.
+  - **Consistency Demand:** `strength: write-time` (or `read-your-write`).
+  - **Justification:** The system must immediately verify username uniqueness and provide feedback. A temporary violation (allowing a duplicate to exist for even a short period) would lead to a poor user experience and data integrity issues. The cost of a strict, synchronous check is acceptable.
+
+- **Feature B: Bulk User Import (Enterprise Migration)**
+  - **Context:** Importing 100,000 users from a legacy system.
+  - **Consistency Demand:** `strength: eventual` (or `tolerance: ≤ PT1H`).
+  - **Justification:** Performing 100,000 synchronous, strict uniqueness checks would be prohibitively slow and potentially cause timeouts. The business might accept that duplicate usernames could temporarily exist in the system during the import process, with a background job resolving conflicts (e.g., appending numbers to make them unique: `john.doe_1`, `john.doe_2`). The cost of temporary violation is low compared to the cost of strict enforcement for this specific bulk operation.
+
+This distinction allows DSpec to capture the ideal state (the invariant) while also specifying pragmatic, feature-specific enforcement requirements.
+
+### Simple Example: Passwordless Login (Level‑0)
+
+```yaml
+meta:
+  id: feature.passwordless-login
+  name: Passwordless login via magic link
+  owner: Identity Team
+  version: 0.3.1
+  domain_id: identity
+
+intent: >
+  Allow users to authenticate without passwords by sending a time-bound,
+  single-use magic link to a verified address.
+
+scope:
+  in:
+    - id: scope.request
+      statement: 'request link'
+    - id: scope.deliver
+      statement: 'deliver link'
+    - id: scope.redeem
+      statement: 'redeem link to authenticate'
+  out:
+    - id: scope.mfa
+      statement: 'MFA enrollment'
+    - id: scope.recovery
+      statement: 'account recovery'
+
+domain_invariants:
+  - id: link-single-use
+    rule: 'A magic link can be redeemed at most once.'
+    moment_of_truth: 'magic-link-redeemed'
+    consistency_demand:
+      scope: 'link'
+      strength: 'write-time'
+      tolerance: 'none'
+  - id: link-expiry
+    rule: 'A magic link expires after TTL and cannot be redeemed thereafter.'
+    moment_of_truth: 'magic-link-redeemed'
+    consistency_demand:
+      scope: 'link'
+      strength: 'write-time'
+      tolerance: 'none'
+
+policy_and_regulatory:
+  - id: policy.privacy
+    statement: 'Respect user notification preferences.'
+system_constraints:
+  - id: constr.delivery
+    statement: 'Email delivery can be delayed; UX must handle late arrivals.'
+explicit_exclusions:
+  - id: excl.sms
+    statement: 'No SMS links.'
+
+acceptance_criteria:
+  - id: ac-001
+    statement: 'Valid, unexpired link authenticates the intended user.'
+  - id: ac-002
+    statement: 'Redeeming an already-used link fails with a harmless error.'
+  - id: ac-003
+    statement: 'Expired link cannot authenticate.'
+
+quality_criteria:
+  - id: qc.latency
+    statement: 'P95 link delivery confirmation ≤ 60s (staging).'
+verification:
+  type: 'executable'
+  artifacts: ['tests/identity/passwordless-login.feature']
+
+dependencies:
+  upstream: ['feature.user-verification']
+  downstream: ['feature.session-issuance']
+```
+
+### Product Catalog: Brand/Product/Variant (Feature)
+
+[See full example in `examples/catalog/level0.yaml`](/examples/catalog/level0.yaml)
+
+---
+
+File: website/docs/09-level-1-design-dspec.md
+---
+layout: default
+title: Level-1 Design dspec
+nav_order: 10
+---
+
+# Level‑1 — Design dspec (Consistency Groups, Commands & Mechanisms)
+
+Level‑1 translates **consistency intent** from Level‑0 into **consistency groups** (a.k.a. aggregates), **commands** (conceptual change requests), and concrete **mechanisms** (unique indexes, reservations, sagas, etc.).
+
+### Identity Commands
+
+```yaml
+commands:
+  - id: request-magic-link
+    name: RequestMagicLink
+    target: magic-link
+    intent: 'Issue a time-bound, single-use link'
+    preconditions: ['user-verified']
+    postconditions:
+      emits: ['magic-link-issued']
+
+  - id: redeem-magic-link
+    name: RedeemMagicLink
+    target: magic-link
+    intent: 'Authenticate via issued link'
+    preconditions: ['link-single-use', 'link-expiry']
+    postconditions:
+      emits: ['magic-link-redeemed']
+    transactional_expectation: 'atomic-within-group'
+    failure_modes:
+      - violates: 'link-single-use'
+        outcome: 'reject already-redeemed'
+      - violates: 'link-expiry'
+        outcome: 'reject link-expired'
+```
+
+### E‑commerce Commands
+
+[See full example in `examples/ecommerce/level1.yaml`](/examples/ecommerce/level1.yaml)
+
+### Product Catalog: Brand/Product/Variant (Design)
+
+[See full example in `examples/catalog/level1.yaml`](/examples/catalog/level1.yaml)
+
+### CRM: Sales‑to‑Contract (Design)
+
+[See full example in `examples/crm/level1.yaml`](/examples/crm/level1.yaml)
+
+---
+
+File: website/docs/10-level-2-implementation-dspec.md
+---
+layout: default
+title: Level-2 Implementation dspec
+nav_order: 11
+---
+
+# Level‑2 — Implementation dspec (Technology Binding)
+
+(This section is reserved for future content detailing technology bindings, APIs, schemas, SLOs, and test mappings.)
+
+
+---
+
+File: website/docs/how-to-use.md
+---
+title: How to Use
+---
+
+# How to Use the Framework
+
+*Placeholder for a practical guide on applying the framework in your projects.*
+
+
+---
+
+File: website/docs/13-adoption-guide.md
+---
+layout: default
+title: Adoption Guide
+nav_order: 14
+---
+
+# Adoption Guide (Quick Start)
+
+1.  **Identify the Bounded Context** (e.g., "Identity", "Catalog").
+2.  **Define/Curate the Domain Model** (Glossary, Lifecycles, Invariants) for that context.
+3.  **Author a Level‑0 dspec** for one feature, referencing the Domain Model.
+4.  Annotate **invariants** with **moment_of_truth** and **consistency_demand**.
+5.  Draft a **Level‑1 design dspec** mapping invariants → mechanisms and defining **commands**.
+6.  Bind **Level‑2** (APIs, schemas, SLOs, tests).
+7.  Add a CI gate on Level‑2 **Success**.
+8.  Iterate: move details **down**, never **up**.
+
+
+---
+
+File: website/docs/12-traceability-and-governance.md
+---
+layout: default
+title: Traceability & ID Stability
+nav_order: 13
+---
+
+# Traceability & ID Stability
+
+One of the core philosophies of the DSpec framework is that **specifications are code**. They are not just static documents for humans to read once and forget; they are active, living artifacts designed to be consumed by tooling, CI/CD pipelines, and **AI Agents**.
+
+To enable this, DSpec enforces a rigorous system of **Stable Identifiers**.
+
+## Why "IDs Everywhere"?
+
+You will notice that almost every "leaf item" in a DSpec schema—whether it's a glossary term, a scope item, an invariant, or a quality criterion—requires a unique `id`.
+
+### 1. Specs for Machines (and AI)
+While DSpec is designed to be human-readable, it is primarily designed to be **machine-referenceable**.
+*   **AI Agents:** When an AI agent analyzes your codebase to see if it meets requirements, it needs to link a specific function `validateEmail()` to a specific requirement `inv-email-format`. If the requirement is just a bullet point "Email must be valid", the link is fuzzy. If it is `id: inv.email.format`, the link is precise and verifiable.
+*   **Tooling:** Verification tools can report "Requirement `req-123` failed" rather than "The second bullet point in the scope section failed."
+
+### 2. Stability vs. Refinement
+Text changes often. We refine wording, fix typos, or clarify "user" to "customer."
+*   **Without IDs:** Changing the text breaks any links (comments, tests, tickets) pointing to that requirement.
+*   **With IDs:** The text is just a label. The `id` is the anchor. You can completely rewrite the definition of `glossary.user`, and all code referencing `glossary.user` remains strictly linked to that concept.
+
+## Traceability Chain
+
+This ID system creates an unbroken chain of custody for requirements:
+
+1.  **Level-0 (Intent):** Defines `id: feature.login` and Invariant `id: inv.unique-email`.
+2.  **Level-1 (Design):** Extends `feature.login` and maps `inv.unique-email` to a Unique Index mechanism.
+3.  **Level-2 (Implementation):** Extends `feature.login` and links the specific SQL migration file to `inv.unique-email`.
+4.  **Tests:** Unit tests explicitly reference `inv.unique-email` in their docstrings or metadata.
+
+## Best Practices for IDs
+
+*   **Immutable:** Once an ID is assigned and referenced, treat it like a primary key in a database. Do not change it lightly.
+*   **Machine-Friendly:** Use **kebab-case** (e.g., `unique-model-code`, `user-id`). Dot notation is permitted for structural hierarchy (e.g., `scope.publish`, `feature.catalog.publish-product`). Snake_case is deprecated.
+*   **Structured (Optional):** Prefixes can help (e.g., `ac-001` for Acceptance Criteria, `inv-001` for Invariants, `scope.login` for Scope items).
+*   **Opaque vs. Semantic:**
+    *   *Semantic:* `inv.user.email-unique` (Easier to read, but risks becoming outdated if logic changes).
+    *   *Opaque:* `inv.1024` (Perfectly stable, but requires lookup).
+    *   *Recommendation:* Use **Semantic but Abstract** IDs (e.g., `inv.identity.uniqueness` rather than `inv.email.must-be-unique`).
+
+## Governance
+
+*   **Breaking Changes:** Deleting or renaming an ID is a breaking change. It requires a version bump of the spec and a review of all downstream dependencies (code, tests, other specs).
+*   **Success as Gate:** CI/CD pipelines should block merging if code references a Spec ID that does not exist, or if a Spec ID exists that has no corresponding implementation/verification (coverage check).
+
+---
+
+File: website/docs/15-appendix-b-level-0-checklist.md
+---
+layout: default
+title: Appendix B - Level-0 Checklist
+nav_order: 16
+---
+
+# Appendix B — Level‑0 Checklist
+
+- [ ] **Intent** is clear and business‑framed.
+- [ ] **Domain refs** link to glossary, lifecycles, and conceptual events.
+- [ ] **Scope** says what’s in/out.
+- [ ] **Invariants** have **moment_of_truth** and **consistency_demand** where relevant.
+- [ ] **No boundaries/mechanisms** (no aggregates, transactions, or schemas).
+- [ ] **Success** uses necessary & sufficient acceptance criteria.
+- [ ] **Verification** points to executable checks where feasible.
+- [ ] **System constraints** note volumes, rates, and data gravity that inform Level‑1.
+
+
+---
+
+File: website/docs/02-relation-to-wbs.md
+---
+layout: default
+title: Relation to WBS
+nav_order: 3
+---
+
+# Relation to WBS
+
+WBS comprises three interlocking components: **What** (intent/space), **Boundaries** (hard constraints that _eliminate_ invalid solutions), and **Success** (criteria that are **necessary and sufficient**). DSpec maps directly onto this: Level‑0 captures the **What** and the domain **Boundaries** (as invariants and their demands) without mechanism; later levels commit to designs and verifications.
+
+
+---
+
+File: website/docs/influence-ddd.md
+---
+title: Domain Driven Design
+---
+
+# Influence: Domain Driven Design (DDD)
+
+*Placeholder for documentation on how DDD influences this framework.*
+
+
+---
+
+File: website/docs/influence-uncle-bob.md
+---
+title: Uncle Bob's Use Cases
+---
+
+# Influence: Uncle Bob's Use Cases
+
+*Placeholder for documentation on the relationship with Uncle Bob's Use Case architecture.*
+
+
+---
+
+File: website/docs/influence-dmmf.md
+---
+title: Domain Modelling Made Functional
+---
+
+# Influence: Domain Modelling Made Functional
+
+*Placeholder for documentation on influences from Scott Wlaschin's "Domain Modelling Made Functional".*
+
+
+---
+
+File: website/docs/07-domain-models-examples.md
+---
+layout: default
+title: Domain Models Examples
+nav_order: 8
+---
+
+# Domain Models (Conceptual) — Examples
+
+> **Runtime note:** The agent team now persists domain models as JSON files conforming to
+> `specs/schemas/domain-model.schema.json`, and auto-hydrates each Level‑0 spec’s
+> `meta.domain_id` with anchors into the persisted `<slug>.domain.json`. The conceptual examples
+> below remain in YAML for readability—the structure is identical.
+
+### Identity (Conceptual)
+
+```yaml
+# domains/identity.domain.json (conceptual)
+meta:
+  id: identity
+  version: 0.1.0
+  owner: Identity Team
+  title: Identity Domain Model
+  description: "Core concepts for user identity and authentication."
+  notes: "This model underpins all user management and login features."
+
+glossary:
+  - id: user
+    name: User
+    definition: "A uniquely identified account holder"
+  - id: magic-link
+    name: MagicLink
+    definition: "A single-use, time-bound authentication link"
+
+lifecycles:
+  magic-link:
+    states:
+      - id: issued
+        name: Issued
+      - id: redeemed
+        name: Redeemed
+      - id: expired
+        name: Expired
+    transitions:
+      - "issued -> redeemed"
+      - "issued -> expired"
+
+predicates:
+  - id: user.has-verified-email
+    name: User.HasVerifiedEmail
+    definition: "True if the User has completed email verification."
+
+invariants:
+  - id: link-single-use
+    name: Single Use Link
+    rule: "A MagicLink in Redeemed|Expired cannot transition again"
+  - id: link-expiry
+    rule: "A MagicLink becomes Expired after its configured TTL elapses"
+
+events:  # domain facts; roles only
+  - id: magic-link-issued
+    name: MagicLinkIssued
+    definition: "MagicLinkIssued(subject: MagicLink, occurred: Time)"
+  - id: magic-link-redeemed
+    name: MagicLinkRedeemed
+    definition: "MagicLinkRedeemed(subject: MagicLink, occurred: Time)"
+  - id: magic-link-expired
+    name: MagicLinkExpired
+    definition: "MagicLinkExpired(subject: MagicLink, occurred: Time)"
+```
+
+### E‑Commerce: Order‑to‑Cash (Conceptual)
+
+[See full example in `examples/ecommerce/domain-model.yaml`](/examples/ecommerce/domain-model.yaml)
+
+### CRM: Sales‑to‑Contract (Conceptual)
+
+[See full example in `examples/crm/domain-model.yaml`](/examples/crm/domain-model.yaml)
+
+### Product Catalog: Brand/Product/Variant (Conceptual)
+
+[See full example in `examples/catalog/domain-model.yaml`](/examples/catalog/domain-model.yaml)
+
+
+---
+
+File: website/docs/16-appendix-c-pattern-library.md
+---
+layout: default
+title: Appendix C - Pattern Library
+nav_order: 17
+---
+
+# Appendix C — Pattern Library: From Invariant to Mechanism
+
+Given a Level‑0 invariant + demand, Level‑1 can choose among patterns (non‑exclusive):
+
+- **Partitioned unique index (single‑writer per key)** — Fast, scalable enforcement for uniqueness rules.
+- **Reservation then confirm (claim service)** — Two‑phase claim for hot keys; great when concurrent creates are common.
+- **DB uniqueness + idempotency + outbox** — Pragmatic, simple; keep design boundary small and let the DB enforce.
+- **Saga + compensation** — For cross‑system invariants when temporary exposure is tolerable.
+- **CRDT/merge** — When eventual convergence is acceptable and partitions are possible.
+
+Choose based on throughput, contention, latency windows, failure modes, and operability.
+
+
+---
+
+File: website/docs/14-appendix-a-json-schemas.md
+---
+layout: default
+title: Appendix A - JSON Schemas
+nav_order: 15
+---
+
+# Appendix A — JSON Schemas
+
+For validation and tooling, use the canonical JSON schemas provided in the `schemas/` directory relative to this guide:
+
+- **Domain Model:** [`schemas/domain-model.schema.json`](pathname:///schemas/domain-model.schema.json)
+- **Level-0 (Feature):** [`schemas/level0.schema.json`](pathname:///schemas/level0.schema.json)
+- **Level-1 (Design):** [`schemas/level1.schema.json`](pathname:///schemas/level1.schema.json)
+- **Level-2 (Implementation):** [`schemas/level2.schema.json`](pathname:///schemas/level2.schema.json)
+
+
+---
+
