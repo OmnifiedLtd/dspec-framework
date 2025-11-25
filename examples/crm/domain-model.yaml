@@ -34,7 +34,17 @@ glossary:
 
 lifecycles:
   lead:
-    states: ["new", "working", "qualified", "disqualified", "converted"]
+    states: 
+      - id: new
+        name: New
+      - id: working
+        name: Working
+      - id: qualified
+        name: Qualified
+      - id: disqualified
+        name: Disqualified
+      - id: converted
+        name: Converted
     transitions:
       - "new -> working"
       - "working -> qualified"
@@ -42,7 +52,17 @@ lifecycles:
       - "qualified -> converted"
     notes: "Conversion creates or links an Account and optionally an Opportunity."
   opportunity:
-    states: ["open", "negotiation", "won", "lost", "closed"]
+    states: 
+      - id: open
+        name: Open
+      - id: negotiation
+        name: Negotiation
+      - id: won
+        name: Won
+      - id: lost
+        name: Lost
+      - id: closed
+        name: Closed
     transitions:
       - "open -> negotiation"
       - "negotiation -> won"
@@ -50,21 +70,45 @@ lifecycles:
       - "won -> closed"
       - "lost -> closed"
   quote:
-    states: ["draft", "issued", "accepted", "expired", "withdrawn"]
+    states: 
+      - id: draft
+        name: Draft
+      - id: issued
+        name: Issued
+      - id: accepted
+        name: Accepted
+      - id: expired
+        name: Expired
+      - id: withdrawn
+        name: Withdrawn
     transitions:
       - "draft -> issued"
       - "issued -> accepted"
       - "issued -> expired"
       - "issued -> withdrawn"
   contract:
-    states: ["draft", "active", "suspended", "terminated", "expired"]
+    states: 
+      - id: draft
+        name: Draft
+      - id: active
+        name: Active
+      - id: suspended
+        name: Suspended
+      - id: terminated
+        name: Terminated
+      - id: expired
+        name: Expired
     transitions:
       - "draft -> active"
       - "active -> suspended"
       - "active -> terminated"
       - "active -> expired"
   consent:
-    states: ["granted", "revoked"]
+    states: 
+      - id: granted
+        name: Granted
+      - id: revoked
+        name: Revoked
     transitions:
       - "granted -> revoked"
 
