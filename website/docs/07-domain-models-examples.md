@@ -33,6 +33,10 @@ lifecycles:
       - "Issued -> Redeemed"
       - "Issued -> Expired"
 
+predicates:
+  - name: User.HasVerifiedEmail
+    definition: "True if the User has completed email verification."
+
 invariants:
   - id: link-single-use
     rule: "A MagicLink in Redeemed|Expired cannot transition again"

@@ -54,11 +54,14 @@
       "items": {
         "type": "object",
         "required": [
-          "id",
+          "name",
           "definition"
         ],
         "properties": {
           "id": {
+            "type": "string"
+          },
+          "name": {
             "type": "string"
           },
           "definition": {
