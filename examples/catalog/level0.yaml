@@ -1,5 +1,5 @@
 meta:
-  id: feature.catalog.publish-product
+  id: feature.catalog.publish_product
   name: Publish Product under Brand with collision-free identifiers
   owner: Catalog Team
   version: 0.3.1
@@ -8,27 +8,27 @@ meta:
 intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
 scope:
   in:
-    - id: scope.in.publish
+    - id: scope.publish
       statement: 'publish product'
-    - id: scope.in.activate
+    - id: scope.activate
       statement: 'activate variant'
   out:
-    - id: scope.out.reindexing
+    - id: scope.reindexing
       statement: 'bulk reindexing'
-    - id: scope.out.search
+    - id: scope.search
       statement: 'search relevance tuning'
 
 domain_invariants:
-  - id: unique-model-code-per-brand
+  - id: unique_model_code_per_brand
     rule: 'Within the same Brand, no two Active Products share the same modelCode.'
-    moment_of_truth: 'ProductActivated'
+    moment_of_truth: 'product_activated'
     consistency_demand:
       scope: 'brand'
       strength: 'write-time'
       tolerance: 'none'
-  - id: variant-sku-unique-per-product
+  - id: variant_sku_unique_per_product
     rule: "A Product's Variant SKUs are unique within that Product."
-    moment_of_truth: 'VariantActivated'
+    moment_of_truth: 'variant_activated'
     consistency_demand:
       scope: 'product'
       strength: 'write-time'
@@ -41,7 +41,7 @@ system_constraints:
     statement: 'Burst rates up to 2k publishes/minute per brand.'
 
 acceptance_criteria:
-  - id: ac1
+  - id: ac_1
     statement: 'Publishing a duplicate modelCode under a Brand is deterministically rejected.'
-  - id: ac2
+  - id: ac_2
     statement: 'Concurrent publishes with distinct modelCodes do not false‑fail as duplicates.'

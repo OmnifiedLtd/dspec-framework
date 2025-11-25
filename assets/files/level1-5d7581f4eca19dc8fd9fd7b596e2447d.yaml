@@ -2,34 +2,34 @@ extends: feature.crm # Placeholder since no Level-0 exists
 
 bounded_context: crm
 consistency_groups:
-  - id: Lead
+  - id: lead
     name: Lead
-  - id: Quote
+  - id: quote
     name: Quote
-  - id: Contract
+  - id: contract
     name: Contract
 commands:
-  - id: ConvertLead
+  - id: convert_lead
     name: ConvertLead
-    target: Lead
+    target: lead
     intent: 'Create/link Account and optionally Opportunity'
     preconditions: []
     postconditions:
-      emits: ['LeadConverted']
+      emits: ['lead_converted']
 
-  - id: AcceptQuote
+  - id: accept_quote
     name: AcceptQuote
-    target: Quote
+    target: quote
     intent: 'Customer accepts terms for a single Opportunity'
-    preconditions: ['quote-aligns-with-opp']
+    preconditions: ['quote_aligns_with_opp']
     postconditions:
-      emits: ['QuoteAccepted']
+      emits: ['quote_accepted']
 
-  - id: ActivateContract
+  - id: activate_contract
     name: ActivateContract
-    target: Contract
+    target: contract
     intent: 'Make contract effective'
     preconditions:
-      ['contract-after-won', 'one-active-contract-per-account-offering']
+      ['contract_after_won', 'one_active_contract_per_account_offering']
     postconditions:
-      emits: ['ContractActivated']
+      emits: ['contract_activated']

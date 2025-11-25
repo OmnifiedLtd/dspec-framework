@@ -4,110 +4,110 @@ meta:
   owner: Commerce Team
 
 glossary:
-  - id: Customer
+  - id: customer
     name: Customer
     definition: "A buyer with an identity recognized by the store."
-  - id: Product
+  - id: product
     name: Product
     definition: "A sellable item with catalog identity and pricing policies."
-  - id: Order
+  - id: order
     name: Order
     definition: "A commitment to purchase specific products and quantities at agreed prices."
-  - id: OrderLine
+  - id: order_line
     name: OrderLine
     definition: "A specific product and quantity within an Order at a priced snapshot."
-  - id: InventoryReservation
+  - id: inventory_reservation
     name: InventoryReservation
     definition: "A temporary claim on stock for an Order or Shipment."
-  - id: PaymentIntent
+  - id: payment_intent
     name: PaymentIntent
     definition: "A customer payment authorization/capture intent for an Order."
-  - id: Shipment
+  - id: shipment
     name: Shipment
     definition: "A fulfillment of one or more OrderLines to a delivery destination."
-  - id: Return
+  - id: return
     name: Return
     definition: "A customer-initiated return of delivered merchandise."
-  - id: Promotion
+  - id: promotion
     name: Promotion
     definition: "A policy that can reduce price under eligibility rules."
 
 lifecycles:
-  Order:
-    states: ["Draft", "Submitted", "Confirmed", "PartiallyFulfilled", "Fulfilled", "Cancelled"]
+  order:
+    states: ["draft", "submitted", "confirmed", "partially_fulfilled", "fulfilled", "cancelled"]
     transitions:
-      - "Draft -> Submitted"
-      - "Submitted -> Confirmed"
-      - "Confirmed -> PartiallyFulfilled"
-      - "PartiallyFulfilled -> Fulfilled"
-      - "Submitted -> Cancelled"
-      - "Confirmed -> Cancelled"
+      - "draft -> submitted"
+      - "submitted -> confirmed"
+      - "confirmed -> partially_fulfilled"
+      - "partially_fulfilled -> fulfilled"
+      - "submitted -> cancelled"
+      - "confirmed -> cancelled"
     notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
-  PaymentIntent:
-    states: ["Created", "Authorized", "Captured", "Voided", "Refunded"]
+  payment_intent:
+    states: ["created", "authorized", "captured", "voided", "refunded"]
     transitions:
-      - "Created -> Authorized"
-      - "Authorized -> Captured"
-      - "Authorized -> Voided"
-      - "Captured -> Refunded"
-  InventoryReservation:
-    states: ["Reserved", "Consumed", "Released", "Expired"]
+      - "created -> authorized"
+      - "authorized -> captured"
+      - "authorized -> voided"
+      - "captured -> refunded"
+  inventory_reservation:
+    states: ["reserved", "consumed", "released", "expired"]
     transitions:
-      - "Reserved -> Consumed"
-      - "Reserved -> Released"
-      - "Reserved -> Expired"
-  Shipment:
-    states: ["Ready", "InTransit", "Delivered", "Lost"]
+      - "reserved -> consumed"
+      - "reserved -> released"
+      - "reserved -> expired"
+  shipment:
+    states: ["ready", "in_transit", "delivered", "lost"]
     transitions:
-      - "Ready -> InTransit"
-      - "InTransit -> Delivered"
-      - "InTransit -> Lost"
-  Return:
-    states: ["Requested", "Approved", "Received", "Refunded", "Rejected"]
+      - "ready -> in_transit"
+      - "in_transit -> delivered"
+      - "in_transit -> lost"
+  return:
+    states: ["requested", "approved", "received", "refunded", "rejected"]
     transitions:
-      - "Requested -> Approved"
-      - "Approved -> Received"
-      - "Received -> Refunded"
-      - "Requested -> Rejected"
+      - "requested -> approved"
+      - "approved -> received"
+      - "received -> refunded"
+      - "requested -> rejected"
 
 invariants:
-  - id: price-snapshot-at-submit
+  - id: price_snapshot_at_submit
     rule: "An Order's monetary commitments equal the sum of its OrderLines priced at the moment of submission, including promotions applicable at that moment."
-  - id: reservation-before-confirm
+  - id: reservation_before_confirm
     rule: "Sufficient InventoryReservation must exist for all OrderLines before an Order transitions to Confirmed."
-  - id: capture-not-exceed-authorize
+  - id: capture_not_exceed_authorize
     rule: "Captured payment cannot exceed the last valid Authorized amount for the PaymentIntent."
-  - id: ship-only-confirmed-lines
+  - id: ship_only_confirmed_lines
     rule: "Shipment may only include OrderLines belonging to a Confirmed (or later) Order state."
-  - id: one-return-per-unit
+  - id: one_return_per_unit
     rule: "A delivered unit may be returned at most once."
-  - id: return-window-policy
+  - id: return_window_policy
     rule: "Return can be Approved only if requested within the applicable return window for the Product."
-  - id: refund-after-receipt-or-proof
+  - id: refund_after_receipt_or_proof
     rule: "A Refund can be executed only after Returned goods are Received or acceptable proof-of-non-delivery exists."
 
 events:
-  - id: OrderSubmitted
+  - id: order_submitted
     name: OrderSubmitted
     definition: "OrderSubmitted(subject: Order, occurred: Time)"
-  - id: InventoryReserved
+  - id: inventory_reserved
     name: InventoryReserved
     definition: "InventoryReserved(subject: InventoryReservation, occurred: Time)"
-  - id: OrderConfirmed
+  - id: order_confirmed
     name: OrderConfirmed
     definition: "OrderConfirmed(subject: Order, occurred: Time)"
-  - id: PaymentAuthorized
+  - id: payment_authorized
     name: PaymentAuthorized
     definition: "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
-  - id: PaymentCaptured
+  - id: payment_captured
     name: PaymentCaptured
     definition: "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
-  - id: ShipmentDelivered
+  - id: shipment_delivered
     name: ShipmentDelivered
     definition: "ShipmentDelivered(subject: Shipment, occurred: Time)"
-  - id: ReturnRequested
+  - id: return_requested
     name: ReturnRequested
     definition: "ReturnRequested(subject: Return, occurred: Time)"
-  - id: RefundIssued
+  - id: refund_issued
     name: RefundIssued
     definition: "RefundIssued(subject: PaymentIntent, occurred: Time)"
