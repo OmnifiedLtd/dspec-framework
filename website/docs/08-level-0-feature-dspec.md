@@ -45,16 +45,16 @@ intent: >
 
 scope:
   in:
-    - id: scope.in.request
+    - id: scope.request
       statement: 'request link'
-    - id: scope.in.deliver
+    - id: scope.deliver
       statement: 'deliver link'
-    - id: scope.in.redeem
+    - id: scope.redeem
       statement: 'redeem link to authenticate'
   out:
-    - id: scope.out.mfa
+    - id: scope.mfa
       statement: 'MFA enrollment'
-    - id: scope.out.recovery
+    - id: scope.recovery
       statement: 'account recovery'
 
 domain_invariants:

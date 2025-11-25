@@ -10,20 +10,20 @@ intent: >
   publish, view, edit, and delete. Users see only their own notes.
 scope:
   in:
-    - id: scope.in.create
+    - id: scope.create
       statement: "Creating and Publishing notes"
-    - id: scope.in.view
+    - id: scope.view
       statement: "Viewing personal note history"
-    - id: scope.in.edit
+    - id: scope.edit
       statement: "Editing note content"
-    - id: scope.in.delete
+    - id: scope.delete
       statement: "Deleting notes"
   out:
-    - id: scope.out.view-others
+    - id: scope.view-others
       statement: "Viewing other users' notes"
-    - id: scope.out.follow
+    - id: scope.follow
       statement: "Following other users"
-    - id: scope.out.public
+    - id: scope.public
       statement: "Public feeds"
 
 domain_invariants:

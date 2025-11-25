@@ -8,14 +8,14 @@ meta:
 intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
 scope:
   in:
-    - id: scope.in.publish
+    - id: scope.publish
       statement: 'publish product'
-    - id: scope.in.activate
+    - id: scope.activate
       statement: 'activate variant'
   out:
-    - id: scope.out.reindexing
+    - id: scope.reindexing
       statement: 'bulk reindexing'
-    - id: scope.out.search
+    - id: scope.search
       statement: 'search relevance tuning'
 
 domain_invariants:
