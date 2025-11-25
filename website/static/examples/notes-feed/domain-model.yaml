@@ -1,5 +1,5 @@
 meta:
-  id: notes_domain
+  id: notes-domain
   version: 0.1.0
   owner: Social Team
 
@@ -26,23 +26,23 @@ lifecycles:
       - "draft -> deleted"
 
 invariants:
-  - id: note_author_ownership
+  - id: note-author-ownership
     rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
-  - id: note_length_limit
+  - id: note-length-limit
     rule: "A Note's content must not exceed 280 characters."
-  - id: author_modification_only
+  - id: author-modification-only
     rule: "Only the Author of a Note may modify its content or state."
 
 events:
-  - id: note_created
+  - id: note-created
     name: NoteCreated
     definition: "NoteCreated(subject: Note, author: User, occurred: Time)"
-  - id: note_published
+  - id: note-published
     name: NotePublished
     definition: "NotePublished(subject: Note, occurred: Time)"
-  - id: note_content_updated
+  - id: note-content-updated
     name: NoteContentUpdated
     definition: "NoteContentUpdated(subject: Note, occurred: Time)"
-  - id: note_deleted
+  - id: note-deleted
     name: NoteDeleted
     definition: "NoteDeleted(subject: Note, occurred: Time)"

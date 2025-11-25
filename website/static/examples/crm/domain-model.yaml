@@ -25,7 +25,7 @@ glossary:
   - id: consent
     name: Consent
     definition: "Grant of permission to process personal data or contact a person under policy/regulation."
-  - id: product_offering
+  - id: product-offering
     name: ProductOffering
     definition: "A sellable package with commercial terms."
   - id: territory
@@ -69,41 +69,41 @@ lifecycles:
       - "granted -> revoked"
 
 invariants:
-  - id: opp_has_single_account
+  - id: opp-has-single-account
     rule: "Every Opportunity is associated to exactly one Account."
-  - id: quote_aligns_with_opp
+  - id: quote-aligns-with-opp
     rule: "An Accepted Quote must reference exactly one Opportunity and its scope is a subset of that Opportunity's scope at acceptance."
-  - id: contract_after_won
+  - id: contract-after-won
     rule: "A Contract may become Active only if derived from a Won Opportunity and an Accepted Quote."
-  - id: one_active_contract_per_account_offering
+  - id: one-active-contract-per-account-offering
     rule: "At most one Active Contract exists per Account × ProductOffering × effective period unless exclusivity is explicitly waived."
-  - id: consent_gates_communication
+  - id: consent-gates-communication
     rule: "Outbound communication to a Contact requires Consent Granted for the relevant channel and purpose."
-  - id: territory_assignment_stability
+  - id: territory-assignment-stability
     rule: "Opportunity territory may change only at stage boundaries (Open↔Negotiation); changes are disallowed after Won/Lost."
 
 events:
-  - id: lead_qualified
+  - id: lead-qualified
     name: LeadQualified
     definition: "LeadQualified(subject: Lead, occurred: Time)"
-  - id: lead_converted
+  - id: lead-converted
     name: LeadConverted
     definition: "LeadConverted(subject: Lead, occurred: Time)"
-  - id: opportunity_stage_advanced
+  - id: opportunity-stage-advanced
     name: OpportunityStageAdvanced
     definition: "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
-  - id: quote_issued
+  - id: quote-issued
     name: QuoteIssued
     definition: "QuoteIssued(subject: Quote, occurred: Time)"
-  - id: quote_accepted
+  - id: quote-accepted
     name: QuoteAccepted
     definition: "QuoteAccepted(subject: Quote, occurred: Time)"
-  - id: contract_activated
+  - id: contract-activated
     name: ContractActivated
     definition: "ContractActivated(subject: Contract, occurred: Time)"
-  - id: consent_granted
+  - id: consent-granted
     name: ConsentGranted
     definition: "ConsentGranted(subject: Consent, occurred: Time)"
-  - id: consent_revoked
+  - id: consent-revoked
     name: ConsentRevoked
     definition: "ConsentRevoked(subject: Consent, occurred: Time)"

@@ -13,13 +13,13 @@ glossary:
   - id: order
     name: Order
     definition: "A commitment to purchase specific products and quantities at agreed prices."
-  - id: order_line
+  - id: order-line
     name: OrderLine
     definition: "A specific product and quantity within an Order at a priced snapshot."
-  - id: inventory_reservation
+  - id: inventory-reservation
     name: InventoryReservation
     definition: "A temporary claim on stock for an Order or Shipment."
-  - id: payment_intent
+  - id: payment-intent
     name: PaymentIntent
     definition: "A customer payment authorization/capture intent for an Order."
   - id: shipment
@@ -43,14 +43,14 @@ lifecycles:
       - "submitted -> cancelled"
       - "confirmed -> cancelled"
     notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
-  payment_intent:
+  payment-intent:
     states: ["created", "authorized", "captured", "voided", "refunded"]
     transitions:
       - "created -> authorized"
       - "authorized -> captured"
       - "authorized -> voided"
       - "captured -> refunded"
-  inventory_reservation:
+  inventory-reservation:
     states: ["reserved", "consumed", "released", "expired"]
     transitions:
       - "reserved -> consumed"
@@ -71,43 +71,43 @@ lifecycles:
       - "requested -> rejected"
 
 invariants:
-  - id: price_snapshot_at_submit
+  - id: price-snapshot-at-submit
     rule: "An Order's monetary commitments equal the sum of its OrderLines priced at the moment of submission, including promotions applicable at that moment."
-  - id: reservation_before_confirm
+  - id: reservation-before-confirm
     rule: "Sufficient InventoryReservation must exist for all OrderLines before an Order transitions to Confirmed."
-  - id: capture_not_exceed_authorize
+  - id: capture-not-exceed-authorize
     rule: "Captured payment cannot exceed the last valid Authorized amount for the PaymentIntent."
-  - id: ship_only_confirmed_lines
+  - id: ship-only-confirmed-lines
     rule: "Shipment may only include OrderLines belonging to a Confirmed (or later) Order state."
-  - id: one_return_per_unit
+  - id: one-return-per-unit
     rule: "A delivered unit may be returned at most once."
-  - id: return_window_policy
+  - id: return-window-policy
     rule: "Return can be Approved only if requested within the applicable return window for the Product."
-  - id: refund_after_receipt_or_proof
+  - id: refund-after-receipt-or-proof
     rule: "A Refund can be executed only after Returned goods are Received or acceptable proof-of-non-delivery exists."
 
 events:
-  - id: order_submitted
+  - id: order-submitted
     name: OrderSubmitted
     definition: "OrderSubmitted(subject: Order, occurred: Time)"
-  - id: inventory_reserved
+  - id: inventory-reserved
     name: InventoryReserved
     definition: "InventoryReserved(subject: InventoryReservation, occurred: Time)"
-  - id: order_confirmed
+  - id: order-confirmed
     name: OrderConfirmed
     definition: "OrderConfirmed(subject: Order, occurred: Time)"
-  - id: payment_authorized
+  - id: payment-authorized
     name: PaymentAuthorized
     definition: "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
-  - id: payment_captured
+  - id: payment-captured
     name: PaymentCaptured
     definition: "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
-  - id: shipment_delivered
+  - id: shipment-delivered
     name: ShipmentDelivered
     definition: "ShipmentDelivered(subject: Shipment, occurred: Time)"
-  - id: return_requested
+  - id: return-requested
     name: ReturnRequested
     definition: "ReturnRequested(subject: Return, occurred: Time)"
-  - id: refund_issued
+  - id: refund-issued
     name: RefundIssued
     definition: "RefundIssued(subject: PaymentIntent, occurred: Time)"

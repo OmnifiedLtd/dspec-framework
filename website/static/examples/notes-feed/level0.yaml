@@ -1,9 +1,9 @@
 meta:
-  id: feature.personal_notes
+  id: feature.personal-notes
   name: Personal Notes Log
   owner: Productivity Team
   version: 0.2.0
-  domain_id: notes_domain
+  domain_id: notes-domain
 
 intent: >
   Allow users to maintain a personal log of short text notes which they can
@@ -19,7 +19,7 @@ scope:
     - id: scope.delete
       statement: "Deleting notes"
   out:
-    - id: scope.view_others
+    - id: scope.view-others
       statement: "Viewing other users' notes"
     - id: scope.follow
       statement: "Following other users"
@@ -27,36 +27,36 @@ scope:
       statement: "Public feeds"
 
 domain_invariants:
-  - id: note_author_ownership
+  - id: note-author-ownership
     rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
-    moment_of_truth: "note_created"
+    moment_of_truth: "note-created"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
-  - id: note_length_limit
+  - id: note-length-limit
     rule: "A Note's content must not exceed 280 characters."
-    moment_of_truth: "note_published"
+    moment_of_truth: "note-published"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
-  - id: author_modification_only
+  - id: author-modification-only
     rule: "Only the Author of a Note may modify its content or state."
-    moment_of_truth: "note_content_updated"
+    moment_of_truth: "note-content-updated"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
 
 acceptance_criteria:
-  - id: ac_001
+  - id: ac-001
     statement: "User can create and publish a note."
-  - id: ac_002
+  - id: ac-002
     statement: "User can edit the content of their existing note."
-  - id: ac_003
+  - id: ac-003
     statement: "User sees only their own notes in the feed."
-  - id: ac_004
+  - id: ac-004
     statement: "Attempting to access or edit another user's note results in an error."
 
 quality_criteria:
@@ -70,6 +70,6 @@ verification:
 
 dependencies:
   upstream:
-    - "feature.user_identity"
+    - "feature.user-identity"
   downstream:
-    - "feature.data_export"
+    - "feature.data-export"

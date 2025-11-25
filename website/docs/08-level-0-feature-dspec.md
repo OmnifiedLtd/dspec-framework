@@ -33,7 +33,7 @@ This distinction allows DSpec to capture the ideal state (the invariant) while a
 
 ```yaml
 meta:
-  id: feature.passwordless_login
+  id: feature.passwordless-login
   name: Passwordless login via magic link
   owner: Identity Team
   version: 0.3.1
@@ -58,16 +58,16 @@ scope:
       statement: 'account recovery'
 
 domain_invariants:
-  - id: link_single_use
+  - id: link-single-use
     rule: 'A magic link can be redeemed at most once.'
-    moment_of_truth: 'magic_link_redeemed'
+    moment_of_truth: 'magic-link-redeemed'
     consistency_demand:
       scope: 'link'
       strength: 'write-time'
       tolerance: 'none'
-  - id: link_expiry
+  - id: link-expiry
     rule: 'A magic link expires after TTL and cannot be redeemed thereafter.'
-    moment_of_truth: 'magic_link_redeemed'
+    moment_of_truth: 'magic-link-redeemed'
     consistency_demand:
       scope: 'link'
       strength: 'write-time'
@@ -84,11 +84,11 @@ explicit_exclusions:
     statement: 'No SMS links.'
 
 acceptance_criteria:
-  - id: ac_001
+  - id: ac-001
     statement: 'Valid, unexpired link authenticates the intended user.'
-  - id: ac_002
+  - id: ac-002
     statement: 'Redeeming an already-used link fails with a harmless error.'
-  - id: ac_003
+  - id: ac-003
     statement: 'Expired link cannot authenticate.'
 
 quality_criteria:
@@ -99,8 +99,8 @@ verification:
   artifacts: ['tests/identity/passwordless-login.feature']
 
 dependencies:
-  upstream: ['feature.user_verification']
-  downstream: ['feature.session_issuance']
+  upstream: ['feature.user-verification']
+  downstream: ['feature.session-issuance']
 ```
 
 ### Product Catalog: Brand/Product/Variant (Feature)
