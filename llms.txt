@@ -12,7 +12,7 @@ The dspec-framework provides a structured approach to software specification, en
 * [Purpose and Scope](https://OmnifiedLtd.github.io/dspec-framework/docs/purpose-and-scope): Introduction to the framework's goals, covering the "Why" and high-level scope.
 * [Core Principles](https://OmnifiedLtd.github.io/dspec-framework/docs/core-principles): The fundamental axioms (e.g., "Events as Facts") that drive the framework's design.
 * [Spec Levels at a Glance](https://OmnifiedLtd.github.io/dspec-framework/docs/spec-levels-at-a-glance): A quick reference guide to the three specification levels (L0, L1, L2).
-* [Bounded Contexts & Domain Models](https://OmnifiedLtd.github.io/dspec-framework/docs/bounded-contexts-and-domain-models): Instructions on defining domain boundaries and the ubiquitous language.
+* [Bounded Contexts & Domain Models](https://OmnifiedLtd.github.io/dspec-framework/docs/domain-models-and-bounded-contexts): Instructions on defining domain boundaries and the ubiquitous language.
 * [Level 0: Feature dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-0-feature-dspec): Detailed specification for defining functional requirements (User Stories, Scenarios).
 * [Level 1: Design dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-1-design-dspec): Detailed specification for technical design (Components, Topics, Interfaces).
 * [Level 2: Implementation dspec](https://OmnifiedLtd.github.io/dspec-framework/docs/level-2-implementation-dspec): Detailed specification for implementation details (Payload schemas, Class definitions).
