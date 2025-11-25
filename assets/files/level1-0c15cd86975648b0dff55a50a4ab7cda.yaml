@@ -4,31 +4,31 @@ bounded_context: ecommerce
 consistency_groups:
   - id: order
     name: Order
-  - id: payment_intent
+  - id: payment-intent
     name: PaymentIntent
 commands:
-  - id: submit_order
+  - id: submit-order
     name: SubmitOrder
     target: order
     intent: 'Move Draft -> Submitted and fix priced snapshot'
     preconditions: []
     postconditions:
-      emits: ['order_submitted']
+      emits: ['order-submitted']
       transitions: ['draft -> submitted']
 
-  - id: confirm_order
+  - id: confirm-order
     name: ConfirmOrder
     target: order
     intent: 'Confirm when reservations are sufficient'
-    preconditions: ['reservation_before_confirm']
+    preconditions: ['reservation-before-confirm']
     postconditions:
-      emits: ['order_confirmed']
+      emits: ['order-confirmed']
       transitions: ['submitted -> confirmed']
 
-  - id: capture_payment
+  - id: capture-payment
     name: CapturePayment
-    target: payment_intent
+    target: payment-intent
     intent: 'Capture funds up to authorized amount'
-    preconditions: ['capture_not_exceed_authorize']
+    preconditions: ['capture-not-exceed-authorize']
     postconditions:
-      emits: ['payment_captured']
+      emits: ['payment-captured']

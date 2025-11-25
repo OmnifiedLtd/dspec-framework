@@ -22,21 +22,21 @@ lifecycles:
       - "active -> discontinued"
 
 invariants:
-  - id: unique_model_code_per_brand
+  - id: unique-model-code-per-brand
     rule: "Within the same Brand, no two Active Products share the same modelCode."
-  - id: variant_sku_unique_per_product
+  - id: variant-sku-unique-per-product
     rule: "A Product's Variant SKUs are unique within that Product."
 
 events:
-  - id: product_proposed
+  - id: product-proposed
     name: ProductProposed
     definition: "ProductProposed(subject: Product, occurred: Time)"
-  - id: product_activated
+  - id: product-activated
     name: ProductActivated
     definition: "ProductActivated(subject: Product, occurred: Time)"
-  - id: product_discontinued
+  - id: product-discontinued
     name: ProductDiscontinued
     definition: "ProductDiscontinued(subject: Product, occurred: Time)"
-  - id: model_code_reassigned
+  - id: model-code-reassigned
     name: ModelCodeReassigned
     definition: "ModelCodeReassigned(subject: Product, occurred: Time)"

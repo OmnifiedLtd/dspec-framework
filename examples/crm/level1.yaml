@@ -9,27 +9,27 @@ consistency_groups:
   - id: contract
     name: Contract
 commands:
-  - id: convert_lead
+  - id: convert-lead
     name: ConvertLead
     target: lead
     intent: 'Create/link Account and optionally Opportunity'
     preconditions: []
     postconditions:
-      emits: ['lead_converted']
+      emits: ['lead-converted']
 
-  - id: accept_quote
+  - id: accept-quote
     name: AcceptQuote
     target: quote
     intent: 'Customer accepts terms for a single Opportunity'
-    preconditions: ['quote_aligns_with_opp']
+    preconditions: ['quote-aligns-with-opp']
     postconditions:
-      emits: ['quote_accepted']
+      emits: ['quote-accepted']
 
-  - id: activate_contract
+  - id: activate-contract
     name: ActivateContract
     target: contract
     intent: 'Make contract effective'
     preconditions:
-      ['contract_after_won', 'one_active_contract_per_account_offering']
+      ['contract-after-won', 'one-active-contract-per-account-offering']
     postconditions:
-      emits: ['contract_activated']
+      emits: ['contract-activated']

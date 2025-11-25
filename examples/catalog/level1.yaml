@@ -7,23 +7,23 @@ consistency_groups:
   - id: variant
     name: Variant
 commands:
-  - id: activate_product
+  - id: activate-product
     name: ActivateProduct
     target: product
     intent: 'Publish product under a Brand'
-    preconditions: ['unique_model_code_per_brand']
+    preconditions: ['unique-model-code-per-brand']
     postconditions:
-      emits: ['product_activated']
+      emits: ['product-activated']
       transitions: ['draft -> active']
     transactional_expectation: 'starts-saga' # if using reservation-then-confirm
     failure_modes:
-      - violates: 'unique_model_code_per_brand'
-        outcome: 'reject duplicate_model_code'
+      - violates: 'unique-model-code-per-brand'
+        outcome: 'reject duplicate-model-code'
 
-  - id: activate_variant
+  - id: activate-variant
     name: ActivateVariant
     target: variant
     intent: 'Publish purchasable SKU'
-    preconditions: ['variant_sku_unique_per_product']
+    preconditions: ['variant-sku-unique-per-product']
     postconditions:
-      emits: ['variant_activated']
+      emits: ['variant-activated']
