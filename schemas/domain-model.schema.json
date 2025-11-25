@@ -107,14 +107,19 @@
       "items": {
         "type": "object",
         "required": [
-          "id",
           "rule"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
+          "name": {
+            "type": "string"
+          },
           "rule": {
+            "type": "string"
+          },
+          "notes": {
             "type": "string"
           }
         }
