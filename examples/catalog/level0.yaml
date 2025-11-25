@@ -3,41 +3,35 @@ meta:
   name: Publish Product under Brand with collision-free identifiers
   owner: Catalog Team
   version: 0.3.1
-  relates_to_domain: catalog
+  domain_id: catalog
 
-what:
-  intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
-  domain_refs:
-    glossary: domain-model.yaml#glossary
-    lifecycles: domain-model.yaml#lifecycles.Product
-    events: domain-model.yaml#events
-  scope:
-    in: ['publish product', 'activate variant']
-    out: ['bulk reindexing', 'search relevance tuning']
+intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
+scope:
+  in: ['publish product', 'activate variant']
+  out: ['bulk reindexing', 'search relevance tuning']
 
-boundaries:
-  domain_invariants:
-    - id: unique-model-code-per-brand
-      rule: 'Within the same Brand, no two Active Products share the same modelCode.'
-      moment_of_truth: 'ProductActivated'
-      consistency_demand:
-        scope: 'brand'
-        strength: 'write-time'
-        tolerance: 'none'
-    - id: variant-sku-unique-per-product
-      rule: "A Product's Variant SKUs are unique within that Product."
-      moment_of_truth: 'VariantActivated'
-      consistency_demand:
-        scope: 'product'
-        strength: 'write-time'
-        tolerance: 'none'
-  system_constraints:
-    - 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
-    - 'Burst rates up to 2k publishes/minute per brand.'
+domain_invariants:
+  - id: unique-model-code-per-brand
+    rule: 'Within the same Brand, no two Active Products share the same modelCode.'
+    moment_of_truth: 'ProductActivated'
+    consistency_demand:
+      scope: 'brand'
+      strength: 'write-time'
+      tolerance: 'none'
+  - id: variant-sku-unique-per-product
+    rule: "A Product's Variant SKUs are unique within that Product."
+    moment_of_truth: 'VariantActivated'
+    consistency_demand:
+      scope: 'product'
+      strength: 'write-time'
+      tolerance: 'none'
 
-success:
-  acceptance_criteria:
-    - id: ac1
-      statement: 'Publishing a duplicate modelCode under a Brand is deterministically rejected.'
-    - id: ac2
-      statement: 'Concurrent publishes with distinct modelCodes do not false‑fail as duplicates.'
+system_constraints:
+  - 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
+  - 'Burst rates up to 2k publishes/minute per brand.'
+
+acceptance_criteria:
+  - id: ac1
+    statement: 'Publishing a duplicate modelCode under a Brand is deterministically rejected.'
+  - id: ac2
+    statement: 'Concurrent publishes with distinct modelCodes do not false‑fail as duplicates.'

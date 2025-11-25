@@ -37,56 +37,52 @@ meta:
   name: Passwordless login via magic link
   owner: Identity Team
   version: 0.3.1
-  relates_to_domain: identity
+  domain_id: identity
 
-what:
-  intent: >
-    Allow users to authenticate without passwords by sending a time-bound,
-    single-use magic link to a verified address.
-  domain_refs:
-    glossary: domains/identity.domain.json#glossary
-    lifecycles: domains/identity.domain.json#lifecycles.MagicLink
-    events: domains/identity.domain.json#events
-  scope:
-    in: ['request link', 'deliver link', 'redeem link to authenticate']
-    out: ['MFA enrollment', 'account recovery']
+intent: >
+  Allow users to authenticate without passwords by sending a time-bound,
+  single-use magic link to a verified address.
 
-boundaries:
-  domain_invariants:
-    - id: link-single-use
-      rule: 'A magic link can be redeemed at most once.'
-      moment_of_truth: 'MagicLinkRedeemed'
-      consistency_demand:
-        scope: 'link'
-        strength: 'write-time'
-        tolerance: 'none'
-    - id: link-expiry
-      rule: 'A magic link expires after TTL and cannot be redeemed thereafter.'
-      moment_of_truth: 'MagicLinkRedeemed'
-      consistency_demand:
-        scope: 'link'
-        strength: 'write-time'
-        tolerance: 'none'
-  policy_and_regulatory:
-    - 'Respect user notification preferences.'
-  system_constraints:
-    - 'Email delivery can be delayed; UX must handle late arrivals.'
-  explicit_exclusions:
-    - 'No SMS links.'
+scope:
+  in: ['request link', 'deliver link', 'redeem link to authenticate']
+  out: ['MFA enrollment', 'account recovery']
 
-success:
-  acceptance_criteria:
-    - id: ac-001
-      statement: 'Valid, unexpired link authenticates the intended user.'
-    - id: ac-002
-      statement: 'Redeeming an already-used link fails with a harmless error.'
-    - id: ac-003
-      statement: 'Expired link cannot authenticate.'
-  quality_criteria:
-    - 'P95 link delivery confirmation ≤ 60s (staging).'
-  verification:
-    type: 'executable'
-    artifacts: ['tests/identity/passwordless-login.feature']
+domain_invariants:
+  - id: link-single-use
+    rule: 'A magic link can be redeemed at most once.'
+    moment_of_truth: 'MagicLinkRedeemed'
+    consistency_demand:
+      scope: 'link'
+      strength: 'write-time'
+      tolerance: 'none'
+  - id: link-expiry
+    rule: 'A magic link expires after TTL and cannot be redeemed thereafter.'
+    moment_of_truth: 'MagicLinkRedeemed'
+    consistency_demand:
+      scope: 'link'
+      strength: 'write-time'
+      tolerance: 'none'
+
+policy_and_regulatory:
+  - 'Respect user notification preferences.'
+system_constraints:
+  - 'Email delivery can be delayed; UX must handle late arrivals.'
+explicit_exclusions:
+  - 'No SMS links.'
+
+acceptance_criteria:
+  - id: ac-001
+    statement: 'Valid, unexpired link authenticates the intended user.'
+  - id: ac-002
+    statement: 'Redeeming an already-used link fails with a harmless error.'
+  - id: ac-003
+    statement: 'Expired link cannot authenticate.'
+
+quality_criteria:
+  - 'P95 link delivery confirmation ≤ 60s (staging).'
+verification:
+  type: 'executable'
+  artifacts: ['tests/identity/passwordless-login.feature']
 
 dependencies:
   upstream: ['feature.user-verification']

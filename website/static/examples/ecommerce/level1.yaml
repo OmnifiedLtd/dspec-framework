@@ -1,33 +1,29 @@
 extends: feature.ecommerce # Placeholder since no Level-0 exists
 
-what:
-  bounded_context: ecommerce
-  consistency_groups:
-    - Order
-    - PaymentIntent
-  commands:
-    - name: SubmitOrder
-      target: Order
-      intent: 'Move Draft -> Submitted and fix priced snapshot'
-      preconditions: []
-      postconditions:
-        emits: ['OrderSubmitted']
-        transitions: ['Draft -> Submitted']
+bounded_context: ecommerce
+consistency_groups:
+  - Order
+  - PaymentIntent
+commands:
+  - name: SubmitOrder
+    target: Order
+    intent: 'Move Draft -> Submitted and fix priced snapshot'
+    preconditions: []
+    postconditions:
+      emits: ['OrderSubmitted']
+      transitions: ['Draft -> Submitted']
 
-    - name: ConfirmOrder
-      target: Order
-      intent: 'Confirm when reservations are sufficient'
-      preconditions: ['reservation-before-confirm']
-      postconditions:
-        emits: ['OrderConfirmed']
-        transitions: ['Submitted -> Confirmed']
+  - name: ConfirmOrder
+    target: Order
+    intent: 'Confirm when reservations are sufficient'
+    preconditions: ['reservation-before-confirm']
+    postconditions:
+      emits: ['OrderConfirmed']
+      transitions: ['Submitted -> Confirmed']
 
-    - name: CapturePayment
-      target: PaymentIntent
-      intent: 'Capture funds up to authorized amount'
-      preconditions: ['capture-not-exceed-authorize']
-      postconditions:
-        emits: ['PaymentCaptured']
-
-boundaries: {}
-success: {}
+  - name: CapturePayment
+    target: PaymentIntent
+    intent: 'Capture funds up to authorized amount'
+    preconditions: ['capture-not-exceed-authorize']
+    postconditions:
+      emits: ['PaymentCaptured']

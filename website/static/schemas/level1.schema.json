@@ -1,19 +1,11 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["extends", "what", "boundaries", "success"],
+  "required": ["extends", "bounded_context", "consistency_groups"],
   "properties": {
     "extends": { "type": "string" },
-    "what": {
-      "type": "object",
-      "required": ["bounded_context", "consistency_groups"],
-      "properties": {
-        "bounded_context": { "type": "string" },
-        "consistency_groups": { "type": "array" },
-        "commands": { "type": "array" }
-      }
-    },
-    "boundaries": { "type": "object" },
-    "success": { "type": "object" }
+    "bounded_context": { "type": "string" },
+    "consistency_groups": { "type": "array" },
+    "commands": { "type": "array" }
   }
 }
