@@ -10,14 +10,21 @@ intent: >
   publish, view, edit, and delete. Users see only their own notes.
 scope:
   in:
-    - "Creating and Publishing notes"
-    - "Viewing personal note history"
-    - "Editing note content"
-    - "Deleting notes"
+    - id: scope.in.create
+      statement: "Creating and Publishing notes"
+    - id: scope.in.view
+      statement: "Viewing personal note history"
+    - id: scope.in.edit
+      statement: "Editing note content"
+    - id: scope.in.delete
+      statement: "Deleting notes"
   out:
-    - "Viewing other users' notes"
-    - "Following other users"
-    - "Public feeds"
+    - id: scope.out.view-others
+      statement: "Viewing other users' notes"
+    - id: scope.out.follow
+      statement: "Following other users"
+    - id: scope.out.public
+      statement: "Public feeds"
 
 domain_invariants:
   - id: note-author-ownership
@@ -53,7 +60,9 @@ acceptance_criteria:
     statement: "Attempting to access or edit another user's note results in an error."
 
 quality_criteria:
-  - "Note updates are visible immediately (read-your-write)."
+  - id: qc.latency
+    statement: "Note updates are visible immediately (read-your-write)."
+
 verification:
   type: "executable"
   artifacts:

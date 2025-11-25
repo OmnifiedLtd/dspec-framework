@@ -2,10 +2,13 @@ extends: feature.ecommerce # Placeholder since no Level-0 exists
 
 bounded_context: ecommerce
 consistency_groups:
-  - Order
-  - PaymentIntent
+  - id: Order
+    name: Order
+  - id: PaymentIntent
+    name: PaymentIntent
 commands:
-  - name: SubmitOrder
+  - id: SubmitOrder
+    name: SubmitOrder
     target: Order
     intent: 'Move Draft -> Submitted and fix priced snapshot'
     preconditions: []
@@ -13,7 +16,8 @@ commands:
       emits: ['OrderSubmitted']
       transitions: ['Draft -> Submitted']
 
-  - name: ConfirmOrder
+  - id: ConfirmOrder
+    name: ConfirmOrder
     target: Order
     intent: 'Confirm when reservations are sufficient'
     preconditions: ['reservation-before-confirm']
@@ -21,7 +25,8 @@ commands:
       emits: ['OrderConfirmed']
       transitions: ['Submitted -> Confirmed']
 
-  - name: CapturePayment
+  - id: CapturePayment
+    name: CapturePayment
     target: PaymentIntent
     intent: 'Capture funds up to authorized amount'
     preconditions: ['capture-not-exceed-authorize']

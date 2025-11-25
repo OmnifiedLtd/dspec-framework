@@ -12,14 +12,16 @@ Level‑1 translates **consistency intent** from Level‑0 into **consistency gr
 
 ```yaml
 commands:
-  - name: RequestMagicLink
+  - id: RequestMagicLink
+    name: RequestMagicLink
     target: MagicLink
     intent: 'Issue a time-bound, single-use link'
     preconditions: ['User is verified']
     postconditions:
       emits: ['MagicLinkIssued']
 
-  - name: RedeemMagicLink
+  - id: RedeemMagicLink
+    name: RedeemMagicLink
     target: MagicLink
     intent: 'Authenticate via issued link'
     preconditions: ['link-single-use', 'link-expiry']

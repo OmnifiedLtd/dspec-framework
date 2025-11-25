@@ -39,6 +39,7 @@
       "items": {
         "type": "object",
         "required": [
+          "id",
           "name",
           "definition"
         ],
@@ -63,6 +64,7 @@
       "items": {
         "type": "object",
         "required": [
+          "id",
           "name",
           "definition"
         ],
@@ -116,6 +118,7 @@
       "items": {
         "type": "object",
         "required": [
+          "id",
           "rule"
         ],
         "properties": {
@@ -137,7 +140,24 @@
     "events": {
       "type": "array",
       "items": {
-        "type": "string"
+        "type": "object",
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
       }
     }
   }

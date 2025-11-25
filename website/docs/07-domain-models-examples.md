@@ -24,9 +24,11 @@ meta:
   notes: "This model underpins all user management and login features."
 
 glossary:
-  - name: User
+  - id: User
+    name: User
     definition: "A uniquely identified account holder"
-  - name: MagicLink
+  - id: MagicLink
+    name: MagicLink
     definition: "A single-use, time-bound authentication link"
 
 lifecycles:
@@ -37,7 +39,8 @@ lifecycles:
       - "Issued -> Expired"
 
 predicates:
-  - name: User.HasVerifiedEmail
+  - id: User.HasVerifiedEmail
+    name: User.HasVerifiedEmail
     definition: "True if the User has completed email verification."
 
 invariants:
@@ -48,9 +51,15 @@ invariants:
     rule: "A MagicLink becomes Expired after its configured TTL elapses"
 
 events:  # domain facts; roles only
-  MagicLinkIssued(subject: MagicLink, occurred: Time)
-  MagicLinkRedeemed(subject: MagicLink, occurred: Time)
-  MagicLinkExpired(subject: MagicLink, occurred: Time)
+  - id: MagicLinkIssued
+    name: MagicLinkIssued
+    definition: "MagicLinkIssued(subject: MagicLink, occurred: Time)"
+  - id: MagicLinkRedeemed
+    name: MagicLinkRedeemed
+    definition: "MagicLinkRedeemed(subject: MagicLink, occurred: Time)"
+  - id: MagicLinkExpired
+    name: MagicLinkExpired
+    definition: "MagicLinkExpired(subject: MagicLink, occurred: Time)"
 ```
 
 ### E‑Commerce: Order‑to‑Cash (Conceptual)

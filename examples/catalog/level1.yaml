@@ -2,10 +2,13 @@ extends: level0.yaml
 
 bounded_context: catalog
 consistency_groups:
-  - Product
-  - Variant
+  - id: Product
+    name: Product
+  - id: Variant
+    name: Variant
 commands:
-  - name: ActivateProduct
+  - id: ActivateProduct
+    name: ActivateProduct
     target: Product
     intent: 'Publish product under a Brand'
     preconditions: ['unique-model-code-per-brand']
@@ -17,7 +20,8 @@ commands:
       - violates: 'unique-model-code-per-brand'
         outcome: 'reject DuplicateModelCode'
 
-  - name: ActivateVariant
+  - id: ActivateVariant
+    name: ActivateVariant
     target: Variant
     intent: 'Publish purchasable SKU'
     preconditions: ['variant-sku-unique-per-product']

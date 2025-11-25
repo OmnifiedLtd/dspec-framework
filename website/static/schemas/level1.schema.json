@@ -5,7 +5,33 @@
   "properties": {
     "extends": { "type": "string" },
     "bounded_context": { "type": "string" },
-    "consistency_groups": { "type": "array" },
-    "commands": { "type": "array" }
+    "consistency_groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      }
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "intent", "target", "preconditions", "postconditions"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "target": { "type": "string" },
+          "intent": { "type": "string" },
+          "preconditions": { "type": "array" },
+          "postconditions": { "type": "object" },
+          "transactional_expectation": { "type": "string" },
+          "failure_modes": { "type": "array" }
+        }
+      }
+    }
   }
 }

@@ -44,8 +44,18 @@ intent: >
   single-use magic link to a verified address.
 
 scope:
-  in: ['request link', 'deliver link', 'redeem link to authenticate']
-  out: ['MFA enrollment', 'account recovery']
+  in:
+    - id: scope.in.request
+      statement: 'request link'
+    - id: scope.in.deliver
+      statement: 'deliver link'
+    - id: scope.in.redeem
+      statement: 'redeem link to authenticate'
+  out:
+    - id: scope.out.mfa
+      statement: 'MFA enrollment'
+    - id: scope.out.recovery
+      statement: 'account recovery'
 
 domain_invariants:
   - id: link-single-use
@@ -64,11 +74,14 @@ domain_invariants:
       tolerance: 'none'
 
 policy_and_regulatory:
-  - 'Respect user notification preferences.'
+  - id: policy.privacy
+    statement: 'Respect user notification preferences.'
 system_constraints:
-  - 'Email delivery can be delayed; UX must handle late arrivals.'
+  - id: constr.delivery
+    statement: 'Email delivery can be delayed; UX must handle late arrivals.'
 explicit_exclusions:
-  - 'No SMS links.'
+  - id: excl.sms
+    statement: 'No SMS links.'
 
 acceptance_criteria:
   - id: ac-001
@@ -79,7 +92,8 @@ acceptance_criteria:
     statement: 'Expired link cannot authenticate.'
 
 quality_criteria:
-  - 'P95 link delivery confirmation ≤ 60s (staging).'
+  - id: qc.latency
+    statement: 'P95 link delivery confirmation ≤ 60s (staging).'
 verification:
   type: 'executable'
   artifacts: ['tests/identity/passwordless-login.feature']

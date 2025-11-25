@@ -4,11 +4,14 @@ meta:
   owner: Catalog Team
 
 glossary:
-  - name: Brand
+  - id: Brand
+    name: Brand
     definition: "A label/manufacturer under which products are marketed."
-  - name: Product
+  - id: Product
+    name: Product
     definition: "A marketable item belonging to exactly one Brand."
-  - name: Variant
+  - id: Variant
+    name: Variant
     definition: "A purchasable option of a Product (e.g., size/color)."
 
 lifecycles:
@@ -25,7 +28,15 @@ invariants:
     rule: "A Product's Variant SKUs are unique within that Product."
 
 events:
-  - "ProductProposed(subject: Product, occurred: Time)"
-  - "ProductActivated(subject: Product, occurred: Time)"
-  - "ProductDiscontinued(subject: Product, occurred: Time)"
-  - "ModelCodeReassigned(subject: Product, occurred: Time)"
+  - id: ProductProposed
+    name: ProductProposed
+    definition: "ProductProposed(subject: Product, occurred: Time)"
+  - id: ProductActivated
+    name: ProductActivated
+    definition: "ProductActivated(subject: Product, occurred: Time)"
+  - id: ProductDiscontinued
+    name: ProductDiscontinued
+    definition: "ProductDiscontinued(subject: Product, occurred: Time)"
+  - id: ModelCodeReassigned
+    name: ModelCodeReassigned
+    definition: "ModelCodeReassigned(subject: Product, occurred: Time)"
