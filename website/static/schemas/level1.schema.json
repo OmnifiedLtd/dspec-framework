@@ -1,35 +1,113 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["extends", "bounded_context", "consistency_groups"],
+  "description": "Schema for a Level-1 (Design) DSpec. Defines the architecture, consistency groups (aggregates), and commands to satisfy the Level-0 intent.",
+  "required": [
+    "extends",
+    "bounded_context",
+    "consistency_groups"
+  ],
   "properties": {
-    "extends": { "type": "string" },
-    "bounded_context": { "type": "string" },
+    "extends": {
+      "type": "string",
+      "description": "The ID of the Level-0 Feature Spec that this design refines."
+    },
+    "bounded_context": {
+      "type": "string",
+      "description": "The Bounded Context (domain boundary) this design operates within."
+    },
     "consistency_groups": {
       "type": "array",
+      "description": "Definitions of consistency boundaries (often called Aggregates in DDD) where invariants are enforced.",
       "items": {
         "type": "object",
-        "required": ["id", "name"],
+        "required": [
+          "id",
+          "name"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID for the consistency group."
+          },
+          "name": {
+            "type": "string",
+            "description": "Human-readable name (e.g., 'OrderAggregate')."
+          }
         }
       }
     },
     "commands": {
       "type": "array",
+      "description": "List of Commands (state-change requests) designed to fulfill the feature's intent.",
       "items": {
         "type": "object",
-        "required": ["id", "name", "intent", "target", "preconditions", "postconditions"],
+        "required": [
+          "id",
+          "name",
+          "intent",
+          "target",
+          "preconditions",
+          "postconditions"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "target": { "type": "string" },
-          "intent": { "type": "string" },
-          "preconditions": { "type": "array" },
-          "postconditions": { "type": "object" },
-          "transactional_expectation": { "type": "string" },
-          "failure_modes": { "type": "array" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID for the command (e.g., 'cmd.submit-order')."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the command, typically VerbNoun (e.g., 'SubmitOrder')."
+          },
+          "target": {
+            "type": "string",
+            "description": "The target Consistency Group or Entity ID that handles this command."
+          },
+          "intent": {
+            "type": "string",
+            "description": "Brief description of what this command achieves."
+          },
+          "preconditions": {
+            "type": "array",
+            "description": "List of Invariant IDs that must be true *before* this command can succeed.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "postconditions": {
+            "type": "object",
+            "description": "The outcome of the command if successful.",
+            "properties": {
+              "emits": {
+                "type": "array",
+                "description": "List of Domain Event IDs emitted by this command.",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "transactional_expectation": {
+            "type": "string",
+            "description": "The transactional scope required (e.g., 'atomic-within-group')."
+          },
+          "failure_modes": {
+            "type": "array",
+            "description": "Expected failures when preconditions are violated.",
+            "items": {
+              "type": "object",
+              "properties": {
+                "violates": {
+                  "type": "string",
+                  "description": "The Invariant ID that caused the failure."
+                },
+                "outcome": {
+                  "type": "string",
+                  "description": "The system response (e.g., 'reject with error 409')."
+                }
+              }
+            }
+          }
         }
       }
     }
