@@ -22,6 +22,15 @@
         },
         "owner": {
           "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
         }
       }
     },
