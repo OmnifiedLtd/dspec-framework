@@ -4,9 +4,12 @@ meta:
   owner: Catalog Team
 
 glossary:
-  Brand: "A label/manufacturer under which products are marketed."
-  Product: "A marketable item belonging to exactly one Brand."
-  Variant: "A purchasable option of a Product (e.g., size/color)."
+  - name: Brand
+    definition: "A label/manufacturer under which products are marketed."
+  - name: Product
+    definition: "A marketable item belonging to exactly one Brand."
+  - name: Variant
+    definition: "A purchasable option of a Product (e.g., size/color)."
 
 lifecycles:
   Product:

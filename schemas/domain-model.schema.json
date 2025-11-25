@@ -13,8 +13,16 @@
       }
     },
     "glossary": {
-      "type": "object",
-      "additionalProperties": { "type": "string" }
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "definition"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "definition": { "type": "string" }
+        }
+      }
     },
     "predicates": {
       "type": "array",
