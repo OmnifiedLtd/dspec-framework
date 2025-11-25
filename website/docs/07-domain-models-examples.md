@@ -39,6 +39,7 @@ predicates:
 
 invariants:
   - id: link-single-use
+    name: Single Use Link
     rule: "A MagicLink in Redeemed|Expired cannot transition again"
   - id: link-expiry
     rule: "A MagicLink becomes Expired after its configured TTL elapses"
