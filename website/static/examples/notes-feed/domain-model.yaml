@@ -4,9 +4,12 @@ meta:
   owner: Social Team
 
 glossary:
-  User: "A registered participant in the system."
-  Note: "A short text message created by a User."
-  Feed: "A reverse-chronological collection of Notes created by a specific User."
+  - name: User
+    definition: "A registered participant in the system."
+  - name: Note
+    definition: "A short text message created by a User."
+  - name: Feed
+    definition: "A reverse-chronological collection of Notes created by a specific User."
 
 lifecycles:
   Note:

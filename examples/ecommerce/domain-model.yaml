@@ -4,15 +4,24 @@ meta:
   owner: Commerce Team
 
 glossary:
-  Customer: "A buyer with an identity recognized by the store."
-  Product: "A sellable item with catalog identity and pricing policies."
-  Order: "A commitment to purchase specific products and quantities at agreed prices."
-  OrderLine: "A specific product and quantity within an Order at a priced snapshot."
-  InventoryReservation: "A temporary claim on stock for an Order or Shipment."
-  PaymentIntent: "A customer payment authorization/capture intent for an Order."
-  Shipment: "A fulfillment of one or more OrderLines to a delivery destination."
-  Return: "A customer-initiated return of delivered merchandise."
-  Promotion: "A policy that can reduce price under eligibility rules."
+  - name: Customer
+    definition: "A buyer with an identity recognized by the store."
+  - name: Product
+    definition: "A sellable item with catalog identity and pricing policies."
+  - name: Order
+    definition: "A commitment to purchase specific products and quantities at agreed prices."
+  - name: OrderLine
+    definition: "A specific product and quantity within an Order at a priced snapshot."
+  - name: InventoryReservation
+    definition: "A temporary claim on stock for an Order or Shipment."
+  - name: PaymentIntent
+    definition: "A customer payment authorization/capture intent for an Order."
+  - name: Shipment
+    definition: "A fulfillment of one or more OrderLines to a delivery destination."
+  - name: Return
+    definition: "A customer-initiated return of delivered merchandise."
+  - name: Promotion
+    definition: "A policy that can reduce price under eligibility rules."
 
 lifecycles:
   Order:

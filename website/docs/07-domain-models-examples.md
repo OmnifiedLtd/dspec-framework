@@ -8,7 +8,7 @@ nav_order: 8
 
 > **Runtime note:** The agent team now persists domain models as JSON files conforming to
 > `specs/schemas/domain-model.schema.json`, and auto-hydrates each Level‑0 spec’s
-> `what.domain_refs` with anchors into the persisted `<slug>.domain.json`. The conceptual examples
+> `meta.domain_id` with anchors into the persisted `<slug>.domain.json`. The conceptual examples
 > below remain in YAML for readability—the structure is identical.
 
 ### Identity (Conceptual)
@@ -21,8 +21,10 @@ meta:
   owner: Identity Team
 
 glossary:
-  User: "A uniquely identified account holder"
-  MagicLink: "A single-use, time-bound authentication link"
+  - name: User
+    definition: "A uniquely identified account holder"
+  - name: MagicLink
+    definition: "A single-use, time-bound authentication link"
 
 lifecycles:
   MagicLink:

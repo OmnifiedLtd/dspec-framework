@@ -4,15 +4,24 @@ meta:
   owner: Sales Team
 
 glossary:
-  Account: "An organization or customer entity with whom we have or seek a commercial relationship."
-  Contact: "A person associated with an Account."
-  Lead: "A prospect not yet qualified to an Account or Opportunity."
-  Opportunity: "A potential sale with scope, value, and probability."
-  Quote: "A formal commercial proposal based on Opportunity scope."
-  Contract: "A legally binding agreement granting rights and obligations."
-  Consent: "Grant of permission to process personal data or contact a person under policy/regulation."
-  ProductOffering: "A sellable package with commercial terms."
-  Territory: "A sales coverage area with assignment rules."
+  - name: Account
+    definition: "An organization or customer entity with whom we have or seek a commercial relationship."
+  - name: Contact
+    definition: "A person associated with an Account."
+  - name: Lead
+    definition: "A prospect not yet qualified to an Account or Opportunity."
+  - name: Opportunity
+    definition: "A potential sale with scope, value, and probability."
+  - name: Quote
+    definition: "A formal commercial proposal based on Opportunity scope."
+  - name: Contract
+    definition: "A legally binding agreement granting rights and obligations."
+  - name: Consent
+    definition: "Grant of permission to process personal data or contact a person under policy/regulation."
+  - name: ProductOffering
+    definition: "A sellable package with commercial terms."
+  - name: Territory
+    definition: "A sales coverage area with assignment rules."
 
 lifecycles:
   Lead:
