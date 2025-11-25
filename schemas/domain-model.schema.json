@@ -1,26 +1,51 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["meta", "glossary"],
+  "required": [
+    "meta",
+    "glossary"
+  ],
   "properties": {
     "meta": {
       "type": "object",
-      "required": ["id", "version"],
+      "required": [
+        "id",
+        "version"
+      ],
       "properties": {
-        "id": { "type": "string", "description": "Unique identifier for this domain model." },
-        "version": { "type": "string" },
-        "owner": { "type": "string" }
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this domain model."
+        },
+        "version": {
+          "type": "string"
+        },
+        "owner": {
+          "type": "string"
+        }
       }
     },
     "glossary": {
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["name", "definition"],
+        "required": [
+          "name",
+          "definition"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "name": { "type": "string" },
-          "definition": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
         }
       }
     },
@@ -28,11 +53,23 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "definition"],
+        "required": [
+          "name",
+          "definition"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "definition": { "type": "string" },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "definition": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          }
         }
       }
     },
@@ -41,11 +78,26 @@
       "patternProperties": {
         "^.*$": {
           "type": "object",
-          "required": ["states", "transitions"],
+          "required": [
+            "states",
+            "transitions"
+          ],
           "properties": {
-            "states": { "type": "array", "items": { "type": "string" } },
-            "transitions": { "type": "array", "items": { "type": "string" } },
-            "notes": { "type": "string" }
+            "states": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "transitions": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "notes": {
+              "type": "string"
+            }
           }
         }
       }
@@ -54,16 +106,25 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "rule"],
+        "required": [
+          "id",
+          "rule"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "rule": { "type": "string" }
+          "id": {
+            "type": "string"
+          },
+          "rule": {
+            "type": "string"
+          }
         }
       }
     },
     "events": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "string"
+      }
     }
   }
 }
