@@ -12,27 +12,27 @@ Level‑1 translates **consistency intent** from Level‑0 into **consistency gr
 
 ```yaml
 commands:
-  - id: RequestMagicLink
+  - id: request_magic_link
     name: RequestMagicLink
-    target: MagicLink
+    target: magic_link
     intent: 'Issue a time-bound, single-use link'
-    preconditions: ['User is verified']
+    preconditions: ['user_verified']
     postconditions:
-      emits: ['MagicLinkIssued']
+      emits: ['magic_link_issued']
 
-  - id: RedeemMagicLink
+  - id: redeem_magic_link
     name: RedeemMagicLink
-    target: MagicLink
+    target: magic_link
     intent: 'Authenticate via issued link'
-    preconditions: ['link-single-use', 'link-expiry']
+    preconditions: ['link_single_use', 'link_expiry']
     postconditions:
-      emits: ['MagicLinkRedeemed']
+      emits: ['magic_link_redeemed']
     transactional_expectation: 'atomic-within-group'
     failure_modes:
-      - violates: 'link-single-use'
-        outcome: 'reject AlreadyRedeemed'
-      - violates: 'link-expiry'
-        outcome: 'reject LinkExpired'
+      - violates: 'link_single_use'
+        outcome: 'reject already_redeemed'
+      - violates: 'link_expiry'
+        outcome: 'reject link_expired'
 ```
 
 ### E‑commerce Commands

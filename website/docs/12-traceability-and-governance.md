@@ -36,8 +36,8 @@ This ID system creates an unbroken chain of custody for requirements:
 ## Best Practices for IDs
 
 *   **Immutable:** Once an ID is assigned and referenced, treat it like a primary key in a database. Do not change it lightly.
-*   **Machine-Friendly:** Use `kebab-case`, `snake_case`, or `dot.notation`. Avoid spaces and special characters.
-*   **Structured (Optional):** Prefixes can help (e.g., `ac.001` for Acceptance Criteria, `inv.001` for Invariants, `scope.login` for Scope items).
+*   **Machine-Friendly:** Use **snake_case** (e.g., `unique_model_code`, `user_id`). Dot notation is permitted for structural hierarchy (e.g., `scope.publish`, `feature.catalog.publish_product`). Kebab-case is deprecated.
+*   **Structured (Optional):** Prefixes can help (e.g., `ac_001` for Acceptance Criteria, `inv_001` for Invariants, `scope.login` for Scope items).
 *   **Opaque vs. Semantic:**
     *   *Semantic:* `inv.user.email_unique` (Easier to read, but risks becoming outdated if logic changes).
     *   *Opaque:* `inv.1024` (Perfectly stable, but requires lookup).

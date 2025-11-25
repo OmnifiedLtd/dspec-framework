@@ -24,40 +24,40 @@ meta:
   notes: "This model underpins all user management and login features."
 
 glossary:
-  - id: User
+  - id: user
     name: User
     definition: "A uniquely identified account holder"
-  - id: MagicLink
+  - id: magic_link
     name: MagicLink
     definition: "A single-use, time-bound authentication link"
 
 lifecycles:
-  MagicLink:
-    states: ["Issued", "Redeemed", "Expired"]
+  magic_link:
+    states: ["issued", "redeemed", "expired"]
     transitions:
-      - "Issued -> Redeemed"
-      - "Issued -> Expired"
+      - "issued -> redeemed"
+      - "issued -> expired"
 
 predicates:
-  - id: User.HasVerifiedEmail
+  - id: user.has_verified_email
     name: User.HasVerifiedEmail
     definition: "True if the User has completed email verification."
 
 invariants:
-  - id: link-single-use
+  - id: link_single_use
     name: Single Use Link
     rule: "A MagicLink in Redeemed|Expired cannot transition again"
-  - id: link-expiry
+  - id: link_expiry
     rule: "A MagicLink becomes Expired after its configured TTL elapses"
 
 events:  # domain facts; roles only
-  - id: MagicLinkIssued
+  - id: magic_link_issued
     name: MagicLinkIssued
     definition: "MagicLinkIssued(subject: MagicLink, occurred: Time)"
-  - id: MagicLinkRedeemed
+  - id: magic_link_redeemed
     name: MagicLinkRedeemed
     definition: "MagicLinkRedeemed(subject: MagicLink, occurred: Time)"
-  - id: MagicLinkExpired
+  - id: magic_link_expired
     name: MagicLinkExpired
     definition: "MagicLinkExpired(subject: MagicLink, occurred: Time)"
 ```

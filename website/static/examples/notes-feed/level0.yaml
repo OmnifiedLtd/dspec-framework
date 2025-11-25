@@ -1,62 +1,62 @@
 meta:
-  id: feature.personal-notes
+  id: feature.personal_notes
   name: Personal Notes Log
   owner: Productivity Team
   version: 0.2.0
-  domain_id: notes-domain
+  domain_id: notes_domain
 
 intent: >
   Allow users to maintain a personal log of short text notes which they can
   publish, view, edit, and delete. Users see only their own notes.
 scope:
   in:
-    - id: scope.in.create
+    - id: scope.create
       statement: "Creating and Publishing notes"
-    - id: scope.in.view
+    - id: scope.view
       statement: "Viewing personal note history"
-    - id: scope.in.edit
+    - id: scope.edit
       statement: "Editing note content"
-    - id: scope.in.delete
+    - id: scope.delete
       statement: "Deleting notes"
   out:
-    - id: scope.out.view-others
+    - id: scope.view_others
       statement: "Viewing other users' notes"
-    - id: scope.out.follow
+    - id: scope.follow
       statement: "Following other users"
-    - id: scope.out.public
+    - id: scope.public
       statement: "Public feeds"
 
 domain_invariants:
-  - id: note-author-ownership
+  - id: note_author_ownership
     rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
-    moment_of_truth: "NoteCreated"
+    moment_of_truth: "note_created"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
-  - id: note-length-limit
+  - id: note_length_limit
     rule: "A Note's content must not exceed 280 characters."
-    moment_of_truth: "NotePublished"
+    moment_of_truth: "note_published"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
-  - id: author-modification-only
+  - id: author_modification_only
     rule: "Only the Author of a Note may modify its content or state."
-    moment_of_truth: "NoteContentUpdated"
+    moment_of_truth: "note_content_updated"
     consistency_demand:
       scope: "note"
       strength: "write-time"
       tolerance: "none"
 
 acceptance_criteria:
-  - id: ac-001
+  - id: ac_001
     statement: "User can create and publish a note."
-  - id: ac-002
+  - id: ac_002
     statement: "User can edit the content of their existing note."
-  - id: ac-003
+  - id: ac_003
     statement: "User sees only their own notes in the feed."
-  - id: ac-004
+  - id: ac_004
     statement: "Attempting to access or edit another user's note results in an error."
 
 quality_criteria:
@@ -70,6 +70,6 @@ verification:
 
 dependencies:
   upstream:
-    - "feature.user-identity"
+    - "feature.user_identity"
   downstream:
-    - "feature.data-export"
+    - "feature.data_export"

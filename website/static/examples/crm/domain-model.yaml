@@ -4,106 +4,106 @@ meta:
   owner: Sales Team
 
 glossary:
-  - id: Account
+  - id: account
     name: Account
     definition: "An organization or customer entity with whom we have or seek a commercial relationship."
-  - id: Contact
+  - id: contact
     name: Contact
     definition: "A person associated with an Account."
-  - id: Lead
+  - id: lead
     name: Lead
     definition: "A prospect not yet qualified to an Account or Opportunity."
-  - id: Opportunity
+  - id: opportunity
     name: Opportunity
     definition: "A potential sale with scope, value, and probability."
-  - id: Quote
+  - id: quote
     name: Quote
     definition: "A formal commercial proposal based on Opportunity scope."
-  - id: Contract
+  - id: contract
     name: Contract
     definition: "A legally binding agreement granting rights and obligations."
-  - id: Consent
+  - id: consent
     name: Consent
     definition: "Grant of permission to process personal data or contact a person under policy/regulation."
-  - id: ProductOffering
+  - id: product_offering
     name: ProductOffering
     definition: "A sellable package with commercial terms."
-  - id: Territory
+  - id: territory
     name: Territory
     definition: "A sales coverage area with assignment rules."
 
 lifecycles:
-  Lead:
-    states: ["New", "Working", "Qualified", "Disqualified", "Converted"]
+  lead:
+    states: ["new", "working", "qualified", "disqualified", "converted"]
     transitions:
-      - "New -> Working"
-      - "Working -> Qualified"
-      - "Working -> Disqualified"
-      - "Qualified -> Converted"
+      - "new -> working"
+      - "working -> qualified"
+      - "working -> disqualified"
+      - "qualified -> converted"
     notes: "Conversion creates or links an Account and optionally an Opportunity."
-  Opportunity:
-    states: ["Open", "Negotiation", "Won", "Lost", "Closed"]
+  opportunity:
+    states: ["open", "negotiation", "won", "lost", "closed"]
     transitions:
-      - "Open -> Negotiation"
-      - "Negotiation -> Won"
-      - "Negotiation -> Lost"
-      - "Won -> Closed"
-      - "Lost -> Closed"
-  Quote:
-    states: ["Draft", "Issued", "Accepted", "Expired", "Withdrawn"]
+      - "open -> negotiation"
+      - "negotiation -> won"
+      - "negotiation -> lost"
+      - "won -> closed"
+      - "lost -> closed"
+  quote:
+    states: ["draft", "issued", "accepted", "expired", "withdrawn"]
     transitions:
-      - "Draft -> Issued"
-      - "Issued -> Accepted"
-      - "Issued -> Expired"
-      - "Issued -> Withdrawn"
-  Contract:
-    states: ["Draft", "Active", "Suspended", "Terminated", "Expired"]
+      - "draft -> issued"
+      - "issued -> accepted"
+      - "issued -> expired"
+      - "issued -> withdrawn"
+  contract:
+    states: ["draft", "active", "suspended", "terminated", "expired"]
     transitions:
-      - "Draft -> Active"
-      - "Active -> Suspended"
-      - "Active -> Terminated"
-      - "Active -> Expired"
-  Consent:
-    states: ["Granted", "Revoked"]
+      - "draft -> active"
+      - "active -> suspended"
+      - "active -> terminated"
+      - "active -> expired"
+  consent:
+    states: ["granted", "revoked"]
     transitions:
-      - "Granted -> Revoked"
+      - "granted -> revoked"
 
 invariants:
-  - id: opp-has-single-account
+  - id: opp_has_single_account
     rule: "Every Opportunity is associated to exactly one Account."
-  - id: quote-aligns-with-opp
+  - id: quote_aligns_with_opp
     rule: "An Accepted Quote must reference exactly one Opportunity and its scope is a subset of that Opportunity's scope at acceptance."
-  - id: contract-after-won
+  - id: contract_after_won
     rule: "A Contract may become Active only if derived from a Won Opportunity and an Accepted Quote."
-  - id: one-active-contract-per-account-offering
+  - id: one_active_contract_per_account_offering
     rule: "At most one Active Contract exists per Account × ProductOffering × effective period unless exclusivity is explicitly waived."
-  - id: consent-gates-communication
+  - id: consent_gates_communication
     rule: "Outbound communication to a Contact requires Consent Granted for the relevant channel and purpose."
-  - id: territory-assignment-stability
+  - id: territory_assignment_stability
     rule: "Opportunity territory may change only at stage boundaries (Open↔Negotiation); changes are disallowed after Won/Lost."
 
 events:
-  - id: LeadQualified
+  - id: lead_qualified
     name: LeadQualified
     definition: "LeadQualified(subject: Lead, occurred: Time)"
-  - id: LeadConverted
+  - id: lead_converted
     name: LeadConverted
     definition: "LeadConverted(subject: Lead, occurred: Time)"
-  - id: OpportunityStageAdvanced
+  - id: opportunity_stage_advanced
     name: OpportunityStageAdvanced
     definition: "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
-  - id: QuoteIssued
+  - id: quote_issued
     name: QuoteIssued
     definition: "QuoteIssued(subject: Quote, occurred: Time)"
-  - id: QuoteAccepted
+  - id: quote_accepted
     name: QuoteAccepted
     definition: "QuoteAccepted(subject: Quote, occurred: Time)"
-  - id: ContractActivated
+  - id: contract_activated
     name: ContractActivated
     definition: "ContractActivated(subject: Contract, occurred: Time)"
-  - id: ConsentGranted
+  - id: consent_granted
     name: ConsentGranted
     definition: "ConsentGranted(subject: Consent, occurred: Time)"
-  - id: ConsentRevoked
+  - id: consent_revoked
     name: ConsentRevoked
     definition: "ConsentRevoked(subject: Consent, occurred: Time)"

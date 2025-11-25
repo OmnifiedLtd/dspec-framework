@@ -2,28 +2,28 @@ extends: level0.yaml
 
 bounded_context: catalog
 consistency_groups:
-  - id: Product
+  - id: product
     name: Product
-  - id: Variant
+  - id: variant
     name: Variant
 commands:
-  - id: ActivateProduct
+  - id: activate_product
     name: ActivateProduct
-    target: Product
+    target: product
     intent: 'Publish product under a Brand'
-    preconditions: ['unique-model-code-per-brand']
+    preconditions: ['unique_model_code_per_brand']
     postconditions:
-      emits: ['ProductActivated']
-      transitions: ['Draft -> Active']
+      emits: ['product_activated']
+      transitions: ['draft -> active']
     transactional_expectation: 'starts-saga' # if using reservation-then-confirm
     failure_modes:
-      - violates: 'unique-model-code-per-brand'
-        outcome: 'reject DuplicateModelCode'
+      - violates: 'unique_model_code_per_brand'
+        outcome: 'reject duplicate_model_code'
 
-  - id: ActivateVariant
+  - id: activate_variant
     name: ActivateVariant
-    target: Variant
+    target: variant
     intent: 'Publish purchasable SKU'
-    preconditions: ['variant-sku-unique-per-product']
+    preconditions: ['variant_sku_unique_per_product']
     postconditions:
-      emits: ['VariantActivated']
+      emits: ['variant_activated']

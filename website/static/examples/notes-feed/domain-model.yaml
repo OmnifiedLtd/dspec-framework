@@ -1,48 +1,48 @@
 meta:
-  id: notes-domain
+  id: notes_domain
   version: 0.1.0
   owner: Social Team
 
 glossary:
-  - id: User
+  - id: user
     name: User
     definition: "A registered participant in the system."
-  - id: Note
+  - id: note
     name: Note
     definition: "A short text message created by a User."
-  - id: Feed
+  - id: feed
     name: Feed
     definition: "A reverse-chronological collection of Notes created by a specific User."
 
 lifecycles:
-  Note:
+  note:
     states: 
-      - "Draft"
-      - "Published"
-      - "Deleted"
+      - "draft"
+      - "published"
+      - "deleted"
     transitions:
-      - "Draft -> Published"
-      - "Published -> Deleted"
-      - "Draft -> Deleted"
+      - "draft -> published"
+      - "published -> deleted"
+      - "draft -> deleted"
 
 invariants:
-  - id: note-author-ownership
+  - id: note_author_ownership
     rule: "A Note belongs to exactly one Author (User) and cannot be reassigned."
-  - id: note-length-limit
+  - id: note_length_limit
     rule: "A Note's content must not exceed 280 characters."
-  - id: author-modification-only
+  - id: author_modification_only
     rule: "Only the Author of a Note may modify its content or state."
 
 events:
-  - id: NoteCreated
+  - id: note_created
     name: NoteCreated
     definition: "NoteCreated(subject: Note, author: User, occurred: Time)"
-  - id: NotePublished
+  - id: note_published
     name: NotePublished
     definition: "NotePublished(subject: Note, occurred: Time)"
-  - id: NoteContentUpdated
+  - id: note_content_updated
     name: NoteContentUpdated
     definition: "NoteContentUpdated(subject: Note, occurred: Time)"
-  - id: NoteDeleted
+  - id: note_deleted
     name: NoteDeleted
     definition: "NoteDeleted(subject: Note, occurred: Time)"
