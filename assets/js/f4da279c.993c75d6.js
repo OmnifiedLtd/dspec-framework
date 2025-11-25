@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdocusaurus_tailwind_shadcn_template=self.webpackChunkdocusaurus_tailwind_shadcn_template||[]).push([["5662"],{39327:function(e){e.exports=JSON.parse('{"metadata":{"permalink":"/dspec-framework/blog","page":1,"postsPerPage":6,"totalPages":1,"totalCount":6,"blogDescription":"Updates from the dspec-framework team","blogTitle":"Blog"}}')}}]);
