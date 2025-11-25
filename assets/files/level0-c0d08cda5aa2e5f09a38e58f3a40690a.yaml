@@ -7,8 +7,16 @@ meta:
 
 intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
 scope:
-  in: ['publish product', 'activate variant']
-  out: ['bulk reindexing', 'search relevance tuning']
+  in:
+    - id: scope.in.publish
+      statement: 'publish product'
+    - id: scope.in.activate
+      statement: 'activate variant'
+  out:
+    - id: scope.out.reindexing
+      statement: 'bulk reindexing'
+    - id: scope.out.search
+      statement: 'search relevance tuning'
 
 domain_invariants:
   - id: unique-model-code-per-brand
@@ -27,8 +35,10 @@ domain_invariants:
       tolerance: 'none'
 
 system_constraints:
-  - 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
-  - 'Burst rates up to 2k publishes/minute per brand.'
+  - id: constr.volume
+    statement: 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
+  - id: constr.rate
+    statement: 'Burst rates up to 2k publishes/minute per brand.'
 
 acceptance_criteria:
   - id: ac1

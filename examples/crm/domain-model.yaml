@@ -4,23 +4,32 @@ meta:
   owner: Sales Team
 
 glossary:
-  - name: Account
+  - id: Account
+    name: Account
     definition: "An organization or customer entity with whom we have or seek a commercial relationship."
-  - name: Contact
+  - id: Contact
+    name: Contact
     definition: "A person associated with an Account."
-  - name: Lead
+  - id: Lead
+    name: Lead
     definition: "A prospect not yet qualified to an Account or Opportunity."
-  - name: Opportunity
+  - id: Opportunity
+    name: Opportunity
     definition: "A potential sale with scope, value, and probability."
-  - name: Quote
+  - id: Quote
+    name: Quote
     definition: "A formal commercial proposal based on Opportunity scope."
-  - name: Contract
+  - id: Contract
+    name: Contract
     definition: "A legally binding agreement granting rights and obligations."
-  - name: Consent
+  - id: Consent
+    name: Consent
     definition: "Grant of permission to process personal data or contact a person under policy/regulation."
-  - name: ProductOffering
+  - id: ProductOffering
+    name: ProductOffering
     definition: "A sellable package with commercial terms."
-  - name: Territory
+  - id: Territory
+    name: Territory
     definition: "A sales coverage area with assignment rules."
 
 lifecycles:
@@ -74,11 +83,27 @@ invariants:
     rule: "Opportunity territory may change only at stage boundaries (Open↔Negotiation); changes are disallowed after Won/Lost."
 
 events:
-  - "LeadQualified(subject: Lead, occurred: Time)"
-  - "LeadConverted(subject: Lead, occurred: Time)"
-  - "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
-  - "QuoteIssued(subject: Quote, occurred: Time)"
-  - "QuoteAccepted(subject: Quote, occurred: Time)"
-  - "ContractActivated(subject: Contract, occurred: Time)"
-  - "ConsentGranted(subject: Consent, occurred: Time)"
-  - "ConsentRevoked(subject: Consent, occurred: Time)"
+  - id: LeadQualified
+    name: LeadQualified
+    definition: "LeadQualified(subject: Lead, occurred: Time)"
+  - id: LeadConverted
+    name: LeadConverted
+    definition: "LeadConverted(subject: Lead, occurred: Time)"
+  - id: OpportunityStageAdvanced
+    name: OpportunityStageAdvanced
+    definition: "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
+  - id: QuoteIssued
+    name: QuoteIssued
+    definition: "QuoteIssued(subject: Quote, occurred: Time)"
+  - id: QuoteAccepted
+    name: QuoteAccepted
+    definition: "QuoteAccepted(subject: Quote, occurred: Time)"
+  - id: ContractActivated
+    name: ContractActivated
+    definition: "ContractActivated(subject: Contract, occurred: Time)"
+  - id: ConsentGranted
+    name: ConsentGranted
+    definition: "ConsentGranted(subject: Consent, occurred: Time)"
+  - id: ConsentRevoked
+    name: ConsentRevoked
+    definition: "ConsentRevoked(subject: Consent, occurred: Time)"

@@ -19,8 +19,32 @@
       "type": "object",
       "required": ["in", "out"],
       "properties": {
-        "in": { "type": "array", "items": { "type": "string" } },
-        "out": { "type": "array", "items": { "type": "string" } }
+        "in": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "statement"],
+            "properties": {
+              "id": { "type": "string" },
+              "statement": { "type": "string" },
+              "name": { "type": "string" },
+              "notes": { "type": "string" }
+            }
+          }
+        },
+        "out": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id", "statement"],
+            "properties": {
+              "id": { "type": "string" },
+              "statement": { "type": "string" },
+              "name": { "type": "string" },
+              "notes": { "type": "string" }
+            }
+          }
+        }
       }
     },
     "domain_invariants": {
@@ -48,15 +72,42 @@
     },
     "policy_and_regulatory": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" },
+          "name": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
     },
     "system_constraints": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" },
+          "name": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
     },
     "explicit_exclusions": {
       "type": "array",
-      "items": { "type": "string" }
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" },
+          "name": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
     },
     "acceptance_criteria": {
       "type": "array",
@@ -69,7 +120,19 @@
         }
       }
     },
-    "quality_criteria": { "type": "array", "items": { "type": "string" } },
+    "quality_criteria": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string" },
+          "statement": { "type": "string" },
+          "name": { "type": "string" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
     "verification": {
       "type": "object",
       "properties": {

@@ -4,23 +4,32 @@ meta:
   owner: Commerce Team
 
 glossary:
-  - name: Customer
+  - id: Customer
+    name: Customer
     definition: "A buyer with an identity recognized by the store."
-  - name: Product
+  - id: Product
+    name: Product
     definition: "A sellable item with catalog identity and pricing policies."
-  - name: Order
+  - id: Order
+    name: Order
     definition: "A commitment to purchase specific products and quantities at agreed prices."
-  - name: OrderLine
+  - id: OrderLine
+    name: OrderLine
     definition: "A specific product and quantity within an Order at a priced snapshot."
-  - name: InventoryReservation
+  - id: InventoryReservation
+    name: InventoryReservation
     definition: "A temporary claim on stock for an Order or Shipment."
-  - name: PaymentIntent
+  - id: PaymentIntent
+    name: PaymentIntent
     definition: "A customer payment authorization/capture intent for an Order."
-  - name: Shipment
+  - id: Shipment
+    name: Shipment
     definition: "A fulfillment of one or more OrderLines to a delivery destination."
-  - name: Return
+  - id: Return
+    name: Return
     definition: "A customer-initiated return of delivered merchandise."
-  - name: Promotion
+  - id: Promotion
+    name: Promotion
     definition: "A policy that can reduce price under eligibility rules."
 
 lifecycles:
@@ -78,11 +87,27 @@ invariants:
     rule: "A Refund can be executed only after Returned goods are Received or acceptable proof-of-non-delivery exists."
 
 events:
-  - "OrderSubmitted(subject: Order, occurred: Time)"
-  - "InventoryReserved(subject: InventoryReservation, occurred: Time)"
-  - "OrderConfirmed(subject: Order, occurred: Time)"
-  - "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
-  - "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
-  - "ShipmentDelivered(subject: Shipment, occurred: Time)"
-  - "ReturnRequested(subject: Return, occurred: Time)"
-  - "RefundIssued(subject: PaymentIntent, occurred: Time)"
+  - id: OrderSubmitted
+    name: OrderSubmitted
+    definition: "OrderSubmitted(subject: Order, occurred: Time)"
+  - id: InventoryReserved
+    name: InventoryReserved
+    definition: "InventoryReserved(subject: InventoryReservation, occurred: Time)"
+  - id: OrderConfirmed
+    name: OrderConfirmed
+    definition: "OrderConfirmed(subject: Order, occurred: Time)"
+  - id: PaymentAuthorized
+    name: PaymentAuthorized
+    definition: "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
+  - id: PaymentCaptured
+    name: PaymentCaptured
+    definition: "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
+  - id: ShipmentDelivered
+    name: ShipmentDelivered
+    definition: "ShipmentDelivered(subject: Shipment, occurred: Time)"
+  - id: ReturnRequested
+    name: ReturnRequested
+    definition: "ReturnRequested(subject: Return, occurred: Time)"
+  - id: RefundIssued
+    name: RefundIssued
+    definition: "RefundIssued(subject: PaymentIntent, occurred: Time)"

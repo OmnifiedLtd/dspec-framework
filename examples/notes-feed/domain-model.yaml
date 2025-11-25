@@ -4,11 +4,14 @@ meta:
   owner: Social Team
 
 glossary:
-  - name: User
+  - id: User
+    name: User
     definition: "A registered participant in the system."
-  - name: Note
+  - id: Note
+    name: Note
     definition: "A short text message created by a User."
-  - name: Feed
+  - id: Feed
+    name: Feed
     definition: "A reverse-chronological collection of Notes created by a specific User."
 
 lifecycles:
@@ -31,7 +34,15 @@ invariants:
     rule: "Only the Author of a Note may modify its content or state."
 
 events:
-  - "NoteCreated(subject: Note, author: User, occurred: Time)"
-  - "NotePublished(subject: Note, occurred: Time)"
-  - "NoteContentUpdated(subject: Note, occurred: Time)"
-  - "NoteDeleted(subject: Note, occurred: Time)"
+  - id: NoteCreated
+    name: NoteCreated
+    definition: "NoteCreated(subject: Note, author: User, occurred: Time)"
+  - id: NotePublished
+    name: NotePublished
+    definition: "NotePublished(subject: Note, occurred: Time)"
+  - id: NoteContentUpdated
+    name: NoteContentUpdated
+    definition: "NoteContentUpdated(subject: Note, occurred: Time)"
+  - id: NoteDeleted
+    name: NoteDeleted
+    definition: "NoteDeleted(subject: Note, occurred: Time)"
