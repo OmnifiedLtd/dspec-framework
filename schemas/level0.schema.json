@@ -1,47 +1,115 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
-  "required": ["meta", "intent", "scope", "domain_invariants", "acceptance_criteria"],
+  "description": "Schema for a Level-0 (Feature) DSpec. Defines the User Intent, Scope, and Business Rules (Invariants) without specifying implementation mechanics.",
+  "required": [
+    "meta",
+    "intent",
+    "scope",
+    "domain_invariants",
+    "acceptance_criteria"
+  ],
   "properties": {
     "meta": {
       "type": "object",
-      "required": ["id", "name", "owner", "version", "domain_id"],
+      "description": "Metadata identifying the feature spec.",
+      "required": [
+        "id",
+        "name",
+        "owner",
+        "version",
+        "domain_id"
+      ],
       "properties": {
-        "id": { "type": "string" },
-        "name": { "type": "string" },
-        "owner": { "type": "string" },
-        "version": { "type": "string" },
-        "domain_id": { "type": "string" }
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this feature (e.g., 'feature.passwordless-login')."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the feature."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Team or individual responsible for this feature."
+        },
+        "version": {
+          "type": "string",
+          "description": "Semantic version of the feature spec."
+        },
+        "domain_id": {
+          "type": "string",
+          "description": "ID of the Domain Model that provides the vocabulary for this feature."
+        }
       }
     },
-    "intent": { "type": "string" },
+    "intent": {
+      "type": "string",
+      "description": "A high-level statement of what the user is trying to achieve and why."
+    },
     "scope": {
       "type": "object",
-      "required": ["in", "out"],
+      "description": "Defines the boundaries of the feature: what is in and what is out.",
+      "required": [
+        "in",
+        "out"
+      ],
       "properties": {
         "in": {
           "type": "array",
+          "description": "List of functionalities or scenarios explicitly IN scope.",
           "items": {
             "type": "object",
-            "required": ["id", "statement"],
+            "required": [
+              "id",
+              "statement"
+            ],
             "properties": {
-              "id": { "type": "string" },
-              "statement": { "type": "string" },
-              "name": { "type": "string" },
-              "notes": { "type": "string" }
+              "id": {
+                "type": "string",
+                "description": "Unique ID for this scope item."
+              },
+              "statement": {
+                "type": "string",
+                "description": "Description of the in-scope item."
+              },
+              "name": {
+                "type": "string",
+                "description": "Short name."
+              },
+              "notes": {
+                "type": "string",
+                "description": "Additional context."
+              }
             }
           }
         },
         "out": {
           "type": "array",
+          "description": "List of functionalities or scenarios explicitly OUT of scope.",
           "items": {
             "type": "object",
-            "required": ["id", "statement"],
+            "required": [
+              "id",
+              "statement"
+            ],
             "properties": {
-              "id": { "type": "string" },
-              "statement": { "type": "string" },
-              "name": { "type": "string" },
-              "notes": { "type": "string" }
+              "id": {
+                "type": "string",
+                "description": "Unique ID for this exclusion."
+              },
+              "statement": {
+                "type": "string",
+                "description": "Description of the out-of-scope item."
+              },
+              "name": {
+                "type": "string",
+                "description": "Short name."
+              },
+              "notes": {
+                "type": "string",
+                "description": "Reason for exclusion."
+              }
             }
           }
         }
@@ -49,22 +117,47 @@
     },
     "domain_invariants": {
       "type": "array",
+      "description": "List of Domain Invariants (rules) that must be enforced by this feature, along with their consistency requirements.",
       "items": {
         "type": "object",
-        "required": ["id", "rule"],
+        "required": [
+          "id",
+          "rule"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "rule": { "type": "string" },
-          "moment_of_truth": { "type": "string" },
+          "id": {
+            "type": "string",
+            "description": "Reference ID of the invariant defined in the Domain Model."
+          },
+          "rule": {
+            "type": "string",
+            "description": "The rule text (can be copied from Domain Model for readability)."
+          },
+          "moment_of_truth": {
+            "type": "string",
+            "description": "The specific event or step where this rule must be checked (e.g., 'magic-link-redeemed')."
+          },
           "consistency_demand": {
             "type": "object",
+            "description": "Specifies how strictly this rule must be enforced (Consistency vs. Availability trade-off).",
             "properties": {
-              "scope": { "type": "string" },
+              "scope": {
+                "type": "string",
+                "description": "The boundary of consistency (e.g., 'global', 'user-account', 'link')."
+              },
               "strength": {
                 "type": "string",
-                "enum": ["write-time", "read-your-write", "eventual"]
+                "enum": [
+                  "write-time",
+                  "read-your-write",
+                  "eventual"
+                ],
+                "description": "The required consistency level: 'write-time' (immediate), 'read-your-write' (session), or 'eventual'."
               },
-              "tolerance": { "type": "string" }
+              "tolerance": {
+                "type": "string",
+                "description": "For eventual consistency, the maximum acceptable delay (e.g., '30s', 'none')."
+              }
             }
           }
         }
@@ -72,79 +165,182 @@
     },
     "policy_and_regulatory": {
       "type": "array",
+      "description": "Legal, compliance, or corporate policy constraints.",
       "items": {
         "type": "object",
-        "required": ["id", "statement"],
+        "required": [
+          "id",
+          "statement"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "statement": { "type": "string" },
-          "name": { "type": "string" },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID for this policy."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The policy statement."
+          },
+          "name": {
+            "type": "string",
+            "description": "Short name."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Context."
+          }
         }
       }
     },
     "system_constraints": {
       "type": "array",
+      "description": "Technical or environmental constraints (e.g., 'legacy system', 'mobile only').",
       "items": {
         "type": "object",
-        "required": ["id", "statement"],
+        "required": [
+          "id",
+          "statement"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "statement": { "type": "string" },
-          "name": { "type": "string" },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID for the constraint."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The constraint description."
+          },
+          "name": {
+            "type": "string",
+            "description": "Short name."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Impact on design."
+          }
         }
       }
     },
     "explicit_exclusions": {
       "type": "array",
+      "description": "Specific things this feature will deliberately NOT do (distinct from general out-of-scope).",
       "items": {
         "type": "object",
-        "required": ["id", "statement"],
+        "required": [
+          "id",
+          "statement"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "statement": { "type": "string" },
-          "name": { "type": "string" },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The exclusion statement."
+          },
+          "name": {
+            "type": "string",
+            "description": "Short name."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Reason."
+          }
         }
       }
     },
     "acceptance_criteria": {
       "type": "array",
+      "description": "Necessary and sufficient conditions to verify the feature is complete and correct.",
       "items": {
         "type": "object",
-        "required": ["id", "statement"],
+        "required": [
+          "id",
+          "statement"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "statement": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID (e.g., 'ac-001')."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The criterion that must be met."
+          }
         }
       }
     },
     "quality_criteria": {
       "type": "array",
+      "description": "Non-functional requirements (SLOs) like latency, availability, or throughput.",
       "items": {
         "type": "object",
-        "required": ["id", "statement"],
+        "required": [
+          "id",
+          "statement"
+        ],
         "properties": {
-          "id": { "type": "string" },
-          "statement": { "type": "string" },
-          "name": { "type": "string" },
-          "notes": { "type": "string" }
+          "id": {
+            "type": "string",
+            "description": "Unique ID (e.g., 'qc.latency')."
+          },
+          "statement": {
+            "type": "string",
+            "description": "The quality requirement (e.g., 'P95 latency < 200ms')."
+          },
+          "name": {
+            "type": "string",
+            "description": "Short name."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Measurement context."
+          }
         }
       }
     },
     "verification": {
       "type": "object",
+      "description": "Links to artifacts that verify this spec (e.g., Gherkin feature files).",
       "properties": {
-        "type": { "type": "string", "enum": ["executable", "manual"] },
-        "artifacts": { "type": "array", "items": { "type": "string" } }
+        "type": {
+          "type": "string",
+          "enum": [
+            "executable",
+            "manual"
+          ],
+          "description": "Type of verification: 'executable' (automated tests) or 'manual'."
+        },
+        "artifacts": {
+          "type": "array",
+          "description": "List of file paths to verification artifacts (e.g., 'tests/features/login.feature').",
+          "items": {
+            "type": "string"
+          }
+        }
       }
     },
     "dependencies": {
       "type": "object",
+      "description": "Dependencies on other features.",
       "properties": {
-        "upstream": { "type": "array", "items": { "type": "string" } },
-        "downstream": { "type": "array", "items": { "type": "string" } }
+        "upstream": {
+          "type": "array",
+          "description": "Features that this feature depends on.",
+          "items": {
+            "type": "string",
+            "description": "Feature ID."
+          }
+        },
+        "downstream": {
+          "type": "array",
+          "description": "Features that depend on this feature.",
+          "items": {
+            "type": "string",
+            "description": "Feature ID."
+          }
+        }
       }
     }
   }

@@ -1,6 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
+  "description": "Schema for a Domain Model in the DSpec framework. Defines the Ubiquitous Language, rules, and facts that underpin features.",
   "required": [
     "meta",
     "glossary"
@@ -8,6 +9,7 @@
   "properties": {
     "meta": {
       "type": "object",
+      "description": "Metadata identifying the domain model.",
       "required": [
         "id",
         "version"
@@ -15,27 +17,33 @@
       "properties": {
         "id": {
           "type": "string",
-          "description": "Unique identifier for this domain model."
+          "description": "Unique identifier for this domain model (e.g., 'identity', 'catalog'). Used by Level-0 specs to reference this model."
         },
         "version": {
-          "type": "string"
+          "type": "string",
+          "description": "Semantic version of the domain model (e.g., '1.0.0')."
         },
         "owner": {
-          "type": "string"
+          "type": "string",
+          "description": "Team or individual responsible for maintaining this domain model."
         },
         "notes": {
-          "type": "string"
+          "type": "string",
+          "description": "General notes or context about the domain model."
         },
         "description": {
-          "type": "string"
+          "type": "string",
+          "description": "A brief summary of the domain model's scope and purpose."
         },
         "title": {
-          "type": "string"
+          "type": "string",
+          "description": "Human-readable title of the domain model."
         }
       }
     },
     "glossary": {
       "type": "array",
+      "description": "The Ubiquitous Language: precise definitions of nouns (Entities, Value Objects) used in this domain.",
       "items": {
         "type": "object",
         "required": [
@@ -45,22 +53,27 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier for the term (kebab-case). Immutable reference for other specs."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable name of the term (Capitalized)."
           },
           "definition": {
-            "type": "string"
+            "type": "string",
+            "description": "Precise, concise definition of what this term means in this specific context."
           },
           "notes": {
-            "type": "string"
+            "type": "string",
+            "description": "Additional context, examples, or clarification."
           }
         }
       }
     },
     "predicates": {
       "type": "array",
+      "description": "Named boolean conditions representing significant business states (e.g., 'User.HasVerifiedEmail').",
       "items": {
         "type": "object",
         "required": [
@@ -70,25 +83,31 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier for the predicate (e.g., 'user.has-verified-email')."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable name of the predicate."
           },
           "definition": {
-            "type": "string"
+            "type": "string",
+            "description": "The logical condition that must be met for this predicate to be true."
           },
           "notes": {
-            "type": "string"
+            "type": "string",
+            "description": "Additional context."
           }
         }
       }
     },
     "lifecycles": {
       "type": "object",
+      "description": "Valid states and transitions for entities in the domain.",
       "patternProperties": {
         "^.*$": {
           "type": "object",
+          "description": "Lifecycle definition for a specific entity (key is the entity ID).",
           "required": [
             "states",
             "transitions"
@@ -96,6 +115,7 @@
           "properties": {
             "states": {
               "type": "array",
+              "description": "List of valid states for this entity.",
               "items": {
                 "type": "object",
                 "required": [
@@ -104,25 +124,31 @@
                 ],
                 "properties": {
                   "id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Unique identifier for the state (e.g., 'issued', 'redeemed')."
                   },
                   "name": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Human-readable name of the state."
                   },
                   "notes": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "Description of what this state represents."
                   }
                 }
               }
             },
             "transitions": {
               "type": "array",
+              "description": "Allowed transitions between states (e.g., 'issued -> redeemed').",
               "items": {
-                "type": "string"
+                "type": "string",
+                "description": "A transition string in the format 'from_state -> to_state'."
               }
             },
             "notes": {
-              "type": "string"
+              "type": "string",
+              "description": "Notes about the lifecycle logic."
             }
           }
         }
@@ -130,6 +156,7 @@
     },
     "invariants": {
       "type": "array",
+      "description": "The canonical library of business rules that must always be true.",
       "items": {
         "type": "object",
         "required": [
@@ -138,22 +165,27 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier for the rule (e.g., 'link-single-use')."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable name of the rule."
           },
           "rule": {
-            "type": "string"
+            "type": "string",
+            "description": "The authoritative statement of the business rule."
           },
           "notes": {
-            "type": "string"
+            "type": "string",
+            "description": "Rationale or examples."
           }
         }
       }
     },
     "events": {
       "type": "array",
+      "description": "Domain facts: past-tense statements of things that have happened (e.g., 'MagicLinkRedeemed').",
       "items": {
         "type": "object",
         "required": [
@@ -161,16 +193,20 @@
         ],
         "properties": {
           "id": {
-            "type": "string"
+            "type": "string",
+            "description": "Unique identifier for the event (e.g., 'magic-link-redeemed')."
           },
           "name": {
-            "type": "string"
+            "type": "string",
+            "description": "Human-readable name of the event."
           },
           "definition": {
-            "type": "string"
+            "type": "string",
+            "description": "The semantic definition of the event, often signature-style 'EventName(subject)'."
           },
           "notes": {
-            "type": "string"
+            "type": "string",
+            "description": "When this event occurs and what it signifies."
           }
         }
       }
