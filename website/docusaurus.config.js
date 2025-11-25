@@ -24,7 +24,7 @@ const config = {
   projectName: 'dspec-framework', // Usually your repo name.
   trailingSlash: false,
 
-  onBrokenLinks: 'warn',
+  onBrokenLinks: 'throw',
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'warn'
@@ -60,6 +60,12 @@ const config = {
         blog: false, // Disable default blog plugin as we use the custom one below
         theme: {
           customCss: './src/css/custom.css'
+        },
+        sitemap: {
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml'
         }
       })
     ]
@@ -184,38 +190,38 @@ const config = {
         disableInDev: true
       })
     ],
-    [
-      './src/plugins/blog-plugin',
-      {
-        path: 'blog',
-        editLocalizedFiles: false,
-        blogTitle: 'Blog',
-        blogDescription: 'Updates from the dspec-framework team',
-        blogSidebarCount: 'ALL',
-        blogSidebarTitle: 'Latest Posts',
-        routeBasePath: 'blog',
-        include: ['**/*.md', '**/*.mdx'],
-        exclude: [
-          '**/_*.{js,jsx,ts,tsx,md,mdx}',
-          '**/_*/**',
-          '**/*.test.{js,jsx,ts,tsx}',
-          '**/__tests__/**'
-        ],
-        postsPerPage: 6,
-        truncateMarker: /<!--\s*(truncate)\s*-->/,
-        showReadingTime: true,
-        onUntruncatedBlogPosts: 'ignore',
-        editUrl: 'https://github.com/OmnifiedLtd/dspec-framework/tree/main/',
-        remarkPlugins: [
-          [
-            require('@docusaurus/remark-plugin-npm2yarn'),
-            {
-              sync: true
-            }
-          ]
-        ]
-      }
-    ],
+    // [
+    //   './src/plugins/blog-plugin',
+    //   {
+    //     path: 'blog',
+    //     editLocalizedFiles: false,
+    //     blogTitle: 'Blog',
+    //     blogDescription: 'Updates from the dspec-framework team',
+    //     blogSidebarCount: 'ALL',
+    //     blogSidebarTitle: 'Latest Posts',
+    //     routeBasePath: 'blog',
+    //     include: ['**/*.md', '**/*.mdx'],
+    //     exclude: [
+    //       '**/_*.{js,jsx,ts,tsx,md,mdx}',
+    //       '**/_*/**',
+    //       '**/*.test.{js,jsx,ts,tsx}',
+    //       '**/__tests__/**'
+    //     ],
+    //     postsPerPage: 6,
+    //     truncateMarker: /<!--\s*(truncate)\s*-->/,
+    //     showReadingTime: true,
+    //     onUntruncatedBlogPosts: 'ignore',
+    //     editUrl: 'https://github.com/OmnifiedLtd/dspec-framework/tree/main/',
+    //     remarkPlugins: [
+    //       [
+    //         require('@docusaurus/remark-plugin-npm2yarn'),
+    //         {
+    //           sync: true
+    //         }
+    //       ]
+    //     ]
+    //   }
+    // ],
     // Custom plugin to configure Webpack for YAML handling
     function yamlLoaderPlugin(context, options) {
       return {
