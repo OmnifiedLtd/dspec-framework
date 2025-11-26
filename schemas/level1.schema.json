@@ -3,8 +3,7 @@
   "type": "object",
   "description": "Schema for a Level-1 (Design) DSpec. Defines the architecture, consistency groups (aggregates), and commands to satisfy the Level-0 intent.",
   "required": [
-    "extends",
-    "consistency_groups"
+    "extends"
   ],
   "properties": {
     "extends": {
@@ -40,10 +39,7 @@
         "required": [
           "id",
           "name",
-          "intent",
-          "target",
-          "preconditions",
-          "postconditions"
+          "intent"
         ],
         "properties": {
           "id": {
@@ -130,8 +126,7 @@
         "required": [
           "id",
           "name",
-          "intent",
-          "returns"
+          "intent"
         ],
         "properties": {
           "id": {
