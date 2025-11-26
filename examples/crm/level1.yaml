@@ -32,3 +32,14 @@ commands:
       ['contract-after-won', 'one-active-contract-per-account-offering']
     postconditions:
       emits: ['contract-activated']
+
+queries:
+  - id: get-lead
+    name: GetLead
+    intent: 'View lead details and status'
+    parameters:
+      - name: leadId
+        type: string
+    returns:
+      type: LeadDetails
+      description: 'Lead contact info and current pipeline status'

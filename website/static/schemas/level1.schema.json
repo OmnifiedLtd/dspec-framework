@@ -102,6 +102,88 @@
                 }
               }
             }
+          },
+          "returns": {
+            "type": "object",
+            "description": "Optional data returned to the caller (allowing for non-CQRS designs).",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of data returned (e.g., 'OrderId', 'UpdatedBalance')."
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "queries": {
+      "type": "array",
+      "description": "List of Queries (data retrieval requests). Together with Commands, these form the 'Use Cases' of the system.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "intent",
+          "returns"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique ID for the query (e.g., 'query.get-order')."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the query, typically VerbNoun (e.g., 'GetOrder')."
+          },
+          "intent": {
+            "type": "string",
+            "description": "What information is being requested and why."
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Input parameters required to execute the query.",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "Definition of the data structure returned.",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of data (e.g., 'OrderView', 'List<Product>')."
+              },
+              "description": {
+                "type": "string"
+              }
+            }
           }
         }
       }
