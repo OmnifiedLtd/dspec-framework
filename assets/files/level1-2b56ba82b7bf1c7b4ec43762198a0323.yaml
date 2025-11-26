@@ -1,6 +1,5 @@
 extends: level0.yaml
 
-bounded_context: catalog
 consistency_groups:
   - id: product
     name: Product
@@ -27,3 +26,24 @@ commands:
     preconditions: ['variant-sku-unique-per-product']
     postconditions:
       emits: ['variant-activated']
+
+queries:
+  - id: get-product
+    name: GetProduct
+    intent: 'Show product details on PDP'
+    parameters:
+      - name: productId
+        type: string
+    returns:
+      type: ProductDetails
+      description: 'Rich product data including all active variants'
+
+  - id: list-products-by-brand
+    name: ListProductsByBrand
+    intent: 'Show brand landing page'
+    parameters:
+      - name: brandId
+        type: string
+    returns:
+      type: List<ProductSummary>
+      description: 'Paginated list of active products for the brand'

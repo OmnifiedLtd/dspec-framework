@@ -1,6 +1,5 @@
 extends: feature.ecommerce # Placeholder since no Level-0 exists
 
-bounded_context: ecommerce
 consistency_groups:
   - id: order
     name: Order
@@ -32,3 +31,14 @@ commands:
     preconditions: ['capture-not-exceed-authorize']
     postconditions:
       emits: ['payment-captured']
+
+queries:
+  - id: get-order
+    name: GetOrder
+    intent: 'Retrieve full order details for display'
+    parameters:
+      - name: orderId
+        type: string
+    returns:
+      type: OrderView
+      description: 'Complete order state including items and payment status'

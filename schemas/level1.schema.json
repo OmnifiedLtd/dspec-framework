@@ -3,18 +3,12 @@
   "type": "object",
   "description": "Schema for a Level-1 (Design) DSpec. Defines the architecture, consistency groups (aggregates), and commands to satisfy the Level-0 intent.",
   "required": [
-    "extends",
-    "bounded_context",
-    "consistency_groups"
+    "extends"
   ],
   "properties": {
     "extends": {
       "type": "string",
       "description": "The ID of the Level-0 Feature Spec that this design refines."
-    },
-    "bounded_context": {
-      "type": "string",
-      "description": "The Bounded Context (domain boundary) this design operates within."
     },
     "consistency_groups": {
       "type": "array",
@@ -45,10 +39,7 @@
         "required": [
           "id",
           "name",
-          "intent",
-          "target",
-          "preconditions",
-          "postconditions"
+          "intent"
         ],
         "properties": {
           "id": {
@@ -105,6 +96,87 @@
                   "type": "string",
                   "description": "The system response (e.g., 'reject with error 409')."
                 }
+              }
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "Optional data returned to the caller (allowing for non-CQRS designs).",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of data returned (e.g., 'OrderId', 'UpdatedBalance')."
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "queries": {
+      "type": "array",
+      "description": "List of Queries (data retrieval requests). Together with Commands, these form the 'Use Cases' of the system.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "intent"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique ID for the query (e.g., 'query.get-order')."
+          },
+          "name": {
+            "type": "string",
+            "description": "Name of the query, typically VerbNoun (e.g., 'GetOrder')."
+          },
+          "intent": {
+            "type": "string",
+            "description": "What information is being requested and why."
+          },
+          "parameters": {
+            "type": "array",
+            "description": "Input parameters required to execute the query.",
+            "items": {
+              "type": "object",
+              "required": [
+                "name",
+                "type"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "optional": {
+                  "type": "boolean",
+                  "default": false
+                }
+              }
+            }
+          },
+          "returns": {
+            "type": "object",
+            "description": "Definition of the data structure returned.",
+            "required": [
+              "type"
+            ],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Type of data (e.g., 'OrderView', 'List<Product>')."
+              },
+              "description": {
+                "type": "string"
               }
             }
           }
