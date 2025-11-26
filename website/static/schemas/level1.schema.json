@@ -4,17 +4,12 @@
   "description": "Schema for a Level-1 (Design) DSpec. Defines the architecture, consistency groups (aggregates), and commands to satisfy the Level-0 intent.",
   "required": [
     "extends",
-    "bounded_context",
     "consistency_groups"
   ],
   "properties": {
     "extends": {
       "type": "string",
       "description": "The ID of the Level-0 Feature Spec that this design refines."
-    },
-    "bounded_context": {
-      "type": "string",
-      "description": "The Bounded Context (domain boundary) this design operates within."
     },
     "consistency_groups": {
       "type": "array",

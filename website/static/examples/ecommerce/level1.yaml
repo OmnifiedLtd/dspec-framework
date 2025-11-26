@@ -1,6 +1,5 @@
 extends: feature.ecommerce # Placeholder since no Level-0 exists
 
-bounded_context: ecommerce
 consistency_groups:
   - id: order
     name: Order

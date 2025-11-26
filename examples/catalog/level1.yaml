@@ -1,6 +1,5 @@
 extends: level0.yaml
 
-bounded_context: catalog
 consistency_groups:
   - id: product
     name: Product

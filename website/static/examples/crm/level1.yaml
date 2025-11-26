@@ -1,6 +1,5 @@
 extends: feature.crm # Placeholder since no Level-0 exists
 
-bounded_context: crm
 consistency_groups:
   - id: lead
     name: Lead
