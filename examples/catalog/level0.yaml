@@ -2,7 +2,6 @@ meta:
   id: feature.catalog.publish-product
   name: Publish Product under Brand with collision-free identifiers
   owner: Catalog Team
-  version: 0.3.1
   domain_id: catalog
 
 intent: 'Publish products under brands; ensure identifier collisions cannot occur at publish time.'
@@ -34,7 +33,7 @@ domain_invariants:
       strength: 'write-time'
       tolerance: 'none'
 
-system_constraints:
+environmental_constraints:
   - id: constr.volume
     statement: 'Some brands exceed 500k products; solutions must avoid brand-sized locks/scans.'
   - id: constr.rate

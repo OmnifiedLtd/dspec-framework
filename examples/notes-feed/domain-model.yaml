@@ -14,7 +14,7 @@ glossary:
     definition: "A reverse-chronological collection of Notes created by a specific User."
 
 lifecycles:
-  note:
+  - id: note
     states: 
       - id: draft
         name: Draft
@@ -23,9 +23,15 @@ lifecycles:
       - id: deleted
         name: Deleted
     transitions:
-      - "draft -> published"
-      - "published -> deleted"
-      - "draft -> deleted"
+      - from: draft
+        to: published
+        trigger: note-published
+      - from: published
+        to: deleted
+        trigger: note-deleted
+      - from: draft
+        to: deleted
+        trigger: note-deleted
 
 invariants:
   - id: note-author-ownership
@@ -39,12 +45,16 @@ events:
   - id: note-created
     name: NoteCreated
     definition: "NoteCreated(subject: Note, author: User, occurred: Time)"
+    subject_ref: note
   - id: note-published
     name: NotePublished
     definition: "NotePublished(subject: Note, occurred: Time)"
+    subject_ref: note
   - id: note-content-updated
     name: NoteContentUpdated
     definition: "NoteContentUpdated(subject: Note, occurred: Time)"
+    subject_ref: note
   - id: note-deleted
     name: NoteDeleted
     definition: "NoteDeleted(subject: Note, occurred: Time)"
+    subject_ref: note
