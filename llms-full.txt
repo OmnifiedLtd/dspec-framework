@@ -780,7 +780,6 @@ nav_order: 8
 # domains/identity.domain.json (conceptual)
 meta:
   id: identity
-  version: 0.1.0
   owner: Identity Team
   title: Identity Domain Model
   description: "Core concepts for user identity and authentication."
