@@ -11,17 +11,12 @@
       "type": "object",
       "description": "Metadata identifying the domain model.",
       "required": [
-        "id",
-        "version"
+        "id"
       ],
       "properties": {
         "id": {
           "type": "string",
           "description": "Unique identifier for this domain model (e.g., 'identity', 'catalog'). Used by Level-0 specs to reference this model."
-        },
-        "version": {
-          "type": "string",
-          "description": "Semantic version of the domain model (e.g., '1.0.0')."
         },
         "owner": {
           "type": "string",
