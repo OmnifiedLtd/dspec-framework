@@ -32,7 +32,7 @@ glossary:
     definition: "A sales coverage area with assignment rules."
 
 lifecycles:
-  lead:
+  - id: lead
     states: 
       - id: new
         name: New
@@ -45,12 +45,18 @@ lifecycles:
       - id: converted
         name: Converted
     transitions:
-      - "new -> working"
-      - "working -> qualified"
-      - "working -> disqualified"
-      - "qualified -> converted"
+      - from: new
+        to: working
+      - from: working
+        to: qualified
+        trigger: lead-qualified
+      - from: working
+        to: disqualified
+      - from: qualified
+        to: converted
+        trigger: lead-converted
     notes: "Conversion creates or links an Account and optionally an Opportunity."
-  opportunity:
+  - id: opportunity
     states: 
       - id: open
         name: Open
@@ -63,12 +69,18 @@ lifecycles:
       - id: closed
         name: Closed
     transitions:
-      - "open -> negotiation"
-      - "negotiation -> won"
-      - "negotiation -> lost"
-      - "won -> closed"
-      - "lost -> closed"
-  quote:
+      - from: open
+        to: negotiation
+        trigger: opportunity-stage-advanced
+      - from: negotiation
+        to: won
+      - from: negotiation
+        to: lost
+      - from: won
+        to: closed
+      - from: lost
+        to: closed
+  - id: quote
     states: 
       - id: draft
         name: Draft
@@ -81,11 +93,17 @@ lifecycles:
       - id: withdrawn
         name: Withdrawn
     transitions:
-      - "draft -> issued"
-      - "issued -> accepted"
-      - "issued -> expired"
-      - "issued -> withdrawn"
-  contract:
+      - from: draft
+        to: issued
+        trigger: quote-issued
+      - from: issued
+        to: accepted
+        trigger: quote-accepted
+      - from: issued
+        to: expired
+      - from: issued
+        to: withdrawn
+  - id: contract
     states: 
       - id: draft
         name: Draft
@@ -98,18 +116,25 @@ lifecycles:
       - id: expired
         name: Expired
     transitions:
-      - "draft -> active"
-      - "active -> suspended"
-      - "active -> terminated"
-      - "active -> expired"
-  consent:
+      - from: draft
+        to: active
+        trigger: contract-activated
+      - from: active
+        to: suspended
+      - from: active
+        to: terminated
+      - from: active
+        to: expired
+  - id: consent
     states: 
       - id: granted
         name: Granted
       - id: revoked
         name: Revoked
     transitions:
-      - "granted -> revoked"
+      - from: granted
+        to: revoked
+        trigger: consent-revoked
 
 invariants:
   - id: opp-has-single-account
@@ -129,24 +154,32 @@ events:
   - id: lead-qualified
     name: LeadQualified
     definition: "LeadQualified(subject: Lead, occurred: Time)"
+    subject_ref: lead
   - id: lead-converted
     name: LeadConverted
     definition: "LeadConverted(subject: Lead, occurred: Time)"
+    subject_ref: lead
   - id: opportunity-stage-advanced
     name: OpportunityStageAdvanced
     definition: "OpportunityStageAdvanced(subject: Opportunity, occurred: Time)"
+    subject_ref: opportunity
   - id: quote-issued
     name: QuoteIssued
     definition: "QuoteIssued(subject: Quote, occurred: Time)"
+    subject_ref: quote
   - id: quote-accepted
     name: QuoteAccepted
     definition: "QuoteAccepted(subject: Quote, occurred: Time)"
+    subject_ref: quote
   - id: contract-activated
     name: ContractActivated
     definition: "ContractActivated(subject: Contract, occurred: Time)"
+    subject_ref: contract
   - id: consent-granted
     name: ConsentGranted
     definition: "ConsentGranted(subject: Consent, occurred: Time)"
+    subject_ref: consent
   - id: consent-revoked
     name: ConsentRevoked
     definition: "ConsentRevoked(subject: Consent, occurred: Time)"
+    subject_ref: consent

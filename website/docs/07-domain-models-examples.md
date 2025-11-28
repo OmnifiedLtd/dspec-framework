@@ -31,7 +31,7 @@ glossary:
     definition: "A single-use, time-bound authentication link"
 
 lifecycles:
-  magic-link:
+  - id: magic-link
     states:
       - id: issued
         name: Issued
@@ -40,13 +40,18 @@ lifecycles:
       - id: expired
         name: Expired
     transitions:
-      - "issued -> redeemed"
-      - "issued -> expired"
+      - from: issued
+        to: redeemed
+        trigger: magic-link-redeemed
+      - from: issued
+        to: expired
+        trigger: magic-link-expired
 
 predicates:
   - id: user.has-verified-email
     name: User.HasVerifiedEmail
     definition: "True if the User has completed email verification."
+    subject_ref: user
 
 invariants:
   - id: link-single-use
@@ -59,12 +64,15 @@ events:  # domain facts; roles only
   - id: magic-link-issued
     name: MagicLinkIssued
     definition: "MagicLinkIssued(subject: MagicLink, occurred: Time)"
+    subject_ref: magic-link
   - id: magic-link-redeemed
     name: MagicLinkRedeemed
     definition: "MagicLinkRedeemed(subject: MagicLink, occurred: Time)"
+    subject_ref: magic-link
   - id: magic-link-expired
     name: MagicLinkExpired
     definition: "MagicLinkExpired(subject: MagicLink, occurred: Time)"
+    subject_ref: magic-link
 ```
 
 ### E‑Commerce: Order‑to‑Cash (Conceptual)

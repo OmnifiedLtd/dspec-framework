@@ -14,7 +14,7 @@ glossary:
     definition: "A purchasable option of a Product (e.g., size/color)."
 
 lifecycles:
-  product:
+  - id: product
     states: 
       - id: draft
         name: Draft
@@ -23,8 +23,12 @@ lifecycles:
       - id: discontinued
         name: Discontinued
     transitions:
-      - "draft -> active"
-      - "active -> discontinued"
+      - from: draft
+        to: active
+        trigger: product-activated
+      - from: active
+        to: discontinued
+        trigger: product-discontinued
 
 invariants:
   - id: unique-model-code-per-brand
@@ -36,12 +40,16 @@ events:
   - id: product-proposed
     name: ProductProposed
     definition: "ProductProposed(subject: Product, occurred: Time)"
+    subject_ref: product
   - id: product-activated
     name: ProductActivated
     definition: "ProductActivated(subject: Product, occurred: Time)"
+    subject_ref: product
   - id: product-discontinued
     name: ProductDiscontinued
     definition: "ProductDiscontinued(subject: Product, occurred: Time)"
+    subject_ref: product
   - id: model-code-reassigned
     name: ModelCodeReassigned
     definition: "ModelCodeReassigned(subject: Product, occurred: Time)"
+    subject_ref: product

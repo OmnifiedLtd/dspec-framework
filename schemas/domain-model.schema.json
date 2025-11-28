@@ -89,6 +89,10 @@
             "type": "string",
             "description": "The logical condition that must be met for this predicate to be true."
           },
+          "subject_ref": {
+            "type": "string",
+            "description": "Optional: Reference to the glossary entity this predicate relates to (e.g., 'user')."
+          },
           "notes": {
             "type": "string",
             "description": "Additional context."
@@ -97,54 +101,78 @@
       }
     },
     "lifecycles": {
-      "type": "object",
+      "type": "array",
       "description": "Valid states and transitions for entities in the domain.",
-      "patternProperties": {
-        "^.*$": {
-          "type": "object",
-          "description": "Lifecycle definition for a specific entity (key is the entity ID).",
-          "required": [
-            "states",
-            "transitions"
-          ],
-          "properties": {
-            "states": {
-              "type": "array",
-              "description": "List of valid states for this entity.",
-              "items": {
-                "type": "object",
-                "required": [
-                  "id",
-                  "name"
-                ],
-                "properties": {
-                  "id": {
-                    "type": "string",
-                    "description": "Unique identifier for the state (e.g., 'issued', 'redeemed')."
-                  },
-                  "name": {
-                    "type": "string",
-                    "description": "Human-readable name of the state."
-                  },
-                  "notes": {
-                    "type": "string",
-                    "description": "Description of what this state represents."
-                  }
+      "items": {
+        "type": "object",
+        "description": "Lifecycle definition for a specific entity.",
+        "required": [
+          "id",
+          "states",
+          "transitions"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Unique identifier for this lifecycle, typically matching a glossary entity (e.g., 'order', 'magic-link')."
+          },
+          "states": {
+            "type": "array",
+            "description": "List of valid states for this entity.",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Unique identifier for the state (e.g., 'issued', 'redeemed')."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Human-readable name of the state."
+                },
+                "notes": {
+                  "type": "string",
+                  "description": "Description of what this state represents."
                 }
               }
-            },
-            "transitions": {
-              "type": "array",
-              "description": "Allowed transitions between states (e.g., 'issued -> redeemed').",
-              "items": {
-                "type": "string",
-                "description": "A transition string in the format 'from_state -> to_state'."
-              }
-            },
-            "notes": {
-              "type": "string",
-              "description": "Notes about the lifecycle logic."
             }
+          },
+          "transitions": {
+            "type": "array",
+            "description": "Allowed transitions between states.",
+            "items": {
+              "type": "object",
+              "required": [
+                "from",
+                "to"
+              ],
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "description": "The source state ID for this transition."
+                },
+                "to": {
+                  "type": "string",
+                  "description": "The target state ID for this transition."
+                },
+                "trigger": {
+                  "type": "string",
+                  "description": "Optional: The event ID or command ID that triggers this transition."
+                },
+                "guard": {
+                  "type": "string",
+                  "description": "Optional: A predicate ID that must be true for this transition to occur."
+                }
+              }
+            }
+          },
+          "notes": {
+            "type": "string",
+            "description": "Notes about the lifecycle logic."
           }
         }
       }
@@ -184,7 +212,8 @@
       "items": {
         "type": "object",
         "required": [
-          "id"
+          "id",
+          "name"
         ],
         "properties": {
           "id": {
@@ -193,11 +222,15 @@
           },
           "name": {
             "type": "string",
-            "description": "Human-readable name of the event."
+            "description": "Human-readable name of the event (e.g., 'MagicLinkRedeemed')."
           },
           "definition": {
             "type": "string",
             "description": "The semantic definition of the event, often signature-style 'EventName(subject)'."
+          },
+          "subject_ref": {
+            "type": "string",
+            "description": "Optional: Reference to the glossary entity this event relates to (e.g., 'magic-link')."
           },
           "notes": {
             "type": "string",

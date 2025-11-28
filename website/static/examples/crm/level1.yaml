@@ -1,4 +1,21 @@
-extends: feature.crm # Placeholder since no Level-0 exists
+meta:
+  id: design.crm.sales-to-contract
+  name: Sales-to-Contract Design
+  owner: Sales Team
+  description: "Level-1 design for CRM sales pipeline from lead to contract"
+
+extends: feature.crm
+
+invariant_mechanisms:
+  - invariant_ref: quote-aligns-with-opp
+    mechanism: application-validation
+    notes: "Validated at acceptance time by comparing quote scope to opportunity scope"
+  - invariant_ref: contract-after-won
+    mechanism: application-validation
+    notes: "Guard condition checked before contract activation"
+  - invariant_ref: one-active-contract-per-account-offering
+    mechanism: db-constraint
+    notes: "Unique index on (account_id, offering_id) where status = 'active' and date ranges overlap"
 
 consistency_groups:
   - id: lead
@@ -7,6 +24,7 @@ consistency_groups:
     name: Quote
   - id: contract
     name: Contract
+
 commands:
   - id: convert-lead
     name: ConvertLead
@@ -14,7 +32,12 @@ commands:
     intent: 'Create/link Account and optionally Opportunity'
     preconditions: []
     postconditions:
-      emits: ['lead-converted']
+      state_transitions:
+        - entity: lead
+          from: qualified
+          to: converted
+      emits:
+        - event: lead-converted
 
   - id: accept-quote
     name: AcceptQuote
@@ -22,7 +45,18 @@ commands:
     intent: 'Customer accepts terms for a single Opportunity'
     preconditions: ['quote-aligns-with-opp']
     postconditions:
-      emits: ['quote-accepted']
+      state_transitions:
+        - entity: quote
+          from: issued
+          to: accepted
+      emits:
+        - event: quote-accepted
+    failure_modes:
+      - violates: 'quote-aligns-with-opp'
+        outcome:
+          action: reject
+          error_code: '400'
+          message: 'Quote scope does not align with opportunity scope'
 
   - id: activate-contract
     name: ActivateContract
@@ -31,7 +65,23 @@ commands:
     preconditions:
       ['contract-after-won', 'one-active-contract-per-account-offering']
     postconditions:
-      emits: ['contract-activated']
+      state_transitions:
+        - entity: contract
+          from: draft
+          to: active
+      emits:
+        - event: contract-activated
+    failure_modes:
+      - violates: 'contract-after-won'
+        outcome:
+          action: reject
+          error_code: '400'
+          message: 'Contract requires a won opportunity and accepted quote'
+      - violates: 'one-active-contract-per-account-offering'
+        outcome:
+          action: reject
+          error_code: '409'
+          message: 'Active contract already exists for this account and offering'
 
 queries:
   - id: get-lead

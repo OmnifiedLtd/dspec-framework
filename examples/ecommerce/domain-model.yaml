@@ -32,7 +32,7 @@ glossary:
     definition: "A policy that can reduce price under eligibility rules."
 
 lifecycles:
-  order:
+  - id: order
     states: 
       - id: draft
         name: Draft
@@ -47,14 +47,22 @@ lifecycles:
       - id: cancelled
         name: Cancelled
     transitions:
-      - "draft -> submitted"
-      - "submitted -> confirmed"
-      - "confirmed -> partially-fulfilled"
-      - "partially-fulfilled -> fulfilled"
-      - "submitted -> cancelled"
-      - "confirmed -> cancelled"
+      - from: draft
+        to: submitted
+        trigger: order-submitted
+      - from: submitted
+        to: confirmed
+        trigger: order-confirmed
+      - from: confirmed
+        to: partially-fulfilled
+      - from: partially-fulfilled
+        to: fulfilled
+      - from: submitted
+        to: cancelled
+      - from: confirmed
+        to: cancelled
     notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
-  payment-intent:
+  - id: payment-intent
     states: 
       - id: created
         name: Created
@@ -67,11 +75,18 @@ lifecycles:
       - id: refunded
         name: Refunded
     transitions:
-      - "created -> authorized"
-      - "authorized -> captured"
-      - "authorized -> voided"
-      - "captured -> refunded"
-  inventory-reservation:
+      - from: created
+        to: authorized
+        trigger: payment-authorized
+      - from: authorized
+        to: captured
+        trigger: payment-captured
+      - from: authorized
+        to: voided
+      - from: captured
+        to: refunded
+        trigger: refund-issued
+  - id: inventory-reservation
     states: 
       - id: reserved
         name: Reserved
@@ -82,10 +97,13 @@ lifecycles:
       - id: expired
         name: Expired
     transitions:
-      - "reserved -> consumed"
-      - "reserved -> released"
-      - "reserved -> expired"
-  shipment:
+      - from: reserved
+        to: consumed
+      - from: reserved
+        to: released
+      - from: reserved
+        to: expired
+  - id: shipment
     states: 
       - id: ready
         name: Ready
@@ -96,10 +114,14 @@ lifecycles:
       - id: lost
         name: Lost
     transitions:
-      - "ready -> in-transit"
-      - "in_transit -> delivered"
-      - "in_transit -> lost"
-  return:
+      - from: ready
+        to: in-transit
+      - from: in-transit
+        to: delivered
+        trigger: shipment-delivered
+      - from: in-transit
+        to: lost
+  - id: return
     states: 
       - id: requested
         name: Requested
@@ -112,10 +134,14 @@ lifecycles:
       - id: rejected
         name: Rejected
     transitions:
-      - "requested -> approved"
-      - "approved -> received"
-      - "received -> refunded"
-      - "requested -> rejected"
+      - from: requested
+        to: approved
+      - from: approved
+        to: received
+      - from: received
+        to: refunded
+      - from: requested
+        to: rejected
 
 invariants:
   - id: price-snapshot-at-submit
@@ -137,24 +163,32 @@ events:
   - id: order-submitted
     name: OrderSubmitted
     definition: "OrderSubmitted(subject: Order, occurred: Time)"
+    subject_ref: order
   - id: inventory-reserved
     name: InventoryReserved
     definition: "InventoryReserved(subject: InventoryReservation, occurred: Time)"
+    subject_ref: inventory-reservation
   - id: order-confirmed
     name: OrderConfirmed
     definition: "OrderConfirmed(subject: Order, occurred: Time)"
+    subject_ref: order
   - id: payment-authorized
     name: PaymentAuthorized
     definition: "PaymentAuthorized(subject: PaymentIntent, occurred: Time)"
+    subject_ref: payment-intent
   - id: payment-captured
     name: PaymentCaptured
     definition: "PaymentCaptured(subject: PaymentIntent, occurred: Time)"
+    subject_ref: payment-intent
   - id: shipment-delivered
     name: ShipmentDelivered
     definition: "ShipmentDelivered(subject: Shipment, occurred: Time)"
+    subject_ref: shipment
   - id: return-requested
     name: ReturnRequested
     definition: "ReturnRequested(subject: Return, occurred: Time)"
+    subject_ref: return
   - id: refund-issued
     name: RefundIssued
     definition: "RefundIssued(subject: PaymentIntent, occurred: Time)"
+    subject_ref: payment-intent

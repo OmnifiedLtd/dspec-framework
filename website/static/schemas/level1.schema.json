@@ -3,12 +3,70 @@
   "type": "object",
   "description": "Schema for a Level-1 (Design) DSpec. Defines the architecture, consistency groups (aggregates), and commands to satisfy the Level-0 intent.",
   "required": [
+    "meta",
     "extends"
   ],
+  "anyOf": [
+    { "required": ["consistency_groups"] },
+    { "required": ["commands"] },
+    { "required": ["queries"] }
+  ],
   "properties": {
+    "meta": {
+      "type": "object",
+      "description": "Metadata identifying the design spec.",
+      "required": [
+        "id",
+        "name",
+        "owner"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for this design spec (e.g., 'design.passwordless-login')."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name of the design spec."
+        },
+        "owner": {
+          "type": "string",
+          "description": "Team or individual responsible for this design."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of the design approach."
+        }
+      }
+    },
     "extends": {
       "type": "string",
       "description": "The ID of the Level-0 Feature Spec that this design refines."
+    },
+    "invariant_mechanisms": {
+      "type": "array",
+      "description": "Explicit mapping of Level-0 invariants to their enforcement mechanisms at the design level.",
+      "items": {
+        "type": "object",
+        "required": [
+          "invariant_ref",
+          "mechanism"
+        ],
+        "properties": {
+          "invariant_ref": {
+            "type": "string",
+            "description": "Reference to the invariant ID from the Domain Model or Level-0 spec."
+          },
+          "mechanism": {
+            "type": "string",
+            "description": "The enforcement mechanism (e.g., 'partitioned-unique-index', 'reservation-then-confirm', 'saga-compensation', 'db-constraint')."
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional context about how this mechanism enforces the invariant."
+          }
+        }
+      }
     },
     "consistency_groups": {
       "type": "array",
@@ -39,6 +97,7 @@
         "required": [
           "id",
           "name",
+          "target",
           "intent"
         ],
         "properties": {
@@ -60,7 +119,7 @@
           },
           "preconditions": {
             "type": "array",
-            "description": "List of Invariant IDs that must be true *before* this command can succeed.",
+            "description": "List of Invariant IDs or Predicate IDs that must be true *before* this command can succeed.",
             "items": {
               "type": "string"
             }
@@ -69,11 +128,50 @@
             "type": "object",
             "description": "The outcome of the command if successful.",
             "properties": {
+              "state_transitions": {
+                "type": "array",
+                "description": "State transitions that occur as a result of this command.",
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "entity",
+                    "from",
+                    "to"
+                  ],
+                  "properties": {
+                    "entity": {
+                      "type": "string",
+                      "description": "Reference to the glossary entity whose lifecycle state changes."
+                    },
+                    "from": {
+                      "type": "string",
+                      "description": "The source state ID (from domain model lifecycle)."
+                    },
+                    "to": {
+                      "type": "string",
+                      "description": "The target state ID (from domain model lifecycle)."
+                    }
+                  }
+                }
+              },
               "emits": {
                 "type": "array",
-                "description": "List of Domain Event IDs emitted by this command.",
+                "description": "Domain events emitted by this command.",
                 "items": {
-                  "type": "string"
+                  "type": "object",
+                  "required": [
+                    "event"
+                  ],
+                  "properties": {
+                    "event": {
+                      "type": "string",
+                      "description": "The event ID (from domain model events)."
+                    },
+                    "when": {
+                      "type": "string",
+                      "description": "Optional: Predicate ID that must be true for this event to be emitted. If omitted, event is always emitted on success."
+                    }
+                  }
                 }
               }
             }
@@ -87,14 +185,40 @@
             "description": "Expected failures when preconditions are violated.",
             "items": {
               "type": "object",
+              "required": [
+                "violates",
+                "outcome"
+              ],
               "properties": {
                 "violates": {
                   "type": "string",
-                  "description": "The Invariant ID that caused the failure."
+                  "description": "The Invariant ID or Predicate ID that caused the failure."
                 },
                 "outcome": {
-                  "type": "string",
-                  "description": "The system response (e.g., 'reject with error 409')."
+                  "type": "object",
+                  "description": "The structured system response.",
+                  "required": [
+                    "action"
+                  ],
+                  "properties": {
+                    "action": {
+                      "type": "string",
+                      "enum": [
+                        "reject",
+                        "compensate",
+                        "retry"
+                      ],
+                      "description": "The type of failure response."
+                    },
+                    "error_code": {
+                      "type": "string",
+                      "description": "HTTP status code or application error code (e.g., '409', 'ERR_DUPLICATE')."
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "Human-readable error message."
+                    }
+                  }
                 }
               }
             }
@@ -177,6 +301,20 @@
               },
               "description": {
                 "type": "string"
+              }
+            }
+          },
+          "freshness": {
+            "type": "object",
+            "description": "Optional: Acceptable data staleness for CQRS/eventually-consistent systems.",
+            "properties": {
+              "tolerance": {
+                "type": "string",
+                "description": "Maximum acceptable data age in ISO 8601 duration format (e.g., 'PT30S' for 30 seconds, 'PT5M' for 5 minutes)."
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable explanation of the freshness requirement."
               }
             }
           }

@@ -1,4 +1,18 @@
-extends: level0.yaml
+meta:
+  id: design.catalog.publish-product
+  name: Publish Product Design
+  owner: Catalog Team
+  description: "Level-1 design for publishing products with collision-free identifiers"
+
+extends: feature.catalog.publish-product
+
+invariant_mechanisms:
+  - invariant_ref: unique-model-code-per-brand
+    mechanism: partitioned-unique-index
+    notes: "Enforced via unique index on (brand_id, model_code) where status = 'active'"
+  - invariant_ref: variant-sku-unique-per-product
+    mechanism: db-constraint
+    notes: "Enforced via unique constraint on (product_id, sku)"
 
 consistency_groups:
   - id: product
@@ -12,12 +26,19 @@ commands:
     intent: 'Publish product under a Brand'
     preconditions: ['unique-model-code-per-brand']
     postconditions:
-      emits: ['product-activated']
-      transitions: ['draft -> active']
-    transactional_expectation: 'starts-saga' # if using reservation-then-confirm
+      state_transitions:
+        - entity: product
+          from: draft
+          to: active
+      emits:
+        - event: product-activated
+    transactional_expectation: 'starts-saga'
     failure_modes:
       - violates: 'unique-model-code-per-brand'
-        outcome: 'reject duplicate-model-code'
+        outcome:
+          action: reject
+          error_code: '409'
+          message: 'Duplicate model code for this brand'
 
   - id: activate-variant
     name: ActivateVariant
@@ -25,7 +46,14 @@ commands:
     intent: 'Publish purchasable SKU'
     preconditions: ['variant-sku-unique-per-product']
     postconditions:
-      emits: ['variant-activated']
+      emits:
+        - event: variant-activated
+    failure_modes:
+      - violates: 'variant-sku-unique-per-product'
+        outcome:
+          action: reject
+          error_code: '409'
+          message: 'Duplicate SKU for this product'
 
 queries:
   - id: get-product

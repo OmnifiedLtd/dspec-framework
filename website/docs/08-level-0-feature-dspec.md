@@ -36,7 +36,6 @@ meta:
   id: feature.passwordless-login
   name: Passwordless login via magic link
   owner: Identity Team
-  version: 0.3.1
   domain_id: identity
 
 intent: >
@@ -56,17 +55,18 @@ scope:
       statement: 'MFA enrollment'
     - id: scope.recovery
       statement: 'account recovery'
+    - id: excl.sms
+      statement: 'No SMS links'
+      explicit: true  # Deliberate design decision, not just out of scope
 
 domain_invariants:
   - id: link-single-use
-    rule: 'A magic link can be redeemed at most once.'
     moment_of_truth: 'magic-link-redeemed'
     consistency_demand:
       scope: 'link'
       strength: 'write-time'
       tolerance: 'none'
   - id: link-expiry
-    rule: 'A magic link expires after TTL and cannot be redeemed thereafter.'
     moment_of_truth: 'magic-link-redeemed'
     consistency_demand:
       scope: 'link'
@@ -76,12 +76,10 @@ domain_invariants:
 policy_and_regulatory:
   - id: policy.privacy
     statement: 'Respect user notification preferences.'
-system_constraints:
+
+environmental_constraints:
   - id: constr.delivery
     statement: 'Email delivery can be delayed; UX must handle late arrivals.'
-explicit_exclusions:
-  - id: excl.sms
-    statement: 'No SMS links.'
 
 acceptance_criteria:
   - id: ac-001
@@ -94,6 +92,7 @@ acceptance_criteria:
 quality_criteria:
   - id: qc.latency
     statement: 'P95 link delivery confirmation ≤ 60s (staging).'
+
 verification:
   type: 'executable'
   artifacts: ['tests/identity/passwordless-login.feature']

@@ -17,7 +17,6 @@
         "id",
         "name",
         "owner",
-        "version",
         "domain_id"
       ],
       "properties": {
@@ -32,10 +31,6 @@
         "owner": {
           "type": "string",
           "description": "Team or individual responsible for this feature."
-        },
-        "version": {
-          "type": "string",
-          "description": "Semantic version of the feature spec."
         },
         "domain_id": {
           "type": "string",
@@ -109,6 +104,11 @@
               "notes": {
                 "type": "string",
                 "description": "Reason for exclusion."
+              },
+              "explicit": {
+                "type": "boolean",
+                "description": "If true, this is a deliberate design decision (not just general scope boundary). Use for things the feature will explicitly NOT do.",
+                "default": false
               }
             }
           }
@@ -121,8 +121,7 @@
       "items": {
         "type": "object",
         "required": [
-          "id",
-          "rule"
+          "id"
         ],
         "properties": {
           "id": {
@@ -192,9 +191,9 @@
         }
       }
     },
-    "system_constraints": {
+    "environmental_constraints": {
       "type": "array",
-      "description": "Technical or environmental constraints (e.g., 'legacy system', 'mobile only').",
+      "description": "External business or operational constraints (e.g., 'legacy system integration', 'regulatory requirements', 'mobile-first'). These are realities, not technical architecture decisions.",
       "items": {
         "type": "object",
         "required": [
@@ -217,35 +216,6 @@
           "notes": {
             "type": "string",
             "description": "Impact on design."
-          }
-        }
-      }
-    },
-    "explicit_exclusions": {
-      "type": "array",
-      "description": "Specific things this feature will deliberately NOT do (distinct from general out-of-scope).",
-      "items": {
-        "type": "object",
-        "required": [
-          "id",
-          "statement"
-        ],
-        "properties": {
-          "id": {
-            "type": "string",
-            "description": "Unique ID."
-          },
-          "statement": {
-            "type": "string",
-            "description": "The exclusion statement."
-          },
-          "name": {
-            "type": "string",
-            "description": "Short name."
-          },
-          "notes": {
-            "type": "string",
-            "description": "Reason."
           }
         }
       }
@@ -308,9 +278,12 @@
           "type": "string",
           "enum": [
             "executable",
-            "manual"
+            "manual",
+            "review",
+            "audit",
+            "attestation"
           ],
-          "description": "Type of verification: 'executable' (automated tests) or 'manual'."
+          "description": "Type of verification: 'executable' (automated tests), 'manual' (manual testing), 'review' (code/design review), 'audit' (security/compliance audit), or 'attestation' (formal sign-off)."
         },
         "artifacts": {
           "type": "array",

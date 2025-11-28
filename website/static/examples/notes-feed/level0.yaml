@@ -2,7 +2,6 @@ meta:
   id: feature.personal-notes
   name: Personal Notes Log
   owner: Productivity Team
-  version: 0.2.0
   domain_id: notes-domain
 
 intent: >

@@ -1,10 +1,28 @@
-extends: feature.ecommerce # Placeholder since no Level-0 exists
+meta:
+  id: design.ecommerce.order-to-cash
+  name: Order-to-Cash Design
+  owner: Commerce Team
+  description: "Level-1 design for e-commerce order processing from submission to payment capture"
+
+extends: feature.ecommerce
+
+invariant_mechanisms:
+  - invariant_ref: price-snapshot-at-submit
+    mechanism: application-validation
+    notes: "Prices are captured and stored at submission time"
+  - invariant_ref: reservation-before-confirm
+    mechanism: saga-compensation
+    notes: "Reservation saga with rollback if inventory unavailable"
+  - invariant_ref: capture-not-exceed-authorize
+    mechanism: application-validation
+    notes: "Validated against stored authorization amount before capture"
 
 consistency_groups:
   - id: order
     name: Order
   - id: payment-intent
     name: PaymentIntent
+
 commands:
   - id: submit-order
     name: SubmitOrder
@@ -12,8 +30,12 @@ commands:
     intent: 'Move Draft -> Submitted and fix priced snapshot'
     preconditions: []
     postconditions:
-      emits: ['order-submitted']
-      transitions: ['draft -> submitted']
+      state_transitions:
+        - entity: order
+          from: draft
+          to: submitted
+      emits:
+        - event: order-submitted
 
   - id: confirm-order
     name: ConfirmOrder
@@ -21,8 +43,18 @@ commands:
     intent: 'Confirm when reservations are sufficient'
     preconditions: ['reservation-before-confirm']
     postconditions:
-      emits: ['order-confirmed']
-      transitions: ['submitted -> confirmed']
+      state_transitions:
+        - entity: order
+          from: submitted
+          to: confirmed
+      emits:
+        - event: order-confirmed
+    failure_modes:
+      - violates: 'reservation-before-confirm'
+        outcome:
+          action: reject
+          error_code: '400'
+          message: 'Insufficient inventory reservation for order lines'
 
   - id: capture-payment
     name: CapturePayment
@@ -30,7 +62,18 @@ commands:
     intent: 'Capture funds up to authorized amount'
     preconditions: ['capture-not-exceed-authorize']
     postconditions:
-      emits: ['payment-captured']
+      state_transitions:
+        - entity: payment-intent
+          from: authorized
+          to: captured
+      emits:
+        - event: payment-captured
+    failure_modes:
+      - violates: 'capture-not-exceed-authorize'
+        outcome:
+          action: reject
+          error_code: '400'
+          message: 'Capture amount exceeds authorized amount'
 
 queries:
   - id: get-order
@@ -42,3 +85,6 @@ queries:
     returns:
       type: OrderView
       description: 'Complete order state including items and payment status'
+    freshness:
+      tolerance: PT30S
+      description: 'Order data may be up to 30 seconds stale for display purposes'
