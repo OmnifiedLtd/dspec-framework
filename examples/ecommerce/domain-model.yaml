@@ -33,6 +33,7 @@ glossary:
 
 lifecycles:
   - id: order
+    subject_ref: order
     states: 
       - id: draft
         name: Draft
@@ -63,6 +64,7 @@ lifecycles:
         to: cancelled
     notes: "Cancellation after any fulfillment requires reverse logistics and financial adjustments."
   - id: payment-intent
+    subject_ref: payment-intent
     states: 
       - id: created
         name: Created
@@ -87,6 +89,7 @@ lifecycles:
         to: refunded
         trigger: refund-issued
   - id: inventory-reservation
+    subject_ref: inventory-reservation
     states: 
       - id: reserved
         name: Reserved
@@ -104,6 +107,7 @@ lifecycles:
       - from: reserved
         to: expired
   - id: shipment
+    subject_ref: shipment
     states: 
       - id: ready
         name: Ready
@@ -122,6 +126,7 @@ lifecycles:
       - from: in-transit
         to: lost
   - id: return
+    subject_ref: return
     states: 
       - id: requested
         name: Requested

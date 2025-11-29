@@ -32,6 +32,7 @@ glossary:
 
 lifecycles:
   - id: magic-link
+    subject_ref: magic-link
     states:
       - id: issued
         name: Issued

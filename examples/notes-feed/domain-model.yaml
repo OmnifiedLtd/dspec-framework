@@ -15,6 +15,7 @@ glossary:
 
 lifecycles:
   - id: note
+    subject_ref: note
     states: 
       - id: draft
         name: Draft
