@@ -33,6 +33,7 @@ glossary:
 
 lifecycles:
   - id: lead
+    subject_ref: lead
     states: 
       - id: new
         name: New
@@ -57,6 +58,7 @@ lifecycles:
         trigger: lead-converted
     notes: "Conversion creates or links an Account and optionally an Opportunity."
   - id: opportunity
+    subject_ref: opportunity
     states: 
       - id: open
         name: Open
@@ -81,6 +83,7 @@ lifecycles:
       - from: lost
         to: closed
   - id: quote
+    subject_ref: quote
     states: 
       - id: draft
         name: Draft
@@ -104,6 +107,7 @@ lifecycles:
       - from: issued
         to: withdrawn
   - id: contract
+    subject_ref: contract
     states: 
       - id: draft
         name: Draft
@@ -126,6 +130,7 @@ lifecycles:
       - from: active
         to: expired
   - id: consent
+    subject_ref: consent
     states: 
       - id: granted
         name: Granted

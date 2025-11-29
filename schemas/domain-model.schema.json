@@ -108,13 +108,18 @@
         "description": "Lifecycle definition for a specific entity.",
         "required": [
           "id",
+          "subject_ref",
           "states",
           "transitions"
         ],
         "properties": {
           "id": {
             "type": "string",
-            "description": "Unique identifier for this lifecycle, typically matching a glossary entity (e.g., 'order', 'magic-link')."
+            "description": "Unique identifier for this lifecycle definition (e.g., 'order-fulfillment')."
+          },
+          "subject_ref": {
+            "type": "string",
+            "description": "Reference to the glossary entity ID that this lifecycle applies to (e.g., 'order')."
           },
           "states": {
             "type": "array",

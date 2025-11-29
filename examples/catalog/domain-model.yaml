@@ -15,6 +15,7 @@ glossary:
 
 lifecycles:
   - id: product
+    subject_ref: product
     states: 
       - id: draft
         name: Draft
