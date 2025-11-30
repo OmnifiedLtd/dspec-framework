@@ -2,6 +2,68 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "type": "object",
   "description": "Schema for a Level-0 (Feature) DSpec. Defines the User Intent, Scope, and Business Rules (Invariants) without specifying implementation mechanics.",
+  "definitions": {
+    "scopeItem": {
+      "type": "object",
+      "description": "A single scope item (Leaf).",
+      "required": [
+        "id",
+        "statement"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID for this scope item."
+        },
+        "statement": {
+          "type": "string",
+          "description": "Description of the item."
+        },
+        "name": {
+          "type": "string",
+          "description": "Short name."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Additional context."
+        },
+        "explicit": {
+          "type": "boolean",
+          "description": "If true, this is a deliberate design decision. Primarily used in 'out' scope to denote things explicitly excluded.",
+          "default": false
+        }
+      }
+    },
+    "scopeGroup": {
+      "type": "object",
+      "description": "A group of related scope items.",
+      "required": [
+        "id",
+        "items"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique ID for this group."
+        },
+        "name": {
+          "type": "string",
+          "description": "Human-readable name for the group."
+        },
+        "description": {
+          "type": "string",
+          "description": "Brief description of what this group covers."
+        },
+        "items": {
+          "type": "array",
+          "description": "List of scope items within this group.",
+          "items": {
+            "$ref": "#/definitions/scopeItem"
+          }
+        }
+      }
+    }
+  },
   "required": [
     "meta",
     "intent",
@@ -54,63 +116,28 @@
           "type": "array",
           "description": "List of functionalities or scenarios explicitly IN scope.",
           "items": {
-            "type": "object",
-            "required": [
-              "id",
-              "statement"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique ID for this scope item."
+            "oneOf": [
+              {
+                "$ref": "#/definitions/scopeItem"
               },
-              "statement": {
-                "type": "string",
-                "description": "Description of the in-scope item."
-              },
-              "name": {
-                "type": "string",
-                "description": "Short name."
-              },
-              "notes": {
-                "type": "string",
-                "description": "Additional context."
+              {
+                "$ref": "#/definitions/scopeGroup"
               }
-            }
+            ]
           }
         },
         "out": {
           "type": "array",
           "description": "List of functionalities or scenarios explicitly OUT of scope.",
           "items": {
-            "type": "object",
-            "required": [
-              "id",
-              "statement"
-            ],
-            "properties": {
-              "id": {
-                "type": "string",
-                "description": "Unique ID for this exclusion."
+            "oneOf": [
+              {
+                "$ref": "#/definitions/scopeItem"
               },
-              "statement": {
-                "type": "string",
-                "description": "Description of the out-of-scope item."
-              },
-              "name": {
-                "type": "string",
-                "description": "Short name."
-              },
-              "notes": {
-                "type": "string",
-                "description": "Reason for exclusion."
-              },
-              "explicit": {
-                "type": "boolean",
-                "description": "If true, this is a deliberate design decision (not just general scope boundary). Use for things the feature will explicitly NOT do.",
-                "default": false
+              {
+                "$ref": "#/definitions/scopeGroup"
               }
-            }
+            ]
           }
         }
       }

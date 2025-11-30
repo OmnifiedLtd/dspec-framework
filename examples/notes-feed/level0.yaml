@@ -9,14 +9,18 @@ intent: >
   publish, view, edit, and delete. Users see only their own notes.
 scope:
   in:
-    - id: scope.create
-      statement: "Creating and Publishing notes"
+    - id: group.management
+      name: "Note Management"
+      description: "Standard lifecycle operations"
+      items:
+        - id: scope.create
+          statement: "Creating and Publishing notes"
+        - id: scope.edit
+          statement: "Editing note content"
+        - id: scope.delete
+          statement: "Deleting notes"
     - id: scope.view
       statement: "Viewing personal note history"
-    - id: scope.edit
-      statement: "Editing note content"
-    - id: scope.delete
-      statement: "Deleting notes"
   out:
     - id: scope.view-others
       statement: "Viewing other users' notes"

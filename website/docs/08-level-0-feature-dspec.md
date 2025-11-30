@@ -102,6 +102,26 @@ dependencies:
   downstream: ['feature.session-issuance']
 ```
 
+### Grouping Scope Items
+
+For complex features, you can organize scope items into groups to improve readability. You can mix individual items and groups within the same `in` or `out` list.
+
+```yaml
+scope:
+  in:
+    - id: scope.login.basic
+      statement: 'Standard username/password login'
+
+    - id: group.social-login
+      name: 'Social Login Providers'
+      description: 'Support for third-party authentication'
+      items:
+        - id: scope.login.google
+          statement: 'Login with Google'
+        - id: scope.login.github
+          statement: 'Login with GitHub'
+```
+
 ### Product Catalog: Brand/Product/Variant (Feature)
 
 [See full example in `examples/catalog/level0.yaml`](/examples/catalog/level0.yaml)
