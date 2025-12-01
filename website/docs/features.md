@@ -35,7 +35,7 @@ graph TD
 
 A common pitfall in software specification is mixing definitions with behavior. DSpec strictly separates these:
 
-1.  **The Domain Model** is the foundation. It defines the **Ubiquitous Language**: the entities, value objects, and invariant rules that are true regardless of any specific user workflow.
+1.  **The Domain Model** is the foundation. It defines the **Ubiquitous Language**: the domain concepts, definitions, and invariant rules that are true regardless of any specific user workflow.
     *   *Example:* "A `BankAccount` must have a non-negative balance."
 
 2.  **The Feature** is the application of that model. It orchestrates the domain elements to achieve a specific outcome.

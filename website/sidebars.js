@@ -41,7 +41,6 @@ const sidebars = {
       collapsed: true,
       items: [
         'how-to-use',
-        'adoption-guide',
         'traceability-and-governance',
         'appendix-b-level-0-checklist',
       ],
